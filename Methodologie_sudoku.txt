@@ -1,0 +1,12 @@
+Les methodologies presente dans ce document ne concerne que des techniques praticables par un humain.
+
+Méthodes simples:
+  Réduction par croix:
+    Pour placer un chiffre,rayez toutes les lignes,colonnes et regions qui contiennent déja ce chiffre.Le chiffre devient alors candidat pour toute les cases non rayées.
+
+
+  Candidat unique
+    Dans chaque case vous écrivez tous les candidats. Si la case ne contient qu'un seul candidat, alors ce candidat est la solution de la case.
+
+  Méthodes plus complexes:
+    
