@@ -1,5 +1,7 @@
 require "gtk3"
 require "./GridView.rb"
+require "./AssistantView.rb"
+require "../model/AssetManager.rb"
 
 class Window
     private_class_method :new
@@ -15,12 +17,12 @@ class Window
     def initialize()
         puts("Creating window...");
 
-        window = Gtk::Window.new("Test");
+        window = Gtk::Window.new("Sudoku");
         window.set_size_request(@@WIDTH, @@HEIGHT);
-        window.set_border_width(10);
+        window.set_border_width(4);
 
         # On window close event
-        window.signal_connect("delete-event") { |_widget|
+        window.signal_connect("delete-event") { |widget|
             Gtk.main_quit;
         }
 
@@ -39,6 +41,7 @@ class Window
         # Split container into 2 parts : Top (Grid) & Bottom (Assistant)
         leftContainer = Gtk::Grid.new();
         GridView.init(leftContainer);
+        AssistantView.init(leftContainer);
 
         return leftContainer;
     end

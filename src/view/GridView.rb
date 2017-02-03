@@ -1,4 +1,5 @@
 require "gtk3"
+require "./SquareView.rb"
 
 class GridView
     private_class_method :new
@@ -15,7 +16,7 @@ class GridView
             x = i % 9;
             y = i / 9;
 
-            sudokuGrid.attach(Gtk::Button.new(:label => x.to_s), x, y, 1, 1);
+            SquareView.init(sudokuGrid, x, y);
         end
 
         parent.attach(sudokuGrid, 0, 0, 1, 1);
