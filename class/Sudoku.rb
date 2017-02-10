@@ -1,14 +1,14 @@
-load './Caze.rb'
-
+load 'Caze.rb'
+load 'SudokuAPI.rb'
 class Sudoku
 
 	@tcaze
 
-	attr_reader:tcaze
+	attr_reader :tcaze
 
 	def initialize(str)
-		@tcaze = Array.new()
-		tab = str.split("")
+        @tcaze = Array.new()
+        tab = str.split("")
 		cpt=0
 		tab.each_index do |i|
 			@tcaze << Caze.create(i-10*cpt,cpt,tab[i])

@@ -1,11 +1,14 @@
-class Caze
-	@x
-	@y
-	@value
-	attr_accessor:value
 
+
+class Caze
+    @x
+    @y
+    @value
+	attr_accessor :value
 	def initialize(x,y,value) 
-		self.x,self.y,self.value = x.to_i, y.to_i, value.to_i
+		@x = x.to_i
+        @y = y.to_i
+        @value = value.to_i
 	end
 
 	private_class_method :new
@@ -14,4 +17,7 @@ class Caze
 		new(x,y,value)
 	end
 	
+    def to_s()
+        return @value.to_s
+    end
 end

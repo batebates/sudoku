@@ -1,18 +1,18 @@
-load './Sudoku.rb'
-
+load 'Caze.rb'
 class SudokuAPI
 	@sudoku
-	attr_reader:sudoku
+	attr_reader :sudoku
 	
 	
 
 	private_class_method :new
+    
 	def SudokuAPI.create(sudoku)
 		new(sudoku)
 	end
 	
 	def initialize(sudoku)
-		self.sudoku=sudoku 
+		@sudoku=sudoku
 	end
 	
 	def setColor(x,y,color)
@@ -47,7 +47,7 @@ class SudokuAPI
 		res = Array.new()
 		0.upto(2) do |i|
 			0.upto(2) do |j|
-				tab<<@sudoku.cazeAt(y+i,x+j)
+                #tab<<@sudoku.cazeAt(y+i,x+j)
 			end
 		end
 	end
@@ -64,7 +64,7 @@ class SudokuAPI
 	def to_s()
 		cpt=0
 		@sudoku.tcaze().each do |elt|
-			print elt.to_char + " "
+			print elt.to_s + " "
 			cpt += 1
 			if cpt%9==0
 				print "\n"
