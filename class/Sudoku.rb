@@ -47,4 +47,7 @@ class Sudoku
 		return res
 	end
 
+    def to_s
+        return ""
+    end
 end

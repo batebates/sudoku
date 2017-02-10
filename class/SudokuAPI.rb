@@ -47,7 +47,7 @@ class SudokuAPI
 		res = Array.new()
 		0.upto(2) do |i|
 			0.upto(2) do |j|
-                #tab<<@sudoku.cazeAt(y+i,x+j)
+                tab<<@sudoku.cazeAt(y+i,x+j)
 			end
 		end
 	end
@@ -61,7 +61,7 @@ class SudokuAPI
 	end
 	
 	
-	def to_s()
+	def to_s
 		cpt=0
 		@sudoku.tcaze().each do |elt|
 			print elt.to_s + " "
