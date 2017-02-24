@@ -15,7 +15,8 @@ class Caze
     @y
     @value
     @candidats
-	attr_accessor :value, candidats
+    attr_accessor :value
+    attr_accessor :candidats
 #==========================
 	
 	def initialize(x,y,value) 
