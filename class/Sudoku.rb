@@ -1,14 +1,27 @@
+#<b>Auteur  :</b> Decrand Baptiste,Medhi Zerbane
+#
+#<b>Version :</b> 1.0
+#
+#<b>Date    :</b> 08/02/2017
+#
+#=== Permet la création d'une grille de sudoku composé de case ainsi que les méthodes associées
+#<b>Liste des méthodes
+#*cazeAt
+#*setValue
+#*valueCheck
+#gridFull
+#</b>
 load 'Caze.rb'
 load 'SudokuAPI.rb'
 class Sudoku
-
-	@tcaze
-
+#== Variables d'instance ==
+	@tcaze	
 	attr_reader :tcaze
-
+#==========================
+	
 	def initialize(str)
-        @tcaze = Array.new()
-        tab = str.split("")
+        	@tcaze = Array.new()
+        	tab = str.split("")
 		cpt=0
 		tab.each_index do |i|
 			@tcaze << Caze.create(i-10*cpt,cpt,tab[i])
@@ -25,18 +38,37 @@ class Sudoku
 		new(caze)
 	end
 	
+	#===Renvoie la case correspondant aux coordonnées
+	#
+	#===Paramètres :
+	#* <b>x</b> : int : indique la coordonnée de l'axe des abscisses de la case
+	#* <b>y</b> : int : indique la coordonnée de l'axe des ordonnées de la case
 	def cazeAt(x,y)
 		return @tcaze[x][y]
 	end
-
+	
+	#===Modifie la valeur de la case correspondant aux coordonnées
+	#
+	#===Paramètres :
+	#* <b>x</b> : int : indique la coordonnée de l'axe des abscisses de la case
+	#* <b>y</b> : int : indique la coordonnée de l'axe des ordonnées de la case
+	#* <b>val</b> : int : indique la nouvelle valeur de la case à modifier
 	def setValue(x,y,val)
 		 return @tcaze[x][y].value=(val)
 	end
 
+	#===Vérifie si une case contient bien une valeur 
+	#
+	#===Paramètres :
+	#* <b>x</b> : int : indique la coordonnée de l'axe des abscisses de la case
+	#* <b>y</b> : int : indique la coordonnée de l'axe des ordonnées de la case
 	def valueCheck?(x,y)
 		return @tcaze[x][y].value!=nil
 	end
 	
+	
+	#===Vérifie si la grille est remplie
+	#
 	def gridFull()
 		res = true
 		@tcaze.each do |elt|
@@ -46,7 +78,8 @@ class Sudoku
 		end
 		return res
 	end
-
+#===Renvoie une chaine de caractère vide
+#
     def to_s
         return ""
     end
