@@ -66,6 +66,23 @@ class Sudoku
 		return @tcaze[x][y].value!=nil
 	end
 	
+	#===Retourne l'unité demandée sous forme de tableau
+	#
+	# <b>type</b> : type d'unité, 0 pour une ligne, 1 pour une colonne, 2 pour une région
+	# <b>numero</b> : numero de la regoin dans l'ordre logique
+	def getUnite(type, numero)
+		if type == 0
+			tmp = @tcaze(numero,:)
+		elsif type == 1
+			tmp = @tcaze(:,numero)
+		else
+			i = 0
+			while(i < 9)
+				tmp << @tcaze[i/3+(numero/3)*3][i%3+(numero%3)*3]
+				i+=1
+			end
+		end
+	end
 	
 	#===Vérifie si la grille est remplie
 	#
