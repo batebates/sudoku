@@ -14,13 +14,15 @@ class Caze
     @x
     @y
     @value
-	attr_accessor :value
+    @candidats
+	attr_accessor :value, candidats
 #==========================
 	
 	def initialize(x,y,value) 
 		@x = x.to_i
-        @y = y.to_i
-        @value = value.to_i
+        	@y = y.to_i
+        	@value = value.to_i
+		@candidats = Array.new
 	end
 
 	private_class_method :new
