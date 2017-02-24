@@ -1,4 +1,4 @@
-#<b>Auteur  :</b> Decrand Baptiste,Medhi Zerbane
+#<b>Auteur  :</b> Decrand Baptiste,Zerbane Mehdi
 #
 #<b>Version :</b> 1.0
 #
