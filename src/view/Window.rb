@@ -17,23 +17,25 @@ class Window
     def initialize()
         puts("Creating window...");
 
-        window = Gtk::Window.new("Sudoku");
-        window.set_size_request(@@WIDTH, @@HEIGHT);
-        window.set_border_width(4);
+        @@window = Gtk::Window.new("Sudoku");
+        @@window.set_size_request(@@WIDTH, @@HEIGHT);
 
         # On window close event
-        window.signal_connect("delete-event") { |widget|
+        @@window.signal_connect("delete-event") { |widget|
             Gtk.main_quit;
         }
 
         # Split window into 2 parts : Left (Grid + Assistant) & Right (Menu)
         mainContainer = Gtk::Grid.new();
+        mainContainer.set_margin_top(4);
+        mainContainer.set_margin_left(4);
+
         mainContainer.attach(buildLeftContainer(), 0, 0, 1, 1);
         ## Right - TODO (KIM)
 
-        window.add(mainContainer);
+        @@window.add(mainContainer);
 
-        window.show_all();
+        @@window.show_all();
         Gtk.main();
     end
 
@@ -43,7 +45,13 @@ class Window
         GridView.init(leftContainer);
         AssistantView.init(leftContainer);
 
+        leftContainer.set_margin_right(4);
+
         return leftContainer;
+    end
+
+    def Window.window()
+        @@window;
     end
 end
 
