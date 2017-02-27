@@ -20,16 +20,20 @@ class Sudoku
 #==========================
 	
 	def initialize(str)
-        	@tcaze = Array.new()
-        	tab = str.split("")
+        x_length = 9
+        y_length = 9
+        @tcaze=[]
+        #@tcaze = Array.new(9,Array.new(9,nil))
 		cpt=0
-		tab.each_index do |i|
-			@tcaze << Caze.create(i-10*cpt,cpt,tab[i])
-			if(i%9 == 0) 
-				cpt+=1
-			end
-		end
-		  
+        i=0
+        x_length.times do |x|
+            @tcaze[x] ||= []
+            y_length.times do |y|
+                @tcaze[x][y] = Caze.create(x,y,0)
+
+            end
+        end
+
 	end
 
 	private_class_method :new
@@ -65,25 +69,24 @@ class Sudoku
 	def valueCheck?(x,y)
 		return @tcaze[x][y].value!=nil
 	end
-	
-	#===Retourne l'unité demandée sous forme de tableau
-	#
-	# <b>type</b> : type d'unité, 0 pour une ligne, 1 pour une colonne, 2 pour une région
-	# <b>numero</b> : numero de la regoin dans l'ordre logique
-	def getUnite(type, numero)
-		if type == 0
-			tmp = @tcaze(numero,:)
-		elsif type == 1
-			tmp = @tcaze(:,numero)
-		else
-			i = 0
-			while(i < 9)
-				tmp << @tcaze[i/3+(numero/3)*3][i%3+(numero%3)*3]
-				i+=1
-			end
-		end
-	end
-	
+
+    #===Retourne l'unité demandée sous forme de tableau
+    #
+    # <b>type</b> : type d'unité, 0 pour une ligne, 1 pour une colonne, 2 pour une région
+    # <b>numero</b> : numero de la regoin dans l'ordre logique
+    def getUnite(type, numero)
+        if type == 0
+            tmp = @tcaze(numero,:)
+            elsif type == 1
+            tmp = @tcaze(:,numero)
+            else
+            i = 0
+            while(i < 9)
+                tmp << @tcaze[i/3+(numero/3)*3][i%3+(numero%3)*3]
+                i+=1
+            end
+        end
+    end
 	#===Vérifie si la grille est remplie
 	#
 	def gridFull()
@@ -95,9 +98,16 @@ class Sudoku
 		end
 		return res
 	end
-#===Renvoie une chaine de caractère vide
+#===Affiche le sudoku
 #
     def to_s
-        return ""
+        cpt=0
+        @tcaze.each do |elt|
+            print elt.value() + " "
+            cpt += 1
+            if cpt%9==0
+                print "\n"
+            end
+        end
     end
 end

@@ -116,17 +116,6 @@ class SudokuAPI
 		print str
 	end
 	
-	#===Affiche le sudoku
-	#
-	def to_s
-		cpt=0
-		@sudoku.tcaze().each do |elt|
-			print elt.to_s + " "
-			cpt += 1
-			if cpt%9==0
-				print "\n"
-			end
-		end
-	end
+	
 	
 end

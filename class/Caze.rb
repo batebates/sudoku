@@ -15,15 +15,20 @@ class Caze
     @y
     @value
     @candidats
-    attr_accessor :value
-    attr_accessor :candidats
+    attr_accessor :value, :candidats
+
 #==========================
 	
 	def initialize(x,y,value) 
 		@x = x.to_i
-        	@y = y.to_i
-        	@value = value.to_i
-		@candidats = Array.new
+        @y = y.to_i
+        @value = value.to_i
+        @candidats = Hash.new
+        1.upto(9) do |elt|
+            if(elt!=value)
+                @candidats[elt.to_s]=true
+            end
+        end
 	end
 
 	private_class_method :new
@@ -32,8 +37,11 @@ class Caze
 		new(x,y,value)
 	end
 
+    def getValue()
+        return @value
+    end
 #===Affiche la valeur de la case	
     def to_s()
-        return @value.to_s
+        return @value.to_s + @candidats.to_s
     end
 end

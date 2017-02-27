@@ -6,7 +6,7 @@ grid = Sudoku.create("0000000830048000700000002505000900603107008050680100074009
 s= SudokuAPI.create(grid)
 
 
-puts s
+puts s.sudoku
 
 
 
