@@ -74,19 +74,19 @@ class Sudoku
     #
     # <b>type</b> : type d'unité, 0 pour une ligne, 1 pour une colonne, 2 pour une région
     # <b>numero</b> : numero de la regoin dans l'ordre logique
-    def getUnite(type, numero)
-        if type == 0
-            tmp = @tcaze(numero,:)
-            elsif type == 1
-            tmp = @tcaze(:,numero)
-            else
-            i = 0
-            while(i < 9)
-                tmp << @tcaze[i/3+(numero/3)*3][i%3+(numero%3)*3]
-                i+=1
-            end
-        end
-    end
+    #def getUnite(type, numero)
+        #if type == 0
+            #tmp = @tcaze(numero,:)
+            #elsif type == 1
+            #tmp = @tcaze(:,numero)
+           # else
+          #  i = 0
+         #   while(i < 9)
+       #         i+=1
+      #      end
+     #   end
+        #        tmp << @tcaze[i/3+(numero/3)*3][i%3+(numero%3)*3]
+    #end
 	#===Vérifie si la grille est remplie
 	#
 	def gridFull()
@@ -102,12 +102,14 @@ class Sudoku
 #
     def to_s
         cpt=0
-        @tcaze.each do |elt|
-            print elt.value() + " "
+        @tcaze.each do |tab|
+					tab.each do |elt|
+            print elt.value().to_s + " "
             cpt += 1
             if cpt%9==0
                 print "\n"
             end
+					end
         end
     end
 end
