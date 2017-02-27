@@ -23,14 +23,13 @@ class Sudoku
         x_length = 9
         y_length = 9
         @tcaze=[]
-        #@tcaze = Array.new(9,Array.new(9,nil))
-		cpt=0
+        tab = str.split("")
         i=0
         x_length.times do |x|
             @tcaze[x] ||= []
             y_length.times do |y|
-                @tcaze[x][y] = Caze.create(x,y,0)
-
+                @tcaze[x][y] = Caze.create(x,y,tab[i])
+                i=i+1
             end
         end
 
@@ -103,7 +102,7 @@ class Sudoku
     def to_s
         cpt=0
         @tcaze.each do |tab|
-					tab.each do |elt|
+            tab.each do |elt|
             print elt.value().to_s + " "
             cpt += 1
             if cpt%9==0
