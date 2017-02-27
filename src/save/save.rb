@@ -212,8 +212,11 @@ class Sudoku
 	
 	### TESTS
 	def Sudoku.test()
-		system('save_files/sudoku_generator.exe')
-		sudokuFile = "save_files/sudoku.txt"
+		sudokuFile = "./save_files/sudoku.txt"
+		
+		if system('save_files/sudoku_generator.exe', sudokuFile) == false then
+			print "Error during the sudoku generation process"
+		end
 
 		###Saves
 		#Read
