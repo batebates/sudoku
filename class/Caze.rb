@@ -25,8 +25,10 @@ class Caze
         @value = value.to_i
         @candidats = Hash.new
         1.upto(9) do |elt|
-            if(elt!=value)
+            if(elt!=@value)
                 @candidats[elt.to_s]=true
+            else
+                @candidats[elt.to_s]=false
             end
         end
 	end
@@ -42,6 +44,6 @@ class Caze
     end
 #===Affiche la valeur de la case	
     def to_s()
-        return @value.to_s + @candidats.to_s
+        return ""
     end
 end

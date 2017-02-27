@@ -66,7 +66,7 @@ class Sudoku
 	#* <b>x</b> : int : indique la coordonnée de l'axe des abscisses de la case
 	#* <b>y</b> : int : indique la coordonnée de l'axe des ordonnées de la case
 	def valueCheck?(x,y)
-		return @tcaze[x][y].value!=nil
+		return @tcaze[x][y].value!=0
 	end
 
     #===Retourne l'unité demandée sous forme de tableau
@@ -91,7 +91,7 @@ class Sudoku
 	def gridFull()
 		res = true
 		@tcaze.each do |elt|
-			if elt.value==nil
+			if elt.value==0
 				res = false
 			end
 		end
@@ -103,12 +103,13 @@ class Sudoku
         cpt=0
         @tcaze.each do |tab|
             tab.each do |elt|
-            print elt.value().to_s + " "
-            cpt += 1
-            if cpt%9==0
-                print "\n"
+                print elt.value().to_s + " "
+                cpt += 1
+                if cpt%9==0
+                    print "\n"
+                end
             end
-					end
         end
+
     end
 end

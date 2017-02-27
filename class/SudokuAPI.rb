@@ -31,8 +31,30 @@ class SudokuAPI
 	
 	def initialize(sudoku)
 		@sudoku=sudoku
+        y=0
+        x=0
+        9.times do |x|
+            9.times do |y|
+                candidate_unite(x,y,column(x))
+                candidate_unite(x,y,row(y))
+                candidate_unite(x,y,square(x,y))
+            end
+        end
 	end
-	
+    #===Met les candidats impossible à false selon l'unite
+    #
+    #===Paramètres :
+    #* <b>x</b> : int : indique la coordonnée de l'axe des abscisses de la case
+    #* <b>y</b> : int : indique la coordonnée de l'axe des ordonnées de la case
+    #* <b>unite</b> : tab : contient le tableau de l'unité
+    def candidate_unite(x,y,unite)
+        
+        unite.each{ |g|
+            @sudoku.tcaze[x][y].candidats[g.value.to_s]=false
+        }
+        
+        
+    end
 	#===Modifie la couleur d'une case
 	#
 	#===Paramètres :
@@ -55,10 +77,10 @@ class SudokuAPI
 	#* <b>y</b> : int : indique la coordonnée de l'axe des ordonnées de la ligne
 	def row(y)
 		tab = Array.new()
-		0.upto(8) do |i|
+		9.times do |i|
 			tab<<@sudoku.cazeAt(y,i)
 		end
-		return tab	
+		return tab
 	end
 	
 	#===Renvoie une colonne du sudoku dans un tableau
@@ -67,10 +89,10 @@ class SudokuAPI
 	#* <b>x</b> : int : indique la coordonnée de l'axe des abscisses de la colonne
 	def column(x)
 		tab = Array.new()
-		0.upto(8) do |i|
+		9.times do |i|
 			tab<<@sudoku.cazeAt(i,x)
 		end
-		return tab	
+		return tab
 	end
 
 	#===Renvoie une colonne suivi d'une ligne de la case d'un sudoku dans un tableau 
@@ -91,12 +113,13 @@ class SudokuAPI
 	def square(x,y)
 		x -=x%3
 		y -=y%3
-		res = Array.new()
+		tab = Array.new()
 		0.upto(2) do |i|
 			0.upto(2) do |j|
                 tab<<@sudoku.cazeAt(y+i,x+j)
 			end
 		end
+        return tab
 	end
 
 	#===Renvoie la region,la colonne suivi de la ligne d'un case du sudoku dans un tableau 
