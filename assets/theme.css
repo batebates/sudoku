@@ -1,0 +1,22 @@
+#overlay-grid
+{
+    background-color: #eeeeee;
+    padding: 4px;
+    border: 2px outset #787878;
+    border-radius: 8px;
+    box-shadow: 4px 4px 3px black;
+}
+
+#overlay-grid button
+{
+
+}
+
+#assistant_speech_box
+{
+    font-family: "Comic sans ms", "Arial";
+    background-color: #ffffff;
+    border: 2px outset #787878;
+    border-radius: 8px;
+    margin-left: 4px;
+}

@@ -1,14 +1,17 @@
 require "gtk3"
 require "./GridView.rb"
 require "./AssistantView.rb"
+require "./CSSStyle.rb"
 require "../model/AssetManager.rb"
+require "./Colors.rb"
+require "./OverlayManager.rb"
 
 class Window
     private_class_method :new
 
     # Constants
-    @@WIDTH = 400;
-    @@HEIGHT = 400;
+    @@WIDTH = 200;
+    @@HEIGHT = 200;
 
     def Window.init()
         new();
@@ -33,9 +36,17 @@ class Window
         mainContainer.attach(buildLeftContainer(), 0, 0, 1, 1);
         ## Right - TODO (KIM)
 
-        @@window.add(mainContainer);
+        gridOverlay = Gtk::Overlay.new();
+        gridOverlay.add(mainContainer);
+        OverlayManager.init(gridOverlay);
 
+        #gridOverlay.show_all();
+        @@window.add(gridOverlay);
+        gridOverlay.show_all();
         @@window.show_all();
+        OverlayManager.hide();
+
+        CSSStyle.init();
         Gtk.main();
     end
 

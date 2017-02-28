@@ -4,6 +4,8 @@ require "./SquareView.rb"
 class GridView
     private_class_method :new
 
+    @squareViewList;
+
     def GridView.init(parent)
         new(parent);
     end
@@ -11,7 +13,7 @@ class GridView
     def initialize(parent)
         puts("Creating sudoku grid...");
 
-        gridOverlay = Gtk::Overlay.new();
+        @squareViewList = [];
 
         sudokuGrid = Gtk::Grid.new();
         sudokuGrid.set_size_request(SquareView.size() * 9, SquareView.size() * 9);
@@ -19,7 +21,7 @@ class GridView
             x = i % 9;
             y = i / 9;
 
-            SquareView.init(sudokuGrid, x, y);
+            @squareViewList.push(SquareView.init(sudokuGrid, x, y));
         end
 
 
