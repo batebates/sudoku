@@ -18,8 +18,8 @@ class Caze
     attr_accessor :value, :candidats
 
 #==========================
-	
-	def initialize(x,y,value) 
+
+	def initialize(x,y,value)
 		@x = x.to_i
         @y = y.to_i
         @value = value.to_i
@@ -34,7 +34,7 @@ class Caze
 	end
 
 	private_class_method :new
-	
+
 	def Caze.create(x,y,value)
 		new(x,y,value)
 	end
@@ -42,7 +42,7 @@ class Caze
     def getValue()
         return @value
     end
-#===Affiche la valeur de la case	
+#===Affiche la valeur de la case
     def to_s()
         return ""
     end
