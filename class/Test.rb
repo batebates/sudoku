@@ -4,23 +4,22 @@ load 'Caze.rb'
 
 
 require "test/unit"
- 
 class TestSudoku < Test::Unit::TestCase
- 
+
   def test_caze
 		c = Caze.create(5,4,3)
-    assert_equal(3, c.getValue() )
-    c.candidats.each do |elt|
-			assert_equal(true,elt[1])
-		end
+    assert_equal(3, c.getValue(),"Verification de la valeur de la case")
+		assert_equal(false,c.candidats['3'],"Test de l'initialisation des candidats n1")
+    assert_equal(true,c.candidats['4'],"Test de l'initialisation des candidats n1")
+    assert_equal(true,c.candidats['5'],"Test de l'initialisation des candidats n1")
   end
 
 	def test_sudoku
 		grid = Sudoku.create("000000083004800070000000250500090060310700805068010007400901000890563000000407509")
-		assert_equal(0,grid.cazeAt(0,5).getValue())
-		assert_equal(3,grid.setValue(0,5,3))
-		assert_equal(true,grid.valueCheck?(0,5))
-		assert_equal(false,grid.gridFull())
+		assert_equal(0,grid.cazeAt(0,5).getValue(),"Test de la valeur d'une case d'un grille")
+		assert_equal(3,grid.setValue(0,5,3),"Test du changement de valeur d'une case")
+		assert_equal(true,grid.valueCheck?(0,5),"Test si une case contient une valeur")
+		assert_equal(false,grid.gridFull(),"Test gridFull")
 	end
 
 	def test_sudokuAPI
@@ -31,46 +30,43 @@ class TestSudoku < Test::Unit::TestCase
 		#assert_equal(3,s.execMethod(0,5,3))
 		tab = Array.new
 		s.row(3).each do |elt|
-			tab.push(elt.value)
+			tab.push(elt.getValue)
 		end
-		assert_equal([5,0,0,0,9,0,0,6,0],tab)
+
+		assert_equal([5,0,0,0,9,0,0,6,0],tab,"Test row()")
 
 		tab = Array.new
 		s.column(3).each do |elt|
-			tab.push(elt.value)
+			tab.push(elt.getValue)
 		end
-		assert_equal([0,8,0,0,7,0,9,5,4],tab)
-		
+
+		assert_equal([0,8,0,0,7,0,9,5,4],tab,"Test column")
+
 		tab = Array.new
 		s.rowColumn(2,3).each do |elt|
-			tab.push(elt.value)
+			   tab.push(elt.getValue)
 		end
-		assert_equal([5,0,0,0,9,0,0,6,0,0,4,0,0,0,8,0,0,0],tab)
-		
+
+		assert_equal([5,0,0,0,9,0,0,6,0,0,4,0,0,0,8,0,0,0],tab,"Test row column")
+
 		tab = Array.new
 		s.square(0,5).each do |elt|
-			tab.push(elt.value)
+			tab.push(elt.getValue)
 		end
-		assert_equal([5,0,0,3,1,0,0,6,8	],tab)
-		
+		assert_equal([5,0,0,3,1,0,0,6,8	],tab,"test square()")
+
 		tab = Array.new
 		s.squareRowColumn(2,3).each do |elt|
-			tab.push(elt.value)
+			tab.push(elt.getValue)
 		end
-		assert_equal([5,0,0,0,9,0,0,6,0,0,4,0,0,0,8,0,0,0,5,0,0,3,1,0,0,6,8],tab)
+
+		assert_equal([5,0,0,3,1,0,0,6,8,0,0,0,0,0,0,2,5,0,0,8,0,0,7,0,9,5,4],tab,"test squareRowColumn")
 
 		assert_equal(nil,s.assistantMessage("Zbeub\n"))
-		
+
 		puts s.sudoku
 	end
-grid = Sudoku.create("000000083004800070000000250500090060310700805068010007400901000890563000000407509")
-s= SudokuAPI.create(grid)
- puts s.sudoku
+  grid = Sudoku.create("000000083004800070000000250500090060310700805068010007400901000890563000000407509")
+  s= SudokuAPI.create(grid)
+  puts s.sudoku
 end
-
-
-
-
-
-
-

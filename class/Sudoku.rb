@@ -15,10 +15,10 @@ load 'Caze.rb'
 load 'SudokuAPI.rb'
 class Sudoku
 #== Variables d'instance ==
-	@tcaze	
+	@tcaze
 	attr_reader :tcaze
 #==========================
-	
+
 	def initialize(str)
         x_length = 9
         y_length = 9
@@ -36,11 +36,11 @@ class Sudoku
 	end
 
 	private_class_method :new
-	
+
 	def Sudoku.create(caze)
 		new(caze)
 	end
-	
+
 	#===Renvoie la case correspondant aux coordonnées
 	#
 	#===Paramètres :
@@ -49,7 +49,7 @@ class Sudoku
 	def cazeAt(x,y)
 		return @tcaze[x][y]
 	end
-	
+
 	#===Modifie la valeur de la case correspondant aux coordonnées
 	#
 	#===Paramètres :
@@ -60,7 +60,7 @@ class Sudoku
 		 return @tcaze[x][y].value=(val)
 	end
 
-	#===Vérifie si une case contient bien une valeur 
+	#===Vérifie si une case contient bien une valeur
 	#
 	#===Paramètres :
 	#* <b>x</b> : int : indique la coordonnée de l'axe des abscisses de la case
@@ -90,9 +90,11 @@ class Sudoku
 	#
 	def gridFull()
 		res = true
-		@tcaze.each do |elt|
-			if elt.value==0
-				res = false
+		@tcaze.each do |tab|
+			tab.each do |elt|
+				if elt.value==0
+					res = false
+				end
 			end
 		end
 		return res

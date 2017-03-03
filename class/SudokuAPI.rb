@@ -21,14 +21,14 @@ class SudokuAPI
 #== Variables d'instance ==
 	@sudoku
 	attr_reader :sudoku
-#==========================	
+#==========================
 
 	private_class_method :new
-    
+
 	def SudokuAPI.create(sudoku)
 		new(sudoku)
 	end
-	
+
 	def initialize(sudoku)
 		@sudoku=sudoku
         y=0
@@ -48,12 +48,12 @@ class SudokuAPI
     #* <b>y</b> : int : indique la coordonnée de l'axe des ordonnées de la case
     #* <b>unite</b> : tab : contient le tableau de l'unité
     def candidate_unite(x,y,unite)
-        
+
         unite.each{ |g|
             @sudoku.tcaze[x][y].candidats[g.value.to_s]=false
         }
-        
-        
+
+
     end
 	#===Modifie la couleur d'une case
 	#
@@ -63,7 +63,7 @@ class SudokuAPI
 	#* <b>color</b> : int : indique la nouvelle couleur de la case à modifier
 	def setColor(x,y,color)
 	end
-	
+
 	#===Execute la methode
 	#
 	#===Paramètres :
@@ -82,7 +82,7 @@ class SudokuAPI
 		end
 		return tab
 	end
-	
+
 	#===Renvoie une colonne du sudoku dans un tableau
 	#
 	#===Paramètres :
@@ -95,13 +95,13 @@ class SudokuAPI
 		return tab
 	end
 
-	#===Renvoie une colonne suivi d'une ligne de la case d'un sudoku dans un tableau 
+	#===Renvoie une colonne suivi d'une ligne de la case d'un sudoku dans un tableau
 	#
 	#===Paramètres :
 	#* <b>x</b> : int : indique la coordonnée de l'axe des abscisses de la case
 	#* <b>y</b> : int : indique la coordonnée de l'axe des ordonnées de la case
 	def rowColumn(x,y)
-		return self.row(y) << self.column(x)
+		return self.row(y) + self.column(x)
 	end
 
 	#===Renvoie la région d'une case d'un sudoku dans un tableau
@@ -122,15 +122,15 @@ class SudokuAPI
         return tab
 	end
 
-	#===Renvoie la region,la colonne suivi de la ligne d'un case du sudoku dans un tableau 
+	#===Renvoie la region,la colonne suivi de la ligne d'un case du sudoku dans un tableau
 	#
 	#===Paramètres :
 	#* <b>x</b> : int : indique la coordonnée de l'axe des abscisses de la case
 	#* <b>y</b> : int : indique la coordonnée de l'axe des ordonnées de la case
 	def squareRowColumn(x,y)
-		return square(x,y)<< row(x)<< column(y)
+		return square(x,y) + row(x) + column(y)
 	end
-	
+
 	#===Affiche le message de l'assistant
 	#
 	#===Paramètres :
@@ -138,7 +138,7 @@ class SudokuAPI
 	def assistantMessage(str)
 		print str
 	end
-	
-	
-	
+
+
+
 end
