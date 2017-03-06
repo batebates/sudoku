@@ -5,6 +5,7 @@ require "./CSSStyle.rb"
 require "../model/AssetManager.rb"
 require "./Colors.rb"
 require "./OverlayManager.rb"
+require "./Header.rb"
 
 class Window
     private_class_method :new
@@ -27,6 +28,7 @@ class Window
         @@window.signal_connect("delete-event") { |widget|
             Gtk.main_quit;
         }
+        Header.init();
 
         # Split window into 2 parts : Left (Grid + Assistant) & Right (Menu)
         mainContainer = Gtk::Grid.new();
@@ -44,9 +46,9 @@ class Window
         @@window.add(gridOverlay);
         gridOverlay.show_all();
         @@window.show_all();
-        OverlayManager.hide();
 
         CSSStyle.init();
+        OverlayManager.hide();
         Gtk.main();
     end
 

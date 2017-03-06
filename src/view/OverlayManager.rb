@@ -4,14 +4,14 @@ class OverlayManager
     private_class_method :new
 
     @@overlayPanel = nil;
-    @buttons;
+    @@buttons = nil;
 
     def OverlayManager.init(overlay)
         new(overlay);
     end
 
     def initialize(overlay)
-        @buttons
+        @@buttons = Array.new();
         @@overlayPanel = Gtk::Fixed.new();
         sudokuChoiceGrid = Gtk::Grid.new();
         sudokuChoiceGrid.name = "overlay-grid";
@@ -29,7 +29,7 @@ class OverlayManager
                 onClick(widget);
             }
             sudokuChoiceGrid.attach(buttonChoice, x, y, 1, 1);
-            @buttons.push(buttonChoice);
+            @@buttons.push(buttonChoice);
         end
 
         @@overlayPanel.put(sudokuChoiceGrid, 0, 0);
@@ -39,16 +39,56 @@ class OverlayManager
     end
 
     def onClick(widget)
+        square = SquareView.selectedSquareView();
+        isEraser = !widget.children[0].class.instance_methods(false).include?(:label);
+        if(isEraser)
+            SquareView.selectedSquareView().insertValue(square.value);
+        else
+            SquareView.selectedSquareView().insertValue(widget.children[0].label.to_i);
+        end
         OverlayManager.hide();
-        SquareView.selectedSquareView().insertValue(widget.children[0].label.to_i);
+    end
+
+    def OverlayManager.clear()
+        for i in 0...9
+            if(@@buttons[i].children.length > 0)
+                @@buttons[i].remove(@@buttons[i].children[0]);
+            end
+        end
     end
 
     def OverlayManager.hide()
         @@overlayPanel.hide();
+        OverlayManager.clear();
     end
 
     def OverlayManager.show()
-        @@overlayPanel.show();
+        square = SquareView.selectedSquareView();
+        OverlayManager.clear();
+
+        possibleValues = [5,9,8,7,2];#TODO
+
+        if(square.value != 0)
+            possibleValues.push(square.value);
+        end
+
+        for i in 0...9
+            if(possibleValues.include?(i + 1))
+                if(square.value == i + 1)
+                    @@buttons[i].add(Gtk::Image.new(:file => AssetManager.assetsResource("eraser.png")));
+                else
+                    @@buttons[i].add(Gtk::Label.new((i + 1).to_s));
+                end
+            end
+        end
+
+        @@overlayPanel.show_all();
+
+        for i in 0...9
+            if(!possibleValues.include?(i + 1))
+                @@buttons[i].hide();
+            end
+        end
     end
 
     def OverlayManager.move(x, y)

@@ -3,10 +3,10 @@ require "gtk3"
 class SquareView
     private_class_method :new
 
-    @@size = 32;
+    @@size = 42;
     @@selectedSquareView = nil;
 
-    @value;
+    attr_reader :value;
     @color;
     @lastColor;
 
@@ -76,12 +76,31 @@ class SquareView
         #Text
         ctx.set_source_rgb(0.0, 0.0, 0.0);
 
-        ctx.select_font_face("Comic sans MS", Cairo::FONT_SLANT_NORMAL, Cairo::FONT_WEIGHT_BOLD);
-        ctx.set_font_size(13);
+        if(GridView.isHintMode() && @value == 0)
+            ctx.set_font_size(10);
+            possibilities = [5,9,8,7,2];
+            hintString = "";
+            ctx.set_font_size(10);
 
-        textSize = ctx.text_extents(displayValue());
-        ctx.move_to((@@size / 2) - (textSize.width / 2),  (@@size / 2) + (textSize.height / 2));
-        ctx.show_text(displayValue());
+            for i in 0..9
+                hintString += possibilities.include?(i) ? i.to_s() : "  ";
+
+                if(i % 3 == 0)
+                    ctx.select_font_face("Arial", Cairo::FONT_SLANT_NORMAL, Cairo::FONT_WEIGHT_NORMAL);
+                    textSize = ctx.text_extents(hintString);
+                    ctx.move_to((@@size / 2) - (textSize.width / 2),  (@@size / 2) + (textSize.height / 2) + ((i / 3) - 2) * (textSize.height + 2));
+                    ctx.show_text(hintString);
+
+                    hintString = "";
+                end
+            end
+        else
+            ctx.select_font_face("Comic sans MS", Cairo::FONT_SLANT_NORMAL, Cairo::FONT_WEIGHT_BOLD);
+            ctx.set_font_size(13);
+            textSize = ctx.text_extents(displayValue());
+            ctx.move_to((@@size / 2) - (textSize.width / 2),  (@@size / 2) + (textSize.height / 2));
+            ctx.show_text(displayValue());
+        end
 
         return self;
     end
@@ -99,24 +118,28 @@ class SquareView
         choiceGrid = overlay.children[0];
 
         #Set pos of overlay
-        pos = widget.translate_coordinates(Window.window, 0, 0);
-        pos[0] -= @@size - 2;
-        pos[1] -= @@size - 2;
+        pos = widget.translate_coordinates(widget.parent, 0, 0);
+
+        #Border
+        pos[0] += 2;
+        pos[1] += 2;
 
         #Center x
-        center = choiceGrid.allocation.width / 2;
-        pos[0] -= center - @@size / 2;
+        width = choiceGrid.allocation.width;
+        height = choiceGrid.allocation.height;
+        center = width / 2;
+        pos[0] -= center;
+        pos[0] += @@size / 2;
 
         #Clamp X
-        pos[0] = [[6, pos[0]].max(), @@size * 9 - choiceGrid.allocation.width - 8].min();
+        pos[0] = [[0, pos[0]].max(), @@size * 9 - width].min();
 
         #Clamp Y
-        pos[1] = pos[1] > @@size * 4.5 ? pos[1] - choiceGrid.allocation.height - @@size : pos[1];
-
-        OverlayManager.move(pos[0], pos[1]);
-        OverlayManager.show();
+        pos[1] = pos[1] > @@size * 4.5 ? pos[1] - height : pos[1] + @@size;
 
         @@selectedSquareView = self;
+        OverlayManager.move(pos[0], pos[1]);
+        OverlayManager.show();
     end
 
     def onHover(event, widget)
