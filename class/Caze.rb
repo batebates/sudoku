@@ -46,6 +46,6 @@ class Caze
     end
 #===Affiche la valeur de la case
     def to_s()
-        return ""
+        return "\n"   
     end
 end

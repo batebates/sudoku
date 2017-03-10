@@ -99,6 +99,22 @@ class Sudoku
 		end
 		return res
 	end
+
+	def printCandidate
+		cpt=0
+		@tcaze.each do |tab|
+            tab.each do |elt|
+            	print elt.value
+            	print " "
+                print elt.candidats.to_s + "\n"
+                cpt += 1
+                if cpt%9==0
+                    print "\n"
+                end
+            end
+        end
+    end
+
 #===Affiche le sudoku
 #
     def to_s
@@ -106,12 +122,13 @@ class Sudoku
         @tcaze.each do |tab|
             tab.each do |elt|
                 print elt.value().to_s + " "
+
                 cpt += 1
                 if cpt%9==0
                     print "\n"
                 end
             end
         end
-
+        printCandidate()
     end
 end
