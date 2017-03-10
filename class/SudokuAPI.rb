@@ -36,7 +36,7 @@ class SudokuAPI
         x=0
         9.times do |x|
             9.times do |y|
-            	candidateCaze(x,y)
+            	candidateCaze(y,x)
             end
         end
 	end
@@ -53,9 +53,9 @@ class SudokuAPI
     end
 
     def candidateCaze(x,y)
-    #     candidate_unite(x,y,column(x))
-        candidate_unite(x,y,row(y))
-    #    candidate_unite(x,y,square(x,y))
+        candidate_unite(x,y,column(y))
+        candidate_unite(x,y,row(x))
+        candidate_unite(x,y,square(y,x))
     end
 	#===Modifie la couleur d'une case
 	#

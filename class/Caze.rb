@@ -27,11 +27,8 @@ class Caze
         @color =nil
         @candidats = Hash.new
         1.upto(9) do |elt|
-            if(elt!=@value)
-                @candidats[elt.to_s]=true
-            else
-                @candidats[elt.to_s]=false
-            end
+            @candidats[elt.to_s]=true
+
         end
 	end
 
