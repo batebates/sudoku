@@ -15,7 +15,8 @@ class Caze
     @y
     @value
     @candidats
-    attr_accessor :value, :candidats
+    @color
+    attr_accessor :value, :candidats, :color
 
 #==========================
 
@@ -23,6 +24,7 @@ class Caze
 		@x = x.to_i
         @y = y.to_i
         @value = value.to_i
+        @color =nil
         @candidats = Hash.new
         1.upto(9) do |elt|
             if(elt!=@value)

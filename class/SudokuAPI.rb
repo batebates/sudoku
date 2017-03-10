@@ -21,6 +21,7 @@ class SudokuAPI
 #== Variables d'instance ==
 	@sudoku
 	attr_reader :sudoku
+
 #==========================
 
 	private_class_method :new
@@ -62,6 +63,11 @@ class SudokuAPI
 	#* <b>y</b> : int : indique la coordonnée de l'axe des ordonnées de la case
 	#* <b>color</b> : int : indique la nouvelle couleur de la case à modifier
 	def setColor(x,y,color)
+		@sudoku.cazeAt(x,y).color=color;
+	end
+
+	def getColor(x,y)
+		return @sudoku.cazeAt(x,y).color;
 	end
 
 	#===Execute la methode
