@@ -6,6 +6,7 @@ require "../model/AssetManager.rb"
 require "./Colors.rb"
 require "./OverlayManager.rb"
 require "./Header.rb"
+require "./Menu.rb"
 
 class Window
     private_class_method :new
@@ -36,7 +37,8 @@ class Window
         mainContainer.set_margin_left(4);
 
         mainContainer.attach(buildLeftContainer(), 0, 0, 1, 1);
-        ## Right - TODO (KIM)
+        ## Right
+        Menu.init(mainContainer);
 
         gridOverlay = Gtk::Overlay.new();
         gridOverlay.add(mainContainer);
@@ -62,6 +64,7 @@ class Window
 
         return leftContainer;
     end
+    
 
     def Window.window()
         @@window;
