@@ -1,4 +1,6 @@
 require 'gtk3'
+require "../model/AssetManager.rb"
+require "./CSSStyle.rb"
 
 #
 #
@@ -19,11 +21,11 @@ class MainMenu
 	#@@opt = OptionsFrame.new
 
 	#Image
-	@iOpt = Gtk::Image.new(:file=>'gears.png')
-	@iOpt2 = Gtk::Image.new(:file=>'gears.png')
-	@iNG = Gtk::Image.new(:file=>'grid.png')
-	@iSav = Gtk::Image.new(:file=>'save.png')
-	@iLoad = Gtk::Image.new(:file=>'load.png')
+	@iOpt = Gtk::Image.new(:file=>AssetManager.assetsResource('assistant.png'))
+	@iOpt2 = Gtk::Image.new(:file=>AssetManager.assetsResource('gears.png'))
+	@iNG = Gtk::Image.new(:file=>AssetManager.assetsResource('grid.png'))
+	@iSav = Gtk::Image.new(:file=>AssetManager.assetsResource('save.png'))
+	@iLoad = Gtk::Image.new(:file=>AssetManager.assetsResource('load.png'))
 
 	lOpt = Gtk::Label.new("Options")
 	lNG = Gtk::Label.new("Nouvelle Grille")
