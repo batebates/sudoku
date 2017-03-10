@@ -6,7 +6,17 @@ class MethodUniqueCandidate < Method
 
 	def demoMethod
 		#TODO
-		#save grille actuelle
+		fileName = "DeathStar"
+		@sudoku.saveSudoku(fileName)
+		gridDemo = '005000070
+					400000400
+					000000000
+					000404000
+					000000000
+					000000000
+					000000000
+					000000000
+					000000000'
 		#creation grille demo
 		#load grille demo
 		#grisation des cases non importantes
