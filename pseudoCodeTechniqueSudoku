@@ -1,0 +1,48 @@
+#Reduction par croix
+#Application a une case
+Entrée: une case
+Sortie: un booleen #Vrai quand des candidats sont trouvés faux sinon
+bool crossReduction(aCase) do
+
+	parcoursRegionCase |eltcase|:
+		si la case contient un (chiffre):
+			bool+=aCase.enleveCandidat(chiffre)
+		fin si
+	fin parcours
+	parcoursColonneCase |eltcase|:
+		si la case contient un (chiffre):
+			bool+=aCase.enleveCandidat(chiffre)
+		fin si
+	fin parcours
+	parcoursLigneCase |eltcase|:
+		si la case contient un (chiffre):
+			bool+=aCase.enleveCandidat(chiffre)
+		fin si
+	fin parcours
+	
+end
+	
+
+#Unicite
+#Recherche d'application:
+
+Entrée:void
+Sortie:liste de 4 cases si technique applicable rien sinon
+
+liste uniciteSearch() do
+	listeSortie
+	ParcoursGrille |eltCase| do
+		si eltCase contient uniquement 2 candidats
+			liste2Candidats<les 2 candidats
+			ParcoursLigne(eltCase) |eltLigneCase|
+				si eltLigneCase contient ces 2 candidats minimums
+					ParcoursColonne(eltLigneCase) |eltDiagonalCase|
+						si eltDiagonalCase contient ces 2 candidats minimums AND eltColonneCase = getCase(eltDiagonalCase.ligne,eltCase.colone) contient ces 2 candidats minimums
+							return listeSortie = eltCase,eltLigneCase,eltColonneCase,eltDiagonalCase
+						finsi
+					finparcours
+				finsi
+			finparcours
+		finsi
+	finparcours
+end

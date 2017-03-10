@@ -1,0 +1,3 @@
+class MethodUniqueCandidate < Method
+
+end
