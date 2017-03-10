@@ -68,8 +68,6 @@ class Menu
 		#Quitter
 		bQuit.signal_connect('clicked'){
 			#Pop up de validation
-
-			#Quit
 			Gtk.main_quit();
 		}
 
