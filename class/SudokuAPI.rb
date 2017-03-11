@@ -39,6 +39,7 @@ class SudokuAPI
             	candidateCaze(y,x)
             end
         end
+       	@sudoku.candidateToTab()
 	end
     #===Met les candidats impossible à false selon l'unite
     #
@@ -50,12 +51,15 @@ class SudokuAPI
         unite.each{ |g|
             @sudoku.tcaze[x][y].candidats[g.value.to_s]=false
         }
+
     end
 
     def candidateCaze(x,y)
         candidate_unite(x,y,column(y))
         candidate_unite(x,y,row(x))
         candidate_unite(x,y,square(y,x))
+
+
     end
 	#===Modifie la couleur d'une case
 	#
@@ -70,6 +74,7 @@ class SudokuAPI
 	def getColor(x,y)
 		return @sudoku.cazeAt(x,y).color;
 	end
+
 
 	#===Execute la methode
 	#

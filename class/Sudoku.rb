@@ -32,7 +32,6 @@ class Sudoku
                 i=i+1
             end
         end
-
 	end
 
 	private_class_method :new
@@ -100,6 +99,7 @@ class Sudoku
 		return res
 	end
 
+	#========Affiche la liste des candidats		True = candidats	False = non candidats
 	def printCandidate
 		cpt=0
 		@tcaze.each do |tab|
@@ -115,6 +115,23 @@ class Sudoku
         end
     end
 
+    #=====Transforme dans un tableau la valeur de la case + la liste de ses candidats
+    def candidateToTab()
+    	tabe = Array.new()
+		@tcaze.each do |tab|
+            tab.each do |elt|
+            	tmp = Array.new()
+            	tmp << elt.value
+  				1.upto(9) do|i|
+  					if (elt.candidats[i.to_s] == true)
+                		tmp<<i;
+  					end
+                end
+                tabe<<tmp
+            end
+        end
+    end
+
 #===Affiche le sudoku
 #
     def to_s
@@ -122,13 +139,11 @@ class Sudoku
         @tcaze.each do |tab|
             tab.each do |elt|
                 print elt.value().to_s + " "
-
                 cpt += 1
                 if cpt%9==0
                     print "\n"
                 end
             end
         end
-        printCandidate()
     end
 end

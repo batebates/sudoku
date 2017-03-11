@@ -28,7 +28,6 @@ class Caze
         @candidats = Hash.new
         1.upto(9) do |elt|
             @candidats[elt.to_s]=true
-
         end
 	end
 
