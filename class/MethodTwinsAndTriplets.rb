@@ -1,4 +1,4 @@
-class MethodUniqueCandidate < Method
+class MethodTwinsAndTriplets < Method
 
 	def textMethod
 		return "Dans le cas où un candidat est unique dans une unité, on peut en déduire que la case où il est présent contient bien ce candidat car il ne peut être nul part ailleurs."
@@ -6,14 +6,11 @@ class MethodUniqueCandidate < Method
 
 	def demoMethod
 		#TODO
-		#Assistant dit "Voici une démonstration"
 		fileName = "DeathStar"
-		#Sauvegarde de la grille actuelle
 		@sudoku.saveSudoku(fileName)
-		gridDemo = "005000070400000400000000000000404000000000000000000000000000000000000000000000000"
-		#Chargement et affichage de la grille de démo
-		@sudoku.loadSudoku(gridDemo)
-		#"grisation" des cases non importantes
+		gridDemo = "005000070400000400000000000000404000000000000000000000000000000000000000000000000"	
+		#load grille demo
+		#grisation des cases non importantes
 		#Assistant dit on va s'occuper de cette ligne
 		#Mise en valeur de la case
 		#"On peut remarquer que sur cette case machin truc"

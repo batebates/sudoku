@@ -11,8 +11,9 @@
 #*valueCheck
 #gridFull
 #</b>
-load 'Caze.rb'
-load 'SudokuAPI.rb'
+require "./Caze.rb"
+require "./SudokuAPI.rb"
+
 class Sudoku
 #== Variables d'instance ==
 	@tcaze
@@ -32,7 +33,6 @@ class Sudoku
                 i=i+1
             end
         end
-
 	end
 
 	private_class_method :new
@@ -99,6 +99,40 @@ class Sudoku
 		end
 		return res
 	end
+
+	#========Affiche la liste des candidats		True = candidats	False = non candidats
+	def printCandidate
+		cpt=0
+		@tcaze.each do |tab|
+            tab.each do |elt|
+            	print elt.value
+            	print " "
+                print elt.candidats.to_s + "\n"
+                cpt += 1
+                if cpt%9==0
+                    print "\n"
+                end
+            end
+        end
+    end
+
+    #=====Transforme dans un tableau la valeur de la case + la liste de ses candidats
+    def candidateToTab()
+    	tabe = Array.new()
+		@tcaze.each do |tab|
+            tab.each do |elt|
+            	tmp = Array.new()
+            	tmp << elt.value
+  				1.upto(9) do|i|
+  					if (elt.candidats[i.to_s] == true)
+                		tmp<<i;
+  					end
+                end
+                tabe<<tmp
+            end
+        end
+    end
+
 #===Affiche le sudoku
 #
     def to_s
@@ -112,6 +146,5 @@ class Sudoku
                 end
             end
         end
-
     end
 end

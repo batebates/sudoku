@@ -16,7 +16,9 @@
 #*assistantMessage
 #</b>
 
-load 'Caze.rb'
+require "./Caze.rb"
+require "./Sudoku.rb"
+
 class SudokuAPI
 #== Variables d'instance ==
 	@sudoku
@@ -27,10 +29,10 @@ class SudokuAPI
 
 #==========================
 
-	private_class_method :new
+	@@API = SudokuAPI.new();
 
-	def SudokuAPI.create(sudoku)
-		new(sudoku)
+	def SudokuAPI.API()
+		return @@API;
 	end
 
 	def initialize(sudoku, sudokuCompleted)
@@ -46,6 +48,7 @@ class SudokuAPI
             end
         end
 	end
+
     #===Met les candidats impossible à false selon l'unite
     #
     #===Paramètres :
@@ -53,13 +56,19 @@ class SudokuAPI
     #* <b>y</b> : int : indique la coordonnée de l'axe des ordonnées de la case
     #* <b>unite</b> : tab : contient le tableau de l'unité
     def candidate_unite(x,y,unite)
-
         unite.each{ |g|
             @sudoku.tcaze[x][y].candidats[g.value.to_s]=false
         }
 
-
     end
+
+    def candidateCaze(x,y)
+        candidate_unite(x,y,column(y))
+        candidate_unite(x,y,row(x))
+        candidate_unite(x,y,square(y,x))
+    end
+
+
 	#===Modifie la couleur d'une case
 	#
 	#===Paramètres :
@@ -74,11 +83,13 @@ class SudokuAPI
 		return @sudoku.cazeAt(x,y).color;
 	end
 
+
 	#===Execute la methode
 	#
 	#===Paramètres :
 	#* <b>meth</b> : Methode : indique la methode à executer
 	def execMethod(meth)
+
 	end
 
 	#===Renvoie une ligne du Sudoku dans un tableau
@@ -121,8 +132,8 @@ class SudokuAPI
 	#* <b>y</b> : int : indique la coordonnée de l'axe des ordonnées de la case
 	#* <b>val</b> : int : indique la nouvelle valeur de la case à modifier
 	def square(x,y)
-		x -=x%3
-		y -=y%3
+		x -= x%3
+		y -= y%3
 		tab = Array.new()
 		0.upto(2) do |i|
 			0.upto(2) do |j|
@@ -139,6 +150,25 @@ class SudokuAPI
 	#* <b>y</b> : int : indique la coordonnée de l'axe des ordonnées de la case
 	def squareRowColumn(x,y)
 		return square(x,y) + row(x) + column(y)
+	end
+
+	#===Cherche si une unite possède un candidat unique
+	#
+	#===Paramètres :
+	#* <b>unite</b> : unite à traiter
+	def uniqueCandidate(unite)
+		tab = Array.new()
+		unite.each{ |g|
+            1.upto(9) do |elt|
+            if(g[elt.to_s])
+            	tab[elt]++
+            end
+        }
+        tab.each{ |c|
+        	if(c == 1)
+        		return true
+        }
+        return false
 	end
 
 	#===Affiche le message de l'assistant
