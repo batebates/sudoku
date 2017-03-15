@@ -15,11 +15,13 @@ class MethodCrossReduce < Method
             tcandidats = Array.new()
             sRC = @sudokuAPI.squareRowColumn(ncase.x,ncase.y)
             1..9 do |n|
-              if(!sRC.include?(n))
+              if(!sRC.include?(n) && ncase.candidats[n]==true)
                 tcandidats.push(n)
               end
             end
-            if t
+            if !tcandidats.empty?
+
+            end
         end
       end
     end
