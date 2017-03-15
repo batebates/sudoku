@@ -11,8 +11,9 @@
 #*valueCheck
 #gridFull
 #</b>
-load 'Caze.rb'
-load 'SudokuAPI.rb'
+require "./Caze.rb"
+require "./SudokuAPI.rb"
+
 class Sudoku
 #== Variables d'instance ==
 	@tcaze

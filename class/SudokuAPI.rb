@@ -16,7 +16,9 @@
 #*assistantMessage
 #</b>
 
-load 'Caze.rb'
+require "./Caze.rb"
+require "./Sudoku.rb"
+
 class SudokuAPI
 #== Variables d'instance ==
 	@sudoku
@@ -24,23 +26,28 @@ class SudokuAPI
 
 #==========================
 
-	private_class_method :new
+	@@API = SudokuAPI.new();
 
-	def SudokuAPI.create(sudoku)
-		new(sudoku)
+	def SudokuAPI.API()
+		return @@API;
 	end
 
-	def initialize(sudoku)
+	def initialize()
+		initSudoku(Sudoku.create("000000000000000000000000000000000000000000000000000000000000000000000000000000000"));
+	end
+
+	def initSudoku(sudoku)
 		@sudoku=sudoku
-        y=0
-        x=0
-        9.times do |x|
-            9.times do |y|
-            	candidateCaze(y,x)
-            end
-        end
-       	@sudoku.candidateToTab()
+		y=0
+		x=0
+		9.times do |x|
+			9.times do |y|
+				candidateCaze(y,x)
+			end
+		end
+		@sudoku.candidateToTab()
 	end
+
     #===Met les candidats impossible à false selon l'unite
     #
     #===Paramètres :
@@ -132,7 +139,7 @@ class SudokuAPI
                 tab<<@sudoku.cazeAt(y+i,x+j)
 			end
 		end
-        return tab 
+        return tab
 	end
 
 	#===Renvoie la region,la colonne suivi de la ligne d'un case du sudoku dans un tableau
@@ -151,7 +158,5 @@ class SudokuAPI
 	def assistantMessage(str)
 		print str
 	end
-
-
 
 end
