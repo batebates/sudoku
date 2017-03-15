@@ -26,6 +26,7 @@ class SudokuAPI
 	
 	attr_reader :sudoku
 	attr_reader :sudokuCompleted
+	attr_reader :sudokuStart
 
 #==========================
 
@@ -37,6 +38,7 @@ class SudokuAPI
 
 	def initialize(sudoku, sudokuCompleted)
 		@sudoku = sudoku
+		@sudokuStart = sudoku
 		@sudokuCompleted = sudokuCompleted
         y=0
         x=0
@@ -173,6 +175,12 @@ class SudokuAPI
 		end
 		
 		for i in 0..80
+			saveFile.write self.sudokuStart[i].getValue()
+		end
+		
+		saveFile.write "\n"
+		
+		for i in 0..80
 			saveFile.write self.sudoku[i].getValue()
 		end
 		
@@ -210,8 +218,9 @@ class SudokuAPI
 		sudoku = fileContent[0]
 		sudokuCompleted = fileContent[1]
 		
-		self.gridModify(sudoku)
-		self.completedModify(sudokuCompleted)
+		@sudoku = sudoku
+		@sudokuStart = sudoku
+		@sudokuCompleted = sudokuCompleted
 		
 		loadFile.close
 
