@@ -36,11 +36,10 @@ class SudokuAPI
         x=0
         9.times do |x|
             9.times do |y|
-                candidate_unite(x,y,column(x))
-                candidate_unite(x,y,row(y))
-                candidate_unite(x,y,square(x,y))
+            	candidateCaze(y,x)
             end
         end
+       	@sudoku.candidateToTab()
 	end
     #===Met les candidats impossible à false selon l'unite
     #
@@ -49,10 +48,16 @@ class SudokuAPI
     #* <b>y</b> : int : indique la coordonnée de l'axe des ordonnées de la case
     #* <b>unite</b> : tab : contient le tableau de l'unité
     def candidate_unite(x,y,unite)
-
         unite.each{ |g|
             @sudoku.tcaze[x][y].candidats[g.value.to_s]=false
         }
+
+    end
+
+    def candidateCaze(x,y)
+        candidate_unite(x,y,column(y))
+        candidate_unite(x,y,row(x))
+        candidate_unite(x,y,square(y,x))
 
 
     end
@@ -70,11 +75,13 @@ class SudokuAPI
 		return @sudoku.cazeAt(x,y).color;
 	end
 
+
 	#===Execute la methode
 	#
 	#===Paramètres :
 	#* <b>meth</b> : Methode : indique la methode à executer
 	def execMethod(meth)
+
 	end
 
 	#===Renvoie une ligne du Sudoku dans un tableau
@@ -125,7 +132,7 @@ class SudokuAPI
                 tab<<@sudoku.cazeAt(y+i,x+j)
 			end
 		end
-        return tab
+        return tab 
 	end
 
 	#===Renvoie la region,la colonne suivi de la ligne d'un case du sudoku dans un tableau

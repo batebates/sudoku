@@ -2,12 +2,15 @@ load 'SudokuAPI.rb'
 
 class Method
 
+	@sudokuAPI
 	@grid
-
+	attr_reader :sudokuAPI
+	attr_reader :grid
 	private_class_method :new
 
-	def initialize(grid)
-		self.grid = grid
+	def initialize(sudokuAPI)
+		self.sudokuAPI = sudokuAPI
+		self.grid = sudokuAPI.sudoku.tcaze
 	end
 
 	def textMethod
@@ -23,4 +26,3 @@ class Method
 	end
 
 end
-
