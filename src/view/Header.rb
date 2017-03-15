@@ -1,5 +1,3 @@
-require "gtk3"
-
 class Header
     private_class_method :new
 

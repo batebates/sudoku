@@ -1,13 +1,3 @@
-require "gtk3"
-require "./GridView.rb"
-require "./AssistantView.rb"
-require "./CSSStyle.rb"
-require "../model/AssetManager.rb"
-require "./Colors.rb"
-require "./OverlayManager.rb"
-require "./Header.rb"
-require "./Menu.rb"
-
 class Window
     private_class_method :new
 
@@ -64,11 +54,9 @@ class Window
 
         return leftContainer;
     end
-    
+
 
     def Window.window()
         @@window;
     end
 end
-
-Window.init();

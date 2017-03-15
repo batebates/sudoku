@@ -1,4 +1,3 @@
-require 'gtk3'
 #load 'MainMenu.rb'
 
 
@@ -32,8 +31,8 @@ class OptionsFrame < Gtk::Frame
 	@mainBox = Gtk::Box.new(:vertical,6) 		#Boite principale / Container Principal
 	@vbox = Gtk::Box.new(:vertical,0) 			#Boite verticale contenant les éléments
 	@colorBox = Gtk::Box.new(:horizontal,10)		#Boite de gestion des couleurs
-	@profilBox = Gtk::Box.new(:vertical,2)	
-	@gameBox = Gtk::Box.new(:vertical,2)	
+	@profilBox = Gtk::Box.new(:vertical,2)
+	@gameBox = Gtk::Box.new(:vertical,2)
 
 	#==UTILS
 
@@ -48,7 +47,7 @@ class OptionsFrame < Gtk::Frame
 	sgBtn = Gtk::FileChooserButton.new("Sauvegarder", Gtk::FileChooserAction::OPEN)
 	lgBtn = Gtk::FileChooserButton.new("Charger", Gtk::FileChooserAction::OPEN)
 
-	@gBox.pack_start(sgBtn, :expand=>true, :fill=>true, :padding=>1)	
+	@gBox.pack_start(sgBtn, :expand=>true, :fill=>true, :padding=>1)
 	@gBox.pack_start(lgBtn, :expand=>true, :fill=>true, :padding=>1)
 
 	@vgBox = Gtk::Box.new(:horizontal, 2)
@@ -63,7 +62,7 @@ class OptionsFrame < Gtk::Frame
 	@gameBox.pack_start(@vgBox, :expand=>true, :fill=>true, :padding=>1)
 	@gameBox.pack_start(@gBox, :expand=>true, :fill=>true, :padding=>1)
 
-	
+
 	@gameBox.set_border_width(2)
 
 	#===========================Profil======================================#
@@ -77,7 +76,7 @@ class OptionsFrame < Gtk::Frame
 
 	@bBox.pack_start(newBtn,:expand=>true,:fill=>true,:padding=>2)
 	@bBox.pack_start(changeBtn,:expand=>true,:fill=>true,:padding=>2)
-	
+
 	@profilBox.add(@bBox)
 
 	#===========================COLOR======================================#
@@ -116,7 +115,7 @@ class OptionsFrame < Gtk::Frame
 
 	@colorBox.pack_start(indBox,:expand=>true, :fill=>true,:padding=>3)
 
-	@colorBox.pack_start(ind2Box,:expand=>true, :fill=>true,:padding=>3)	
+	@colorBox.pack_start(ind2Box,:expand=>true, :fill=>true,:padding=>3)
 
 	@colorLab = Gtk::Label.new
 	@colorLab.set_markup("<span foreground='black'><big> <b> Colorisation  </b></big></span>")

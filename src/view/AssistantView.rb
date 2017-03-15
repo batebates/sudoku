@@ -1,6 +1,3 @@
-require "gtk3"
-require "../model/AssetManager.rb"
-
 class AssistantView
     private_class_method :new;
 
