@@ -1,5 +1,3 @@
-require "gtk3"
-
 class OverlayManager
     private_class_method :new
 

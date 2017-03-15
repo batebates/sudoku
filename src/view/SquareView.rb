@@ -1,5 +1,3 @@
-require "gtk3"
-
 class SquareView
     private_class_method :new
 

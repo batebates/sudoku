@@ -1,5 +1,3 @@
-require "gtk3"
-
 class Menu
 	private_class_method :new
 
@@ -18,7 +16,7 @@ class Menu
 		lNG = Gtk::Label.new("Nouvelle Grille");
 		lSav = Gtk::Label.new("Sauvegarder");
 		lLoa = Gtk::Label.new("Charger Grille");
-		
+
 
 		box1 = Gtk::Box.new(:vertical, 0);
 		box1.add(iOpt);
@@ -26,7 +24,7 @@ class Menu
 		box2 = Gtk::Box.new(:vertical, 0);
 		box2.add(iNG);
 		box2.add(lNG);
-		
+
 		box3 = Gtk::Box.new(:vertical, 0);
 		box3.add(iSav);
 		box3.add(lSav);
@@ -87,8 +85,8 @@ class Menu
 			bNewGrid.override_color(:normal,Gdk::RGBA.new(0,0,0,1))
 		}
 		#End newGrid
-		
+
 		parent.attach(vBox, 1, 0, 1, 1);
 	end
-	
+
 end

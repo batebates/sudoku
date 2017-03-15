@@ -1,7 +1,3 @@
-require "gio2"
-require "gtk3"
-require "pango"
-
 class CSSStyle
     private_class_method :new
 

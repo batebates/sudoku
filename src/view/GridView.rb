@@ -1,6 +1,3 @@
-require "gtk3"
-require "./SquareView.rb"
-
 class GridView
     private_class_method :new
 
