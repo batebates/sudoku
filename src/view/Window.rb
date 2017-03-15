@@ -8,6 +8,7 @@ require "./OverlayManager.rb"
 require "./Header.rb"
 require "./Menu.rb"
 
+
 class Window
     private_class_method :new
 
