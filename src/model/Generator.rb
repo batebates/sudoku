@@ -4,6 +4,8 @@ class Generator
 	@gridPlayer = []	#completé par le jouer
 	@gridCorrect = []	#sans trou
 
+	#====Methode de construction====
+
 	def initialize(difficulty, grid_string = "")
 		# Either take a pre-created puzzle, or create a new one programmatically
 
@@ -52,6 +54,8 @@ class Generator
 		@gridPlayer = @grid
 		return @grid;
 	end
+
+	#====Methode d'utilisation====
 
 	def solvable?()
 		# First make sure there are >= 17 clues (minimum possible for a sudoku)
