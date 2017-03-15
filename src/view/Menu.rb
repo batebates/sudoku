@@ -1,4 +1,5 @@
 require "gtk3"
+require "./OptionsDialog.rb"
 
 class Menu
 	private_class_method :new
@@ -18,6 +19,8 @@ class Menu
 		lNG = Gtk::Label.new("Nouvelle Grille");
 		lSav = Gtk::Label.new("Sauvegarder");
 		lLoa = Gtk::Label.new("Charger Grille");
+
+		#optDlg = OptionsDialog.new(parent)
 		
 
 		box1 = Gtk::Box.new(:vertical, 0);
@@ -72,7 +75,7 @@ class Menu
 		}
 
 		bOptions.signal_connect('clicked'){
-			opt.run();
+			OptionsDialog.init()
 		}
 		#End Quitter
 

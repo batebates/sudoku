@@ -1,32 +1,44 @@
 require 'gtk3'
 #load 'MainMenu.rb'
 
-
-#
-#
-# => WORK IN PROGRESS
-#
-#
-
-class OptionsDialog < Gtk::Dialog
+class OptionsDialog
 
 	#Gtk.init
+	private_class_method :new
 
-	def initialize(window)
-		self.set_title("Options")
-		self.signal_connect('destroy'){
-			Gtk.main_quit
-		}
-		self.transient_for = window
-		self.set_default_size(400,400)
+	@optDialog
+	@errorColBtn
+	@goodColBtn
+	@indColBtn
+	@ind2ColBtn
 
-		init_elemts()
+	def OptionsDialog.init()
+		new()
+	end
 
-		self.add_button("Apply", Gtk::ResponseType::OK)
-		self.add_button(Gtk::Stock::CANCEL, Gtk::ResponseType::CANCEL)
-		self.add_button(Gtk::Stock::CLOSe, Gtk::ResponseType::CLOSE)
-		self.set_default_response(Gtk::ResponseType::CANCEL)
+	def initialize()
+		@optDialog = Gtk::Dialog.new(:title=>"Options")
+		@optDialog.set_default_size(300,600)
 
+		init_elemts
+
+		@optDialog.add_button("Appliquer", Gtk::ResponseType::OK)
+		@optDialog.add_button(Gtk::Stock::CANCEL, Gtk::ResponseType::CANCEL)
+		@optDialog.set_default_response(Gtk::ResponseType::CANCEL)
+	
+		result = @optDialog.run
+		case result
+		when Gtk::ResponseType::OK
+			p "OK"
+			#Do something
+			@optDialog.destroy
+		when Gtk::ResponseType::CANCEL
+			p "CANCEL"
+			@optDialog.destroy
+		when Gtk::ResponseType::CLOSE
+			@optDialog.destroy
+		end
+				
 	end
 
 	#== BOXES
@@ -36,24 +48,11 @@ class OptionsDialog < Gtk::Dialog
 		vbox = Gtk::Box.new(:vertical,0) 			#Boite verticale contenant les éléments
 		colorBox = Gtk::Box.new(:horizontal,10)		#Boite de gestion des couleurs
 		profilBox = Gtk::Box.new(:vertical,2)	
-		gameBox = Gtk::Box.new(:vertical,2)	
 
 		#==UTILS
 
-		scroll = Gtk::Scrollbar.new(Gtk::Orientation::VERTICAL)
-
 		#===========================Game======================================#
-		gameLab = Gtk::Label.new
-		gameLab.set_markup("<span foreground='black'><big> <b> Jeu  </b></big></span>")
-
-		gBox = Gtk::Box.new(:horizontal, 2)
-		ngBtn = Gtk::Button.new(:label=>"Nouveau")
-		sgBtn = Gtk::FileChooserButton.new("Sauvegarder", Gtk::FileChooserAction::OPEN)
-		lgBtn = Gtk::FileChooserButton.new("Charger", Gtk::FileChooserAction::OPEN)
-
-		gBox.pack_start(sgBtn, :expand=>true, :fill=>true, :padding=>1)	
-		gBox.pack_start(lgBtn, :expand=>true, :fill=>true, :padding=>1)
-
+	
 		vgBox = Gtk::Box.new(:horizontal, 2)
 		sLab = Gtk::Label.new("Sauvegarder")
 		lLab = Gtk::Label.new("Charger")
@@ -61,55 +60,55 @@ class OptionsDialog < Gtk::Dialog
 		vgBox.pack_start(sLab, :expand=>false, :fill=>true, :padding=>20)
 		vgBox.pack_start(lLab, :expand=>true, :fill=>true, :padding=>2)
 
-
-		gameBox.pack_start(ngBtn, :expand=>true, :fill=>true, :padding=>5)
-		gameBox.pack_start(vgBox, :expand=>true, :fill=>true, :padding=>1)
-		gameBox.pack_start(gBox, :expand=>true, :fill=>true, :padding=>1)
-
-		
-		gameBox.set_border_width(2)
-
 		#===========================Profil======================================#
 
 		prLab = Gtk::Label.new
 		prLab.set_markup("<span foreground='black'><big> <b> Profil  </b></big></span>")
 
 		bBox = Gtk::Box.new(:horizontal, 2)
+		
+		#==// Button
 		newBtn = Gtk::Button.new(:label=>"Nouv. Profil")
 		changeBtn = Gtk::Button.new(:label=>"Gest. Profils")
+
+		#==// Button
 
 		bBox.pack_start(newBtn,:expand=>true,:fill=>true,:padding=>2)
 		bBox.pack_start(changeBtn,:expand=>true,:fill=>true,:padding=>2)
 		
-		profilBox.add(@bBox)
+		profilBox.add(bBox)
 
 		#===========================COLOR======================================#
+		
+		#==error
 		errBox = Gtk::Box.new(:vertical,2)
 		errLab = Gtk::Label.new("Erreur")
-		errorColBtn = Gtk::ColorButton.new
-		errorColBtn.set_rgba(Gdk::RGBA.new(0.9,0,0,1))
-		errBox.add(errorColBtn)
+		@errorColBtn = Gtk::ColorButton.new
+		@errorColBtn.set_rgba(Gdk::RGBA.new(0.9,0,0,1))
+		errBox.add(@errorColBtn)
 		errBox.add(errLab)
+		
 		#==Good
 		goodBox = Gtk::Box.new(:vertical,2)
 		goodLab = Gtk::Label.new("Correct")
-		goodColBtn = Gtk::ColorButton.new
-		goodColBtn.set_rgba(Gdk::RGBA.new(0,0.9,0,1))
-		goodBox.add(goodColBtn)
+		@goodColBtn = Gtk::ColorButton.new
+		@goodColBtn.set_rgba(Gdk::RGBA.new(0,0.9,0,1))
+		goodBox.add(@goodColBtn)
 		goodBox.add(goodLab)
+		
 		#==Indication
 		indBox = Gtk::Box.new(:vertical,2)
 		indLab = Gtk::Label.new("Indic.1")
-		indColBtn = Gtk::ColorButton.new
-		indColBtn.set_rgba(Gdk::RGBA.new(0.6,0.6,0.6,1))
-		indBox.add(indColBtn)
+		@indColBtn = Gtk::ColorButton.new
+		@indColBtn.set_rgba(Gdk::RGBA.new(0.6,0.6,0.6,1))
+		indBox.add(@indColBtn)
 		indBox.add(indLab)
 
 		ind2Box = Gtk::Box.new(:vertical,2)
 		ind2Lab = Gtk::Label.new("Indic.2")
-		ind2ColBtn = Gtk::ColorButton.new
-		ind2ColBtn.set_rgba(Gdk::RGBA.new(0.9,0.9,0.3,1))
-		ind2Box.add(ind2ColBtn)
+		@ind2ColBtn = Gtk::ColorButton.new
+		@ind2ColBtn.set_rgba(Gdk::RGBA.new(0.9,0.9,0.3,1))
+		ind2Box.add(@ind2ColBtn)
 		ind2Box.add(ind2Lab)
 		#==
 
@@ -130,11 +129,9 @@ class OptionsDialog < Gtk::Dialog
 		mainBox.pack_start(colorBox, :expand=>false, :fill=>true, :padding=>10)
 		mainBox.pack_start(prLab, :expand=>false, :fill=>true, :padding=>5)
 		mainBox.pack_start(profilBox, :expand=>false, :fill=>true, :padding=>10)
-		mainBox.pack_start(gameLab, :expand=>false, :fill=>true, :padding=>5)
-		mainBox.pack_start(gameBox, :expand=>false, :fill=>true, :padding=>10)
 
-		self.show_all
-
+		@optDialog.child.add(mainBox)
+		@optDialog.child.show_all
 	end
 
 end
