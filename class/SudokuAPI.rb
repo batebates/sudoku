@@ -20,7 +20,10 @@ load 'Caze.rb'
 class SudokuAPI
 #== Variables d'instance ==
 	@sudoku
+	@sudokuCompleted
+	
 	attr_reader :sudoku
+	attr_reader :sudokuCompleted
 
 #==========================
 
@@ -30,8 +33,9 @@ class SudokuAPI
 		new(sudoku)
 	end
 
-	def initialize(sudoku)
-		@sudoku=sudoku
+	def initialize(sudoku, sudokuCompleted)
+		@sudoku = sudoku
+		@sudokuCompleted = sudokuCompleted
         y=0
         x=0
         9.times do |x|
@@ -144,7 +148,64 @@ class SudokuAPI
 	def assistantMessage(str)
 		print str
 	end
+	
+	#===Sauvegarde des deux grilles
+	#
+	#===Paramètres :
+	#* <b>fileName</b> : string : nom du fichier de sauvegarde
+	
+	def saveSudoku(fileName)
+		saveFile = File.open("save_files/" + fileName, "w")
+		
+		if(!saveFile.closed?)
+			print "Fichier de sauvegarde ouvert\n"
+		end
+		
+		for i in 0..80
+			saveFile.write self.sudoku[i].getValue()
+		end
+		
+		saveFile.write "\n"
+		
+		for i in 0..80
+			saveFile.write self.sudokuCompleted[i].getValue()
+		end
+		
+		saveFile.write "\n"
+		
+		saveFile.close
+		
+		if(saveFile.closed?)
+			print "Sauvegarde terminée !\n"
+		end
+	end
+	
+	
+	#===Chargement des deux grilles à partir d'un fichier
+	#
+	#===Paramètres :
+	#* <b>fileName</b> : string : nom du fichier à charger
 
+	def loadSudoku(fileName)
+		loadFile = File.open(fileName, "r")
+		
+		if(!loadFile.closed?)
+			print "Fichier à charger ouvert\n"
+		end
+		
+		fileContent = IO.readlines(fileName)
+		
+		# Grids
+		sudoku = fileContent[0]
+		sudokuCompleted = fileContent[1]
+		
+		self.gridModify(sudoku)
+		self.completedModify(sudokuCompleted)
+		
+		loadFile.close
 
-
+		if(loadFile.closed?)
+			print "Chargement terminé !\n"
+		end
+	end
 end
