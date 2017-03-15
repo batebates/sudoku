@@ -151,25 +151,6 @@ class SudokuAPI
 		return square(x,y) + row(x) + column(y)
 	end
 
-	#===Cherche si une unite possède un candidat unique
-	#
-	#===Paramètres :
-	#* <b>unite</b> : unite à traiter
-	def uniqueCandidate(unite)
-		tab = Array.new()
-		unite.each{ |g|
-            1.upto(9) do |elt|
-            if(g[elt.to_s])
-            	tab[elt]++
-            end
-        }
-        tab.each{ |c|
-        	if(c == 1)
-        		return true
-        }
-        return false
-	end
-
 	#===Affiche le message de l'assistant
 	#
 	#===Paramètres :
