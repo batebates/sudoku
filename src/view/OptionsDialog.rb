@@ -7,10 +7,14 @@ class OptionsDialog
 	private_class_method :new
 
 	@optDialog
+
 	@errorColBtn
 	@goodColBtn
 	@indColBtn
 	@ind2ColBtn
+	@newBtn
+	@changeBtn
+
 
 	def OptionsDialog.init()
 		new()
@@ -68,13 +72,13 @@ class OptionsDialog
 		bBox = Gtk::Box.new(:horizontal, 2)
 		
 		#==// Button
-		newBtn = Gtk::Button.new(:label=>"Nouv. Profil")
-		changeBtn = Gtk::Button.new(:label=>"Gest. Profils")
+		@newBtn = Gtk::Button.new(:label=>"Nouv. Profil")
+		@changeBtn = Gtk::Button.new(:label=>"Gest. Profils")
 
 		#==// Button
 
-		bBox.pack_start(newBtn,:expand=>true,:fill=>true,:padding=>2)
-		bBox.pack_start(changeBtn,:expand=>true,:fill=>true,:padding=>2)
+		bBox.pack_start(@newBtn,:expand=>true,:fill=>true,:padding=>2)
+		bBox.pack_start(@changeBtn,:expand=>true,:fill=>true,:padding=>2)
 		
 		profilBox.add(bBox)
 
@@ -132,6 +136,28 @@ class OptionsDialog
 
 		@optDialog.child.add(mainBox)
 		@optDialog.child.show_all
+	end
+
+=begin
+	defintions
+=end
+
+	
+
+	def setErrColor(errColor) 
+		@errorColBtn.set_rgba(errColor)
+	end
+
+	def setGoodColor(goodColor)
+		@goodColBtn.set_rgba(goodColBtn)
+	end
+
+	def setIndColor(indColor)
+		@indColBtn.set_rgba(indColor)
+	end
+
+	def setInd2Color(ind2Color)
+		@ind2ColBtn.set_rgba(ind2Color)
 	end
 
 end
