@@ -1,56 +1,97 @@
 load "Score.rb"
 
+#== Utilisation :
+#
+#== scoreAInserer = Score.creer("nomJoueur", scoreJoueur)
+#== tableauOuInserer.scoreInsertTab(scoreAInserer)
+
+
 class ScoreTable
 	
-	@score_tableau = []
+	#tableau contenant 10 valeur Score
+	@score_tableau
 	
 	attr_accessor :score_tableau
 	private_class_method :new
 	
+	#====Methode de construction====
+	
 	def ScoreTable.build()
-		return new()
+		new()
 	end
 	
 	def initialize()
 		cpt=0
+		@score_tableau = Array.new()
 		while cpt < 10  do
-  			@score_tableau[cpt] = Score.creer("Michel", 10-cpt)
+  			@score_tableau.insert(cpt, Score.creer("Valentin", 10+10*cpt))
   			cpt+=1
 		end
 	end
 	
-	/* 
-		Va comparer un a un les éléments du tableau de score avec le score actuel du joueur
-		et renverra l'indice auxquel se trouve l'élément directement inférieur au score du joueur
-		si celui-ci existe
-	*/
+	#====Methode de manipulation====
+	
+	#===Renvoi l'index a laquelle le score voulu doit s'inserer
+	#
+	#===Paramètre
+	# <b>scoreCompare</b> Score : Score que l'on désire inserer
 	def scoreTableGetIndex(scoreCompare)
 		cpt = 0
 		
 		while cpt<10 do
-			if(self[cpt].getScore > scoreCompare.getScore() ) then
+			if(self.score_tableau[cpt].getScore > scoreCompare.getScore()) then
 				return cpt-1
 			end
 			cpt+=1
 		end
-		return -1
+		return cpt
 	end
 	
-	/*
-		Inserera l'élément scoreToInsert a l'endroit index du tableau @score_tableau
-		fonctionnement : 
-		echange une valeur tampon (dabord vide) avec @score_tableau[index] pour inserer scoreToInsert
-		repète l'opération en descendant (jusqu'a index = 0) et supprime ainsi la dernière valeur
-	*/
+	
+	#===Insert un score sur une ligne donnée dans le tableau
+	#
+	#===Paramètre
+	# <b>scoreToInsert</b> Score : Score que l'on souhaite inserer
+	# <b>index</b> int : Position du tableau où inserer le score
 	def scoreInsert(scoreToInsert, index)
-		if(index != -1) then
-			tampon = Score.creer("",0);
-			tampon = @score_tableau[index]
-			@score_tableau[index] = scoreToInsert
-			scoreInsert(tampon, index-1)
-		end
+		self.score_tableau.insert(index, scoreToInsert)
+		self.score_tableau.shift()
 	end
 	
-	
-
+	#===cherche et insert un score dans le tableau, à sa place
+	#
+	#===Paramètre
+	# <b>scoreToInsert</b> Score : Score a inserer
+	def scoreInsertTab(scoreToInsert)
+		index = self.scoreTableGetIndex(scoreToInsert)
+		if(index > -1) then
+			self.scoreInsert(scoreToInsert, index)
+		end
+		self.scoreAff()
+	end
+		
+	#===Affiche le tableau de score en ordre décroissant
+	#
+	def scoreAff()
+		cpt=9
+		
+		while cpt >= 0 do
+			puts self.score_tableau[cpt]
+			cpt-=1
+		end
+		puts
+	end
 end
+
+tableScore = ScoreTable.build()
+
+scoreTest1 = Score.creer("Dimitri", 1250)
+tableScore.scoreInsertTab(scoreTest1)
+
+scoreTest2 = Score.creer("Dieu", 75)
+tableScore.scoreInsertTab(scoreTest2)
+
+scoreTest3 = Score.creer("Jean-Eude", 7)
+tableScore.scoreInsertTab(scoreTest3)
+
+
