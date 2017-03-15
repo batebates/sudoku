@@ -142,8 +142,6 @@ class OptionsDialog
 	defintions
 =end
 
-	
-
 	def setErrColor(errColor) 
 		@errorColBtn.set_rgba(errColor)
 	end
