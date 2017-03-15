@@ -1,16 +1,16 @@
 class MethodTwinsAndTriplets < Method
 
 	def textMethod
-		return "Dans le cas où un candidat est unique dans une unité, on peut en déduire que la case où il est présent contient bien ce candidat car il ne peut être nul part ailleurs."
+		return "Cette méthode nous permet de déduire dans quelle partie d'une région peut se trouver un symbole. En effet il n'est pas toujours évident de découvrir dès le début l'emplacement final et définitif. Si un candidat se trouve uniquement par exemple dans la dernière ligne d'une région il se trouvera donc obligatoirement dans cette ligne."
 	end
 
 	def demoMethod
-		#TODO
 		fileName = "DeathStar"
 		@sudoku.saveSudoku(fileName)
 		gridDemo = "005000070400000400000000000000404000000000000000000000000000000000000000000000000"	
-		#load grille demo
-		#grisation des cases non importantes
+		  SudokuAPI.API.initSudoku(gridDemo);
+	
+ 		#grisation des cases non importantes
 		#Assistant dit on va s'occuper de cette ligne
 		#Mise en valeur de la case
 		#"On peut remarquer que sur cette case machin truc"
