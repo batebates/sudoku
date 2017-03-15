@@ -14,7 +14,6 @@ class MethodUniqueCandidate < Method
 		#Chargement et affichage de la grille de démo
 		@sudoku.loadSudoku(gridDemo)
 		#"grisation" des cases non importantes
-		for(i=1;i<)
 		#Assistant dit on va s'occuper de cette ligne
 		#Mise en valeur de la case
 		#"On peut remarquer que sur cette case machin truc"
