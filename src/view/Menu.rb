@@ -17,6 +17,7 @@ class Menu
 		lSav = Gtk::Label.new("Sauvegarder");
 		lLoa = Gtk::Label.new("Charger Grille");
 
+		#optDlg = OptionsDialog.new(parent)
 
 		box1 = Gtk::Box.new(:vertical, 0);
 		box1.add(iOpt);
@@ -66,13 +67,11 @@ class Menu
 		#Quitter
 		bQuit.signal_connect('clicked'){
 			#Pop up de validation
-
-			#Quit
 			Gtk.main_quit();
 		}
 
 		bOptions.signal_connect('clicked'){
-			opt.run();
+			OptionsDialog.init()
 		}
 		#End Quitter
 

@@ -12,6 +12,7 @@ require "./view/Colors.rb"
 require "./view/OverlayManager.rb"
 require "./view/Header.rb"
 require "./view/Menu.rb"
+require "./view/OptionsDialog.rb"
 
 require "./model/AssetManager.rb"
 require "./model/Generator.rb"
