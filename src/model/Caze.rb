@@ -24,7 +24,7 @@ class Caze
 		@x = x.to_i
         @y = y.to_i
         @value = value.to_i
-        @color =nil
+        @color = Colors::CL_BLANK
         @candidats = Hash.new
         1.upto(9) do |elt|
             @candidats[elt.to_s]=true
@@ -42,6 +42,6 @@ class Caze
     end
 #===Affiche la valeur de la case
     def to_s()
-        return "\n"   
+        return "\n"
     end
 end

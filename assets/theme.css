@@ -1,6 +1,11 @@
-#titleLabel, #timeLabel
+#headerLabel
 {
     font-weight: bold;
+}
+
+#background
+{
+    background-color: #e6f2ff;
 }
 
 #overlay-grid
@@ -24,4 +29,47 @@
     border: 2px outset #787878;
     border-radius: 8px;
     margin-left: 4px;
+}
+
+#rightMenu
+{
+    background-color: #e6f2ff;
+    box-shadow: -2px 0px 2px rgba(0,0,0,0.6);
+}
+
+#rightMenu button
+{
+    background-image: -gtk-gradient (linear, left top, left bottom, from (#e6f2ff), to (#e6f2ff));
+    border-radius: 0px;
+    border: 0px;
+    border-top: 1px solid #ffffff;
+    border-bottom: 1px solid #b3d9ff;
+}
+
+#rightMenu button:hover
+{
+    color: green;
+    background-image: -gtk-gradient (linear, left top, left bottom, from (#ffffff), to (#ffffff));
+}
+
+#rightMenu button:active
+{
+    background-image: -gtk-gradient (linear, left top, left bottom, from (#b3d9ff), to (#b3d9ff));
+}
+
+#rightMenu button image
+{
+    margin-right: 10px;
+}
+
+#rightMenuTitle
+{
+    font-size: 18px;
+    background-color: #99ccff;
+    border-bottom: 2px solid #66b3ff;
+    border-top: 2px solid #e6f2ff;
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-top: 4px;
+    padding-bottom: 4px;
 }

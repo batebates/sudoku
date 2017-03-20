@@ -23,8 +23,7 @@ class Window
 
         # Split window into 2 parts : Left (Grid + Assistant) & Right (Menu)
         mainContainer = Gtk::Grid.new();
-        mainContainer.set_margin_top(4);
-        mainContainer.set_margin_left(4);
+        mainContainer.name = "background";
 
         mainContainer.attach(buildLeftContainer(), 0, 0, 1, 1);
         ## Right

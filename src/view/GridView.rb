@@ -14,6 +14,8 @@ class GridView
         @@squareViewList = Array.new();
 
         sudokuGrid = Gtk::Grid.new();
+        sudokuGrid.set_margin_top(4);
+        sudokuGrid.set_margin_left(4);
         sudokuGrid.set_size_request(SquareView.size() * 9, SquareView.size() * 9);
         for i in 0...81
             x = i % 9;

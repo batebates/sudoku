@@ -6,61 +6,36 @@ class Menu
 	end
 
 	def initialize(parent)
-		#Image
-		iOpt = Gtk::Image.new(:file => AssetManager.assetsResource("gears.png"));
-		iNG = Gtk::Image.new(:file => AssetManager.assetsResource("grid.png"));
-		iSav = Gtk::Image.new(:file => AssetManager.assetsResource("save.png"));
-		iLoad = Gtk::Image.new(:file => AssetManager.assetsResource("load.png"));
 
-		lOpt = Gtk::Label.new("Options");
-		lNG = Gtk::Label.new("Nouvelle Grille");
-		lSav = Gtk::Label.new("Sauvegarder");
-		lLoa = Gtk::Label.new("Charger Grille");
+		bNewGrid = createButton("grid.png", "Nouvelle partie");
+		bSaveGrid = createButton("save.png", "Sauvegarder partie");
+		bLoadGrid = createButton("load.png", "Charger partie");
 
-		#optDlg = OptionsDialog.new(parent)
+		bMethod1 = createButton("info.png", "Méthode 1");
+		bMethod2 = createButton("info.png", "Méthode 2");
+		bMethod3 = createButton("info.png", "Méthode 3");
+		bMethod4 = createButton("info.png", "Méthode 4");
+		bMethod5 = createButton("info.png", "Méthode 5");
 
-		box1 = Gtk::Box.new(:vertical, 0);
-		box1.add(iOpt);
-		box1.add(lOpt);
-		box2 = Gtk::Box.new(:vertical, 0);
-		box2.add(iNG);
-		box2.add(lNG);
-
-		box3 = Gtk::Box.new(:vertical, 0);
-		box3.add(iSav);
-		box3.add(lSav);
-		box4 = Gtk::Box.new(:vertical, 0);
-		box4.add(iLoad);
-		box4.add(lLoa);
-
-		bNewGrid = Gtk::Button.new();
-		bNewGrid.add(box2);
-		bSaveGrid = Gtk::Button.new();
-		bSaveGrid.add(box3);
-		bLoadGrid = Gtk::Button.new();
-		bLoadGrid.add(box4);
-		bOptions = Gtk::Button.new();
-		bOptions.add(box1);
-		bQuit = Gtk::Button.new(:label => "Quitter");
-
-
-		cC = Gtk::ColorChooserDialog.new(:title => "Select Color");
-
-		menuLab = Gtk::Label.new();
-		menuLab.set_selectable(false);
-		menuLab.set_markup("<span foreground='green'><big> <b> Menu Principal </b></big></span>");
-
-
-		box = Gtk::Box.new(:horizontal,0);
-		box.add(menuLab);
+		bOptions = createButton("gears.png", "Options");
+		bQuit = createButton("exit.png", "Quitter");
 
 		vBox = Gtk::Box.new(:vertical,0);
-		vBox.pack_start(box);
+		vBox.pack_start(createTitle("Menu Principal"));
 		vBox.pack_start(bNewGrid);
 		vBox.pack_start(bSaveGrid);
 		vBox.pack_start(bLoadGrid);
+		vBox.pack_start(createTitle("Méthodes"));
+		vBox.pack_start(bMethod1);
+		vBox.pack_start(bMethod2);
+		vBox.pack_start(bMethod3);
+		vBox.pack_start(bMethod4);
+		vBox.pack_start(bMethod5);
+		vBox.pack_start(createTitle("Autres"));
 		vBox.pack_start(bOptions);
 		vBox.pack_start(bQuit);
+		vBox.set_margin_left(4);
+		vBox.name = "rightMenu";
 
 		#End Define
 
@@ -75,17 +50,33 @@ class Menu
 		}
 		#End Quitter
 
-		#NewGrid
-		bNewGrid.signal_connect('pressed'){
-			bNewGrid.override_color(:normal,Gdk::RGBA.new(255,211,13,1))
-			#newGrid();
-		}
-		bNewGrid.signal_connect('released'){
-			bNewGrid.override_color(:normal,Gdk::RGBA.new(0,0,0,1))
-		}
-		#End newGrid
-
 		parent.attach(vBox, 1, 0, 1, 1);
 	end
 
+	def createButton(icon, text)
+		icon = Gtk::Image.new(:file => AssetManager.assetsResource(icon));
+		label = Gtk::Label.new(text);
+
+		box = Gtk::Box.new(:horizontal, 0);
+		box.add(icon);
+		box.add(label);
+
+		button = Gtk::Button.new();
+		button.add(box);
+
+		return button;
+	end
+
+	def createTitle(text)
+
+		box = Gtk::Box.new(:horizontal, 0);
+		label = Gtk::Label.new();
+		label.set_selectable(false);
+		label.set_markup(text);
+		label.set_size_request(180, 0);
+		label.name = "rightMenuTitle";
+		box.add(label);
+
+		return box;
+	end
 end

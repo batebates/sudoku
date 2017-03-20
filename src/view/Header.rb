@@ -1,7 +1,8 @@
 class Header
     private_class_method :new
 
-    @time;
+    attr_reader :time, :userLabel;
+    @timeLabel;
 
     def Header.init()
         new();
@@ -10,18 +11,23 @@ class Header
     def initialize()
         @time = 0;
         header = Gtk::HeaderBar.new();
+        header.set_title(Window.window.title);
+        header.set_subtitle("Groupe A");
         header.set_show_close_button(true);
 
-        titleLabel = Gtk::Label.new(Window.window.title);
-        titleLabel.name = "titleLabel";
-        titleLabel.set_margin_left(15);
-        header.pack_start(titleLabel);
-
         timeIcon = Gtk::Image.new(:file => AssetManager.assetsResource("clock.png"));
+        userIcon = Gtk::Image.new(:file => AssetManager.assetsResource("user.png"));
+        userButton = Gtk::Button.new();
+        userButton.add(userIcon);
 
         @timeLabel = Gtk::Label.new("00:00");
-        @timeLabel.name = "timeLabel";
+        @timeLabel.name = "headerLabel";
 
+        @userLabel = Gtk::Label.new("Michel");
+        @userLabel.name = "headerLabel";
+
+        header.pack_start(userButton);
+        header.pack_start(@userLabel);
         header.pack_end(@timeLabel);
         header.pack_end(timeIcon);
 

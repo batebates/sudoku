@@ -1,7 +1,7 @@
 class SquareView
     private_class_method :new
 
-    @@size = 42;
+    @@size = 52;
     @@selectedSquareView = nil;
 
     attr_reader :value;
@@ -106,7 +106,7 @@ class SquareView
     def setLineStyle(ctx, x, y, vertical)
         isBigLine = vertical ? (x % 3 == 0) : (y % 3 == 0);
         isExternalLine = vertical ? (x == 0 || x == 9) : (y == 0 || y == 9);
-        color = isBigLine ? 0.0 : 0.0;
+        color = 0.0;
         ctx.set_line_width(isBigLine ? (isExternalLine ? 4 : 2) : 0.5);
         ctx.set_source_rgb(color, color, color);
     end
