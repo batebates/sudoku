@@ -40,15 +40,19 @@ class Menu
 		#End Define
 
 		#Quitter
-		bQuit.signal_connect('clicked'){
+		bQuit.signal_connect("clicked"){
 			#Pop up de validation
 			Gtk.main_quit();
 		}
 
-		bOptions.signal_connect('clicked'){
+		bOptions.signal_connect("clicked"){
 			OptionsDialog.init()
 		}
-		#End Quitter
+
+		bNewGrid.signal_connect("clicked"){
+			SudokuAPI.API.setSudoku(Sudoku.create(Generator.new(0).to_s));
+		}
+
 
 		parent.attach(vBox, 1, 0, 1, 1);
 	end

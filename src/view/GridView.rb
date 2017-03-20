@@ -10,6 +10,7 @@ class GridView
 
     def initialize(parent)
         puts("Creating sudoku grid...");
+        SudokuAPI.API.add_observer(self);
 
         @@squareViewList = Array.new();
 
@@ -37,5 +38,13 @@ class GridView
         @@squareViewList.each { |value|
             value.redraw();
         }
+    end
+
+    def update(type, data)
+        if(type == "newgrid")
+            @@squareViewList.each { |value|
+                value.updateCazeReference();
+            }
+        end
     end
 end

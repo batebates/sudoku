@@ -10,13 +10,16 @@
 #* Caze.create
 #</b>
 class Caze
+    include Observable
 #== Variables d'instance ==
     @x
     @y
     @value
-    @candidats
     @color
-    attr_accessor :value, :candidats, :color
+    @locked
+    @lastColor
+    attr_reader :x, :y, :value, :color, :locked
+    attr_accessor :lastColor
 
 #==========================
 
@@ -25,10 +28,8 @@ class Caze
         @y = y.to_i
         @value = value.to_i
         @color = Colors::CL_BLANK
-        @candidats = Hash.new
-        1.upto(9) do |elt|
-            @candidats[elt.to_s]=true
-        end
+        @lastColor = @color
+        @locked = @value != 0;
 	end
 
 	private_class_method :new
@@ -40,8 +41,20 @@ class Caze
     def getValue()
         return @value
     end
-#===Affiche la valeur de la case
-    def to_s()
-        return "\n"
+
+    def color=(color)
+        @color = color
+        changed(true);
+        notify_observers("color", @color);
+    end
+
+    def value=(value)
+        @value = value
+        changed(true);
+        notify_observers("value", @value);
+    end
+
+    def insertValue(value)
+        self.value = value == self.value ? 0 : value;
     end
 end

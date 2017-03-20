@@ -3,6 +3,7 @@ class OverlayManager
 
     @@overlayPanel = nil;
     @@buttons = nil;
+    @@open = false;
 
     def OverlayManager.init(overlay)
         new(overlay);
@@ -37,12 +38,17 @@ class OverlayManager
     end
 
     def onClick(widget)
+        if(widget.name == "overlayButtonHide")
+            OverlayManager.hide();
+            return;
+        end
+
         square = SquareView.selectedSquareView();
         isEraser = !widget.children[0].class.instance_methods(false).include?(:label);
         if(isEraser)
-            SquareView.selectedSquareView().insertValue(square.value);
+            SquareView.selectedSquareView().caze.insertValue(square.caze.value);
         else
-            SquareView.selectedSquareView().insertValue(widget.children[0].label.to_i);
+            SquareView.selectedSquareView().caze.insertValue(widget.children[0].label.to_i);
         end
         OverlayManager.hide();
     end
@@ -56,23 +62,26 @@ class OverlayManager
     end
 
     def OverlayManager.hide()
+        @@open = false;
         @@overlayPanel.hide();
         OverlayManager.clear();
     end
 
     def OverlayManager.show()
+        @@open = true;
         square = SquareView.selectedSquareView();
+        caze = SquareView.selectedSquareView().caze;
         OverlayManager.clear();
 
-        possibleValues = [5,9,8,7,2];#TODO
+        possibleValues = SudokuAPI.API.candidateCaze(caze.x, caze.y);
 
-        if(square.value != 0)
-            possibleValues.push(square.value);
+        if(caze.value != 0)
+            possibleValues.push(caze.value);
         end
 
         for i in 0...9
             if(possibleValues.include?(i + 1))
-                if(square.value == i + 1)
+                if(caze.value == i + 1)
                     @@buttons[i].add(Gtk::Image.new(:file => AssetManager.assetsResource("eraser.png")));
                 else
                     @@buttons[i].add(Gtk::Label.new((i + 1).to_s));
@@ -84,7 +93,9 @@ class OverlayManager
 
         for i in 0...9
             if(!possibleValues.include?(i + 1))
-                @@buttons[i].hide();
+                @@buttons[i].name = "overlayButtonHide";
+            else
+                @@buttons[i].name = "overlayButtonShow";
             end
         end
     end
@@ -95,5 +106,9 @@ class OverlayManager
 
     def OverlayManager.overlayPanel()
         @@overlayPanel;
+    end
+
+    def OverlayManager.open?()
+        return @@open;
     end
 end

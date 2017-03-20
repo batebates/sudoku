@@ -4,18 +4,15 @@ class SquareView
     @@size = 52;
     @@selectedSquareView = nil;
 
-    attr_reader :value;
-    @color;
-    @lastColor;
+    attr_reader :caze;
 
     def SquareView.init(parent, x, y)
         new(parent, x, y);
     end
 
     def initialize(parent, x, y)
-        @value = 0;
-        @color = Colors::CL_BLANK;
-        @lastColor = @color;
+        @caze = SudokuAPI.API.cazeAt(x, y);
+        @caze.add_observer(self);
 
         @squareDraw = Gtk::DrawingArea.new();
 
@@ -43,7 +40,7 @@ class SquareView
     def render(squareView, idget, ctx, x, y)
 
         #White background
-        ctx.set_source_rgb(@color.red, @color.green, @color.blue);
+        ctx.set_source_rgb(@caze.color.red, @caze.color.green, @caze.color.blue);
         ctx.rectangle(0, 0, @@size, @@size);
         ctx.fill();
 
@@ -72,16 +69,20 @@ class SquareView
         ctx.stroke();
 
         #Text
-        ctx.set_source_rgb(0.0, 0.0, 0.0);
+        if(@caze.locked)
+            ctx.set_source_rgb(Colors::CL_NUMBER_LOCKED.red, Colors::CL_NUMBER_LOCKED.green, Colors::CL_NUMBER_LOCKED.blue);
+        else
+            ctx.set_source_rgb(Colors::CL_NUMBER.red, Colors::CL_NUMBER.green, Colors::CL_NUMBER.blue);
+        end
 
-        if(GridView.isHintMode() && @value == 0)
+        if(GridView.isHintMode() && @caze.value == 0)
             ctx.set_font_size(10);
-            possibilities = [5,9,8,7,2];
+            possibilities = possibleValues = SudokuAPI.API.candidateCaze(caze.x, caze.y);
             hintString = "";
             ctx.set_font_size(10);
 
             for i in 0..9
-                hintString += possibilities.include?(i) ? i.to_s() : "  ";
+                hintString += possibilities.include?(i) ? i.to_s() : " ";
 
                 if(i % 3 == 0)
                     ctx.select_font_face("Arial", Cairo::FONT_SLANT_NORMAL, Cairo::FONT_WEIGHT_NORMAL);
@@ -93,7 +94,11 @@ class SquareView
                 end
             end
         else
-            ctx.select_font_face("Comic sans MS", Cairo::FONT_SLANT_NORMAL, Cairo::FONT_WEIGHT_BOLD);
+            if(!@caze.locked)
+                ctx.select_font_face("Comic sans MS", Cairo::FONT_SLANT_NORMAL, Cairo::FONT_WEIGHT_BOLD);
+            else
+                ctx.select_font_face("Arial", Cairo::FONT_SLANT_NORMAL, Cairo::FONT_WEIGHT_BOLD);
+            end
             ctx.set_font_size(13);
             textSize = ctx.text_extents(displayValue());
             ctx.move_to((@@size / 2) - (textSize.width / 2),  (@@size / 2) + (textSize.height / 2));
@@ -112,6 +117,10 @@ class SquareView
     end
 
     def handleClick(button, widget)
+        if(@caze.locked)
+            return;
+        end
+
         overlay = OverlayManager.overlayPanel();
         choiceGrid = overlay.children[0];
 
@@ -141,19 +150,20 @@ class SquareView
     end
 
     def onHover(event, widget)
-        @lastColor = @color;
-        @color = Colors::CL_HIGHLIGHT;
-        redraw();
+
+        lastColor = @caze.color;
+        (SudokuAPI.API.row(@caze.y) + SudokuAPI.API.column(@caze.x) + SudokuAPI.API.square(@caze.x, @caze.y)).uniq.each{|value|
+            value.lastColor = value.color;
+            value.color = value.x == @caze.x || value.y == @caze.y ? Colors::CL_HIGHLIGHT_LINE : Colors::CL_HIGHLIGHT_SQUARE;
+        };
+        @caze.lastColor = lastColor;
+        @caze.color = Colors::CL_HIGHLIGHT;
     end
 
     def onLeave(event, widget)
-        @color = @lastColor;
-        redraw();
-    end
-
-    def color=(color)
-        @color = color;
-        redraw();
+        (SudokuAPI.API.row(@caze.y) + SudokuAPI.API.column(@caze.x) + SudokuAPI.API.square(@caze.x, @caze.y)).uniq.each{|value|
+            value.color = value.lastColor;
+        };
     end
 
     def redraw()
@@ -161,17 +171,16 @@ class SquareView
     end
 
     def displayValue()
-        return @value == 0 ? "" : @value.to_s;
+        return @caze.value == 0 ? "" : @caze.value.to_s;
     end
 
-    def insertValue(value)
-        @value = value == @value ? 0 : value;
-        @@selectedSquareView = nil;
+    def update(type, value)
         redraw();
     end
 
-    def value=(value)
-        @value = value;
+    def updateCazeReference()
+        @caze = SudokuAPI.API.cazeAt(@caze.x, @caze.y);
+        @caze.add_observer(self);
         redraw();
     end
 

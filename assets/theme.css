@@ -17,9 +17,9 @@
     box-shadow: 4px 4px 3px black;
 }
 
-#overlay-grid button
+#overlayButtonHide
 {
-
+    background-image: -gtk-gradient (linear, left top, left bottom, from (#e6f2ff), to (#e6f2ff));
 }
 
 #assistant_speech_box

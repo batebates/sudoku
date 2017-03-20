@@ -16,13 +16,19 @@
 #*assistantMessage
 #</b>
 class SudokuAPI
+	include Observable
 #== Variables d'instance ==
 	@sudoku
 	@sudokuCompleted
+	@assistantMessage
+	@timerPaused
+	@timer
 
 	attr_reader :sudoku
 	attr_reader :sudokuCompleted
 	attr_reader :sudokuStart
+	attr_reader :assistantMessage
+	attr_accessor :timerPaused, :timer
 
 #==========================
 
@@ -32,38 +38,31 @@ class SudokuAPI
 		return @@API;
 	end
 
-	def initialize(sudoku, sudokuCompleted)
+	def setSudoku(sudoku)
+		@timer = 0
 		@sudoku = sudoku
 		@sudokuStart = sudoku
-		@sudokuCompleted = sudokuCompleted
-        y=0
-        x=0
-        9.times do |x|
-            9.times do |y|
-                candidate_unite(x,y,column(x))
-                candidate_unite(x,y,row(y))
-                candidate_unite(x,y,square(x,y))
-            end
-        end
+		@sudokuCompleted = sudoku;
+
+		changed(true);
+		notify_observers("newgrid", sudoku);
 	end
 
-    #===Met les candidats impossible à false selon l'unite
-    #
-    #===Paramètres :
-    #* <b>x</b> : int : indique la coordonnée de l'axe des abscisses de la case
-    #* <b>y</b> : int : indique la coordonnée de l'axe des ordonnées de la case
-    #* <b>unite</b> : tab : contient le tableau de l'unité
-    def candidate_unite(x,y,unite)
-        unite.each{ |g|
-            @sudoku.tcaze[x][y].candidats[g.value.to_s]=false
+    def candidateCaze(x,y)
+        candidats = [1,2,3,4,5,6,7,8,9];
+        row(y).each{ |caze|
+            candidats.delete(caze.value);
         }
 
-    end
+        column(x).each{ |caze|
+            candidats.delete(caze.value);
+        }
 
-    def candidateCaze(x,y)
-        candidate_unite(x,y,column(y))
-        candidate_unite(x,y,row(x))
-        candidate_unite(x,y,square(y,x))
+        square(x, y).each{ |caze|
+            candidats.delete(caze.value);
+        }
+
+        return candidats;
     end
 
 
@@ -97,7 +96,7 @@ class SudokuAPI
 	def row(y)
 		tab = Array.new()
 		9.times do |i|
-			tab<<@sudoku.cazeAt(y,i)
+			tab<<@sudoku.cazeAt(i,y)
 		end
 		return tab
 	end
@@ -109,7 +108,7 @@ class SudokuAPI
 	def column(x)
 		tab = Array.new()
 		9.times do |i|
-			tab<<@sudoku.cazeAt(i,x)
+			tab<<@sudoku.cazeAt(x,i)
 		end
 		return tab
 	end
@@ -130,12 +129,12 @@ class SudokuAPI
 	#* <b>y</b> : int : indique la coordonnée de l'axe des ordonnées de la case
 	#* <b>val</b> : int : indique la nouvelle valeur de la case à modifier
 	def square(x,y)
-		x -= x%3
-		y -= y%3
+		x = (x / 3).to_i * 3
+		y = (y / 3).to_i * 3
 		tab = Array.new()
 		0.upto(2) do |i|
 			0.upto(2) do |j|
-                tab<<@sudoku.cazeAt(y+i,x+j)
+                tab<<@sudoku.cazeAt(x+i,y+j)
 			end
 		end
         return tab
@@ -154,8 +153,10 @@ class SudokuAPI
 	#
 	#===Paramètres :
 	#* <b>str</b> : string : contient le message a afficher
-	def assistantMessage(str)
-		print str
+	def assistantMessage=(str)
+		@assistantMessage = str;
+		changed(true);
+		notify_observers("assistant", @assistantMessage);
 	end
 
 	#===Sauvegarde des deux grilles
@@ -223,5 +224,24 @@ class SudokuAPI
 		if(loadFile.closed?)
 			print "Chargement terminé !\n"
 		end
+	end
+
+    #===Renvoie la case correspondant aux coordonnées
+	#
+	#===Paramètres :
+	#* <b>x</b> : int : indique la coordonnée de l'axe des abscisses de la case
+	#* <b>y</b> : int : indique la coordonnée de l'axe des ordonnées de la case
+    def cazeAt(x,y)
+        return @sudoku.cazeAt(x,y);
+    end
+
+	#===Modifie la valeur de la case correspondant aux coordonnées
+	#
+	#===Paramètres :
+	#* <b>x</b> : int : indique la coordonnée de l'axe des abscisses de la case
+	#* <b>y</b> : int : indique la coordonnée de l'axe des ordonnées de la case
+	#* <b>val</b> : int : indique la nouvelle valeur de la case à modifier
+	def setValue(x,y,val)
+		 return cazeAt(x, y).value=(val)
 	end
 end
