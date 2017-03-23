@@ -63,29 +63,10 @@ class Sudoku
 	#===Paramètres :
 	#* <b>x</b> : int : indique la coordonnée de l'axe des abscisses de la case
 	#* <b>y</b> : int : indique la coordonnée de l'axe des ordonnées de la case
-	=begin
 	def hasValue?(x,y)
 		return @tcaze[x][y].value!=0
 	end
-	=end
 
-    #===Retourne l'unité demandée sous forme de tableau
-    #
-    # <b>type</b> : type d'unité, 0 pour une ligne, 1 pour une colonne, 2 pour une région
-    # <b>numero</b> : numero de la regoin dans l'ordre logique
-    #def getUnite(type, numero)
-        #if type == 0
-            #tmp = @tcaze(numero,:)
-            #elsif type == 1
-            #tmp = @tcaze(:,numero)
-           # else
-          #  i = 0
-         #   while(i < 9)
-       #         i+=1
-      #      end
-     #   end
-        #        tmp << @tcaze[i/3+(numero/3)*3][i%3+(numero%3)*3]
-    #end
 	#===Vérifie si la grille est remplie
 	#
 	def gridFull()

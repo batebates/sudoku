@@ -1,4 +1,4 @@
-#<b>Auteur  :</b> Decrand Baptiste,Zerbane Mehdi
+#<b>Auteur  :</b> Decrand Baptiste,Zerbane Mehdi,Laville Martin
 #
 #<b>Version :</b> 1.0
 #
@@ -139,6 +139,14 @@ class SudokuAPI
         return tab
 	end
 
+	#===Renvoie la Nème région d'un sudoku dans un tableau
+	#
+	#===Paramètres :
+	#* <b>n</b> : int : indique la région voulue (de 0 à 8)
+	def squareN(n)
+		square(n*3%9, n/3*3)
+	end
+
 	#===Renvoie la region,la colonne suivi de la ligne d'un case du sudoku dans un tableau
 	#
 	#===Paramètres :
@@ -225,7 +233,48 @@ class SudokuAPI
 		end
 	end
 
+	#===Retourne l'unité demandée sous forme de tableau
+	#
+	#===Paramètres :
+	#* <b>type</b> : type d'unité, 0 pour une ligne, 1 pour une colonne, 2 pour une région
+	#* <b>numero</b> : numero de la region dans l'ordre logique
+	def getUnite(type, numero)
+		if type == 0
+			tmp = row(numero)
+		elsif type == 1
+			tmp = column(numero)
+		else
+			tmp = square(numero)
+		end
+	end
 
+	#===Retourne le nombre de fois où un candidat est présent dans une unité
+	#
+	#===Paramètres :
+	# <b>unite</b> : tableau d'une unité
+	def nbCandidate(unite)
+		nbCandid = Array.new(9);
+		unite.each{ |caze|
+			candidats = candidateCaze(caze.x, caze.y)
+			candidats.each{ |candid|
+				nbCandid[candid]+=1
+			}
+		}
+		return nbCandidate
+	end
+
+	#===Regarde si une unité possède un candidat présent une seule fois
+	#
+	#===Paramètres :
+	#* <b>nbCandid</b> : prend un tableau retourné par nbCandidate
+	def uniqueCandidate(nbCandid)
+		res = false
+		nbCandid.each{ |nb|
+			if nb == 1
+				res = true
+		}
+		return res
+	end
     #===Renvoie la case correspondant aux coordonnées
 	#
 	#===Paramètres :
@@ -246,4 +295,7 @@ class SudokuAPI
 		 return cazeAt(x, y).value=(val)
 	end
 
+	def hintMode=()
+
+	end
 end

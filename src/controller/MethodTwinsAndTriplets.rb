@@ -8,7 +8,7 @@ class MethodTwinsAndTriplets < Method
 		fileName = "DeathStar"
 		@sudoku.saveSudoku(fileName)
 		gridDemo = "005000070400000400000000000000404000000000000000000000000000000000000000000000000"	
-		  SudokuAPI.API.initSudoku(gridDemo);
+		SudokuAPI.API.initSudoku(gridDemo);
 	
  		#grisation des cases non importantes
 		#Assistant dit on va s'occuper de cette ligne
