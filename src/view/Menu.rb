@@ -46,7 +46,7 @@ class Menu
 		}
 
 		bOptions.signal_connect("clicked"){
-			OptionsDialog.init()
+			ConfigDialog.init()
 		}
 
 		bNewGrid.signal_connect("clicked"){

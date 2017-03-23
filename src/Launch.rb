@@ -14,6 +14,7 @@ require "./view/OverlayManager.rb"
 require "./view/Header.rb"
 require "./view/Menu.rb"
 require "./view/OptionsDialog.rb"
+require "./view/configDialog.rb"
 
 require "./model/AssetManager.rb"
 require "./model/Generator.rb"
