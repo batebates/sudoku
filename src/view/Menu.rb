@@ -59,13 +59,14 @@ class Menu
 
 	def createButton(icon, text)
 		icon = Gtk::Image.new(:file => AssetManager.assetsResource(icon));
+		icon.set_margin_right(10);
 		label = Gtk::Label.new(text);
-
 		box = Gtk::Box.new(:horizontal, 0);
 		box.add(icon);
 		box.add(label);
 
 		button = Gtk::Button.new();
+		button.name = "menuButton"
 		button.add(box);
 
 		return button;
@@ -74,12 +75,12 @@ class Menu
 	def createTitle(text)
 
 		box = Gtk::Box.new(:horizontal, 0);
+		box.name = "rightMenuTitlePanel";
 		label = Gtk::Label.new();
 		label.set_selectable(false);
 		label.set_markup(text);
-		label.set_size_request(180, 0);
 		label.name = "rightMenuTitle";
-		box.add(label);
+		box.pack_start(label, :expand => true, :fill => true, :padding => 0);
 
 		return box;
 	end

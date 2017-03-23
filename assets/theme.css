@@ -11,7 +11,6 @@
 #overlay-grid
 {
     background-color: #eeeeee;
-    padding: 4px;
     border: 2px outset #787878;
     border-radius: 8px;
     box-shadow: 4px 4px 3px black;
@@ -25,6 +24,7 @@
 #assistant_speech_box
 {
     font-family: "Comic sans ms", "Arial";
+    color: #333333;
     background-color: #ffffff;
     border: 2px outset #787878;
     border-radius: 8px;
@@ -37,8 +37,9 @@
     box-shadow: -2px 0px 2px rgba(0,0,0,0.6);
 }
 
-#rightMenu button
+#rightMenu #menuButton
 {
+    color: #333333;
     background-image: -gtk-gradient (linear, left top, left bottom, from (#e6f2ff), to (#e6f2ff));
     border-radius: 0px;
     border: 0px;
@@ -46,28 +47,28 @@
     border-bottom: 1px solid #b3d9ff;
 }
 
-#rightMenu button:hover
+#rightMenu #menuButton:hover
 {
     color: green;
     background-image: -gtk-gradient (linear, left top, left bottom, from (#ffffff), to (#ffffff));
 }
 
-#rightMenu button:active
+#rightMenu #menuButton:active
 {
     background-image: -gtk-gradient (linear, left top, left bottom, from (#b3d9ff), to (#b3d9ff));
 }
 
-#rightMenu button image
+#rightMenuTitlePanel
 {
-    margin-right: 10px;
+    background-color: #99ccff;
+    border-bottom: 2px solid #66b3ff;
+    border-top: 2px solid #e6f2ff;
 }
 
 #rightMenuTitle
 {
     font-size: 18px;
-    background-color: #99ccff;
-    border-bottom: 2px solid #66b3ff;
-    border-top: 2px solid #e6f2ff;
+    color: #333333;
     padding-left: 25px;
     padding-right: 25px;
     padding-top: 4px;
