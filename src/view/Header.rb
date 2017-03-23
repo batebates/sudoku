@@ -18,6 +18,9 @@ class Header
         userIcon = Gtk::Image.new(:file => AssetManager.assetsResource("user.png"));
         userButton = Gtk::Button.new();
         userButton.add(userIcon);
+        userButton.signal_connect("clicked") { |widget|
+            UserDialog.display();
+        };
 
         @timeLabel = Gtk::Label.new("00:00");
         @timeLabel.name = "headerLabel";
