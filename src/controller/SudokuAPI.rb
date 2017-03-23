@@ -92,10 +92,10 @@ class SudokuAPI
 	#
 	#===Paramètres :
 	#* <b>y</b> : int : indique la coordonnée de l'axe des ordonnées de la ligne
-	def row(y)
+	def row(x)
 		tab = Array.new()
 		9.times do |i|
-			tab<<@sudoku.cazeAt(i,y)
+			tab<<@sudoku.cazeAt(x,i)
 		end
 		return tab
 	end
@@ -104,10 +104,10 @@ class SudokuAPI
 	#
 	#===Paramètres :
 	#* <b>x</b> : int : indique la coordonnée de l'axe des abscisses de la colonne
-	def column(x)
+	def column(y)
 		tab = Array.new()
 		9.times do |i|
-			tab<<@sudoku.cazeAt(x,i)
+			tab<<@sudoku.cazeAt(i,y)
 		end
 		return tab
 	end
@@ -118,7 +118,7 @@ class SudokuAPI
 	#* <b>x</b> : int : indique la coordonnée de l'axe des abscisses de la case
 	#* <b>y</b> : int : indique la coordonnée de l'axe des ordonnées de la case
 	def rowColumn(x,y)
-		return self.row(y) + self.column(x)
+		return self.row(x) + self.column(y)
 	end
 
 	#===Renvoie la région d'une case d'un sudoku dans un tableau
