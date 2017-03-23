@@ -20,8 +20,10 @@ require "./model/AssetManager.rb"
 require "./model/Generator.rb"
 require "./model/Caze.rb"
 require "./model/Sudoku.rb"
+require "./model/ConfigEntry.rb"
 
 require "./controller/SudokuAPI.rb"
+require "./controller/Config.rb"
 =begin
 require "./controller/Method.rb"
 require "./controller/MethodCrossReduce.rb"
@@ -31,5 +33,7 @@ require "./controller/MethodTwinsAndTriplets.rb"
 require "./controller/MethodUniqueCandidate.rb"
 =end
 
+Config.registerConfigs();
+Config.load();
 SudokuAPI.API.setSudoku(Sudoku.create(Generator.new(0).to_s));
 Window.init();
