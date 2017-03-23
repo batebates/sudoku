@@ -48,22 +48,22 @@ class SudokuAPI
 		notify_observers("newgrid", sudoku);
 	end
 
-    def candidateCaze(x,y)
-        candidats = [1,2,3,4,5,6,7,8,9];
-        row(y).each{ |caze|
-            candidats.delete(caze.value);
-        }
+#    def candidateCaze(x,y)
+#        candidats = [1,2,3,4,5,6,7,8,9];
+#        row(y).each{ |caze|
+#            candidats.delete(caze.value);
+#        }
 
-        column(x).each{ |caze|
-            candidats.delete(caze.value);
-        }
-
-        square(x, y).each{ |caze|
-            candidats.delete(caze.value);
-        }
-
-        return candidats;
-    end
+#        column(x).each{ |caze|
+#            candidats.delete(caze.value);
+#        }
+#
+#        square(x, y).each{ |caze|
+#            candidats.delete(caze.value);
+#        }
+#
+#        return candidats;
+#    end
 
 
 	#===Modifie la couleur d'une case
@@ -76,9 +76,9 @@ class SudokuAPI
 		@sudoku.cazeAt(x,y).color=color;
 	end
 
-	def getColor(x,y)
-		return @sudoku.cazeAt(x,y).color;
-	end
+#	def getColor(x,y)
+#		return @sudoku.cazeAt(x,y).color;
+#	end
 
 
 	#===Execute la methode
@@ -146,7 +146,7 @@ class SudokuAPI
 	#* <b>x</b> : int : indique la coordonnée de l'axe des abscisses de la case
 	#* <b>y</b> : int : indique la coordonnée de l'axe des ordonnées de la case
 	def squareRowColumn(x,y)
-		return square(x,y) + row(x) + column(y)
+		return square(x,y) + row(y) + column(x)
 	end
 
 	#===Affiche le message de l'assistant
@@ -164,37 +164,37 @@ class SudokuAPI
 	#===Paramètres :
 	#* <b>fileName</b> : string : nom du fichier de sauvegarde
 
-	def saveSudoku(fileName)
-		saveFile = File.open("save_files/" + fileName, "w")
+#	def saveSudoku(fileName)
+#		saveFile = File.open("save_files/" + fileName, "w")
+#
+#		if(!saveFile.closed?)
+#			print "Fichier de sauvegarde ouvert\n"
+#		end
+#
+#		for i in 0..80
+#			saveFile.write self.sudokuStart[i].getValue()
+#		end
 
-		if(!saveFile.closed?)
-			print "Fichier de sauvegarde ouvert\n"
-		end
-
-		for i in 0..80
-			saveFile.write self.sudokuStart[i].getValue()
-		end
-
-		saveFile.write "\n"
-
-		for i in 0..80
-			saveFile.write self.sudoku[i].getValue()
-		end
-
-		saveFile.write "\n"
-
-		for i in 0..80
-			saveFile.write self.sudokuCompleted[i].getValue()
-		end
-
-		saveFile.write "\n"
-
-		saveFile.close
-
-		if(saveFile.closed?)
-			print "Sauvegarde terminée !\n"
-		end
-	end
+#		saveFile.write "\n"
+#
+#		for i in 0..80
+#			saveFile.write self.sudoku[i].getValue()
+#		end
+#
+#		saveFile.write "\n"
+#
+#		for i in 0..80
+#			saveFile.write self.sudokuCompleted[i].getValue()
+#		end
+#
+#		saveFile.write "\n"
+#
+#		saveFile.close
+#
+#		if(saveFile.closed?)
+#			print "Sauvegarde terminée !\n"
+#		end
+#	end
 
 
 	#===Chargement des deux grilles à partir d'un fichier
@@ -202,6 +202,7 @@ class SudokuAPI
 	#===Paramètres :
 	#* <b>fileName</b> : string : nom du fichier à charger
 
+=begin
 	def loadSudoku(fileName)
 		loadFile = File.open(fileName, "r")
 
@@ -225,23 +226,27 @@ class SudokuAPI
 			print "Chargement terminé !\n"
 		end
 	end
+=end
 
     #===Renvoie la case correspondant aux coordonnées
 	#
 	#===Paramètres :
 	#* <b>x</b> : int : indique la coordonnée de l'axe des abscisses de la case
 	#* <b>y</b> : int : indique la coordonnée de l'axe des ordonnées de la case
+=begin
     def cazeAt(x,y)
         return @sudoku.cazeAt(x,y);
     end
-
+=end
 	#===Modifie la valeur de la case correspondant aux coordonnées
 	#
 	#===Paramètres :
 	#* <b>x</b> : int : indique la coordonnée de l'axe des abscisses de la case
 	#* <b>y</b> : int : indique la coordonnée de l'axe des ordonnées de la case
 	#* <b>val</b> : int : indique la nouvelle valeur de la case à modifier
+=begin
 	def setValue(x,y,val)
 		 return cazeAt(x, y).value=(val)
 	end
+=end
 end
