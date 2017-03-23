@@ -8,6 +8,7 @@ class AssistantView
     end
 
     def initialize(parent)
+        @updateTextThread = nil;
         SudokuAPI.API.add_observer(self);
         # Split container in 2 parts : Left (Avatar), Right (Speech bubble)
         assistantGrid = Gtk::Box.new(:horizontal, 0);
@@ -43,7 +44,11 @@ class AssistantView
         if(type == "assistant")
             @assistantText.label = "";
 
-            updateTextThread = Thread.new(){
+            if(@updateTextThread != nil)
+                @updateTextThread.exit();
+            end
+
+            @updateTextThread = Thread.new(){
                 length = message.length;
                 for i in 0..length
                     @assistantText.label += message[i];
