@@ -17,7 +17,6 @@ require "./model/AssetManager.rb"
 require "./model/Generator.rb"
 require "./model/Caze.rb"
 require "./model/Sudoku.rb"
-
 =begin
 require "./controller/SudokuAPI.rb"
 require "./controller/Method.rb"
@@ -27,7 +26,6 @@ require "./controller/MethodInteractionsRegion.rb"
 require "./controller/MethodTwinsAndTriplets.rb"
 require "./controller/MethodUniqueCandidate.rb"
 =end
-
 class TestSudoku < Test::Unit::TestCase
 
    def test_caze
