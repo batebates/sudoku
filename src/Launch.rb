@@ -30,5 +30,6 @@ require "./controller/MethodTwinsAndTriplets.rb"
 require "./controller/MethodUniqueCandidate.rb"
 =end
 
-SudokuAPI.API.setSudoku(Sudoku.create(Generator.new(0).to_s));
+myGenerator = Generator.new(0)
+SudokuAPI.API.setSudoku(Sudoku.create(myGenerator.to_s), Sudoku.create(myGenerator.to_sPlayer), Sudoku.create(myGenerator.to_sCorrect));
 Window.init();

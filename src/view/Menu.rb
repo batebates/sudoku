@@ -6,6 +6,7 @@ class Menu
 	end
 
 	def initialize(parent)
+		myGenerator = nil
 
 		bNewGrid = createButton("grid.png", "Nouvelle partie");
 		bSaveGrid = createButton("save.png", "Sauvegarder partie");
@@ -50,7 +51,16 @@ class Menu
 		}
 
 		bNewGrid.signal_connect("clicked"){
-			SudokuAPI.API.setSudoku(Sudoku.create(Generator.new(0).to_s));
+			myGenerator = Generator.new(0)
+			SudokuAPI.API.setSudoku(Sudoku.create(myGenerator.to_s), Sudoku.create(myGenerator.to_sPlayer), Sudoku.create(myGenerator.to_sCorrect));
+		}
+		
+		bSaveGrid.signal_connect("clicked"){
+			SudokuAPI.API.saveSudoku("Michel")
+		}
+		
+		bLoadGrid.signal_connect("clicked"){
+			SudokuAPI.API.loadSudoku("Michel")
 		}
 
 

@@ -53,7 +53,7 @@ class Generator
 
 		@gridPlayer = @grid
 		puts "Done ! #{@grid.to_s}";
-		return @grid;
+		return self;
 	end
 
 	#====Methode d'utilisation====
@@ -163,6 +163,10 @@ class Generator
 
 	def to_sCorrect()
 		return @gridCorrect.join("")
+	end
+	
+	def to_sPlayer()
+		return @gridPlayer.join("")
 	end
 
 	def get_grid()

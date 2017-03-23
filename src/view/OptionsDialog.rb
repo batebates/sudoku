@@ -26,7 +26,11 @@ class OptionsDialog
 		@optDialog.add_button("Appliquer", Gtk::ResponseType::OK)
 		@optDialog.add_button(Gtk::Stock::CANCEL, Gtk::ResponseType::CANCEL)
 		@optDialog.set_default_response(Gtk::ResponseType::CANCEL)
-	
+		
+		header = Gtk::HeaderBar.new
+		header.show_close_button = false;
+		@optDialog.titlebar = header
+
 		result = @optDialog.run
 		case result
 		when Gtk::ResponseType::OK
@@ -39,7 +43,6 @@ class OptionsDialog
 		when Gtk::ResponseType::CLOSE
 			@optDialog.destroy
 		end
-				
 	end
 
 	#== BOXES
