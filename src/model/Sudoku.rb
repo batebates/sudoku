@@ -63,9 +63,11 @@ class Sudoku
 	#===Paramètres :
 	#* <b>x</b> : int : indique la coordonnée de l'axe des abscisses de la case
 	#* <b>y</b> : int : indique la coordonnée de l'axe des ordonnées de la case
+	=begin
 	def hasValue?(x,y)
 		return @tcaze[x][y].value!=0
 	end
+	=end
 
     #===Retourne l'unité demandée sous forme de tableau
     #
