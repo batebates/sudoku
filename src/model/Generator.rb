@@ -297,6 +297,14 @@ class Generator
 		] - [0]
 	end
 
+	def getCorrect()
+		return @gridCorrect
+	end
+
+	def getPlayer()
+		return @gridPlayer
+	end
+
 end
 
 

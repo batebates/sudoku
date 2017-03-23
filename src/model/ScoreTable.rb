@@ -81,9 +81,23 @@ class ScoreTable
 		end
 		puts
 	end
+
+
+	def scoreSave()
+		scoreFile = File.new "scoreTable.txt"
+
+
+		File.open(scoreFile, 'w') { |file| file.write("your text") }
+
+	end
+
 end
 
-#tableScore = ScoreTable.build()
+tableScore = ScoreTable.build()
 
-#scoreTest1 = Score.creer("Dimitri", 1250)
-#tableScore.scoreInsertTab(scoreTest1)
+scoreTest1 = Score.creer("Dimitri", 1250)
+tableScore.scoreInsertTab(scoreTest1)
+		
+		
+
+
