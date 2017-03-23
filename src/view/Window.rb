@@ -14,6 +14,7 @@ class Window
 
         @@window = Gtk::Window.new("Sudoku");
         @@window.set_size_request(@@WIDTH, @@HEIGHT);
+        @@window.set_resizable(false);
 
         # On window close event
         @@window.signal_connect("delete-event") { |widget|
