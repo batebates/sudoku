@@ -8,10 +8,16 @@ class MethodTwinsAndTriplets < Method
 		fileName = "DeathStar"
 		@sudoku.saveSudoku(fileName)
 		gridDemo = "005000070400000400000000000000404000000000000000000000000000000000000000000000000"	
-		  SudokuAPI.API.initSudoku(gridDemo);
-	
- 		#grisation des cases non importantes
+		new_ = SudokuAPI.API.initSudoku(gridDemo);
+		#grisation des cases non importantes
+
+		0.upto(8) do |x|
+			3.upto(8) do |y|
+				new_.sudoku.cazeAt(x,y).color=CL_NUMBER_LOCKED;
+			end
+		end
 		#Assistant dit on va s'occuper de cette ligne
+		new_assistantMessage=("nous allons nous occuper de cette ligne");
 		#Mise en valeur de la case
 		#"On peut remarquer que sur cette case machin truc"
 		#affichage du chiffre
