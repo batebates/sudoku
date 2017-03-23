@@ -12,14 +12,16 @@ require "./view/Colors.rb"
 require "./view/OverlayManager.rb"
 require "./view/Header.rb"
 require "./view/Menu.rb"
+require "observer"
 
 require "./model/AssetManager.rb"
 require "./model/Generator.rb"
 require "./model/Caze.rb"
 require "./model/Sudoku.rb"
 
-=begin
+
 require "./controller/SudokuAPI.rb"
+=begin
 require "./controller/Method.rb"
 require "./controller/MethodCrossReduce.rb"
 require "./controller/MethodGroupIsolated.rb"
@@ -48,7 +50,7 @@ class TestSudoku < Test::Unit::TestCase
  	def test_sudokuAPI
  		grid = Sudoku.create("000000083004800070000000250500090060310700805068010007400901000890563000000407509")
  		s = SudokuAPI.API();
-        SudokuAPI.API.initSudoku(grid)
+        SudokuAPI.API.setSudoku(grid)
 
  		#assert_equal(0,s.setColor(0,5,color))
  		#assert_equal(3,s.execMethod(0,5,3))
@@ -92,7 +94,7 @@ class TestSudoku < Test::Unit::TestCase
  	end
   grid = Sudoku.create("000000083004800070000000250500090060310700805068010007400901000890563000000407509")
   s= SudokuAPI.API();
-  SudokuAPI.API.initSudoku(grid);
+  SudokuAPI.API.setSudoku(grid);
 
   puts s.sudoku
 end
