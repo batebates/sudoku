@@ -272,6 +272,7 @@ class SudokuAPI
 		nbCandid.each{ |nb|
 			if nb == 1
 				res = true
+			end
 		}
 		return res
 	end
