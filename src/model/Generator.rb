@@ -7,6 +7,7 @@ class Generator
 	#====Methode de construction====
 
 	def initialize(difficulty, grid_string = "")
+		puts "Generating new sudoku..."
 		# Either take a pre-created puzzle, or create a new one programmatically
 
 		random = Random.new
@@ -50,8 +51,8 @@ class Generator
 			}
 		end
 
-		puts hints
 		@gridPlayer = @grid
+		puts "Done ! #{@grid.to_s}";
 		return @grid;
 	end
 

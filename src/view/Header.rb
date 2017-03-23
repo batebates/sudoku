@@ -1,7 +1,7 @@
 class Header
     private_class_method :new
 
-    attr_reader :time, :userLabel;
+    attr_reader :userLabel;
     @timeLabel;
 
     def Header.init()
@@ -9,7 +9,6 @@ class Header
     end
 
     def initialize()
-        @time = 0;
         header = Gtk::HeaderBar.new();
         header.set_title(Window.window.title);
         header.set_subtitle("Groupe A");
@@ -39,8 +38,10 @@ class Header
     end
 
     def tickSeconds()
-        @time += 1;
-        @timeLabel.label = timeDisplay(@time / 60) + ":" + timeDisplay(@time % 60);
+        if(!SudokuAPI.API.timerPaused)
+            SudokuAPI.API.timer += 1;
+            @timeLabel.label = timeDisplay(SudokuAPI.API.timer / 60) + ":" + timeDisplay(SudokuAPI.API.timer % 60);
+        end
 
         return true;
     end

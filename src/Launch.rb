@@ -2,6 +2,7 @@ require "gtk3"
 require "gio2"
 require "gdk3"
 require "pango"
+require "observer"
 
 require "./view/Window.rb"
 require "./view/GridView.rb"
@@ -29,4 +30,5 @@ require "./controller/MethodTwinsAndTriplets.rb"
 require "./controller/MethodUniqueCandidate.rb"
 =end
 
+SudokuAPI.API.setSudoku(Sudoku.create(Generator.new(0).to_s));
 Window.init();

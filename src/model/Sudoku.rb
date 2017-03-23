@@ -18,18 +18,19 @@ class Sudoku
 #==========================
 
 	def initialize(str)
-        x_length = 9
+		x_length = 9
         y_length = 9
-        @tcaze=[]
-        tab = str.split("")
-        i=0
-        x_length.times do |x|
-            @tcaze[x] ||= []
-            y_length.times do |y|
-                @tcaze[x][y] = Caze.create(x,y,tab[i])
-                i=i+1
-            end
-        end
+
+		@tcaze = Array.new(x_length);
+		@tcaze.each_with_index { |value, index|
+			@tcaze[index] = Array.new(y_length);
+		}
+
+		str.split("").each_with_index { |value, index|
+			x = index % x_length;
+			y = index / x_length;
+			@tcaze[x][y] = Caze.create(x, y, value.to_i);
+		}
 	end
 
 	private_class_method :new
@@ -53,7 +54,7 @@ class Sudoku
 	#* <b>x</b> : int : indique la coordonnée de l'axe des abscisses de la case
 	#* <b>y</b> : int : indique la coordonnée de l'axe des ordonnées de la case
 	#* <b>val</b> : int : indique la nouvelle valeur de la case à modifier
-	def setValue(x,y,val)
+	def setValueAt(x,y,val)
 		 return @tcaze[x][y].value=(val)
 	end
 
@@ -62,7 +63,7 @@ class Sudoku
 	#===Paramètres :
 	#* <b>x</b> : int : indique la coordonnée de l'axe des abscisses de la case
 	#* <b>y</b> : int : indique la coordonnée de l'axe des ordonnées de la case
-	def valueCheck?(x,y)
+	def hasValue?(x,y)
 		return @tcaze[x][y].value!=0
 	end
 
@@ -96,39 +97,6 @@ class Sudoku
 		end
 		return res
 	end
-
-	#========Affiche la liste des candidats		True = candidats	False = non candidats
-	def printCandidate
-		cpt=0
-		@tcaze.each do |tab|
-            tab.each do |elt|
-            	print elt.value
-            	print " "
-                print elt.candidats.to_s + "\n"
-                cpt += 1
-                if cpt%9==0
-                    print "\n"
-                end
-            end
-        end
-    end
-
-    #=====Transforme dans un tableau la valeur de la case + la liste de ses candidats
-    def candidateToTab()
-    	tabe = Array.new()
-		@tcaze.each do |tab|
-            tab.each do |elt|
-            	tmp = Array.new()
-            	tmp << elt.value
-  				1.upto(9) do|i|
-  					if (elt.candidats[i.to_s] == true)
-                		tmp<<i;
-  					end
-                end
-                tabe<<tmp
-            end
-        end
-    end
 
 #===Affiche le sudoku
 #
