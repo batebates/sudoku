@@ -23,11 +23,13 @@ class SudokuAPI
 	@assistantMessage
 	@timerPaused
 	@timer
+	@username
 
 	attr_reader :sudoku
 	attr_reader :sudokuCompleted
 	attr_reader :sudokuStart
 	attr_reader :assistantMessage
+	attr_reader :username
 	attr_accessor :timerPaused, :timer
 
 #==========================
@@ -243,5 +245,12 @@ class SudokuAPI
 	#* <b>val</b> : int : indique la nouvelle valeur de la case à modifier
 	def setValue(x,y,val)
 		 return cazeAt(x, y).value=(val)
+	end
+
+	def username=(username)
+		@username = username;
+
+		changed(true);
+		notify_observers("username", @username);
 	end
 end

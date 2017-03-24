@@ -1,4 +1,4 @@
-#headerLabel
+#headerLabel, #dialogTitle
 {
     font-weight: bold;
 }
@@ -6,11 +6,6 @@
 #background
 {
     background-color: #e6f2ff;
-}
-
-#test
-{
-    background-color: red;
 }
 
 #overlay-grid
@@ -88,4 +83,9 @@
     padding-right: 25px;
     padding-top: 4px;
     padding-bottom: 4px;
+}
+
+#userDialog{
+    border-radius: 6px;
+    border: 2px outset #666666;
 }

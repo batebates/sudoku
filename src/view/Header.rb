@@ -1,7 +1,7 @@
 class Header
     private_class_method :new
 
-    attr_reader :userLabel;
+    @userLabel;
     @timeLabel;
 
     def Header.init()
@@ -9,6 +9,7 @@ class Header
     end
 
     def initialize()
+        SudokuAPI.API.add_observer(self);
         header = Gtk::HeaderBar.new();
         header.set_title(Window.window.title);
         header.set_subtitle("Groupe A");
@@ -25,7 +26,7 @@ class Header
         @timeLabel = Gtk::Label.new("00:00");
         @timeLabel.name = "headerLabel";
 
-        @userLabel = Gtk::Label.new("Michel");
+        @userLabel = Gtk::Label.new("???");
         @userLabel.name = "headerLabel";
 
         header.pack_start(userButton);
@@ -51,5 +52,11 @@ class Header
 
     def timeDisplay(time)
         return time = time <= 9 ? "0" + time.to_s : time.to_s;
+    end
+
+    def update(type, username)
+        if(type == "username")
+            @userLabel.label = username;
+        end
     end
 end
