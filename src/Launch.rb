@@ -14,7 +14,11 @@ require "./view/OverlayManager.rb"
 require "./view/Header.rb"
 require "./view/Menu.rb"
 require "./view/OptionsDialog.rb"
+<<<<<<< HEAD
 require "./view/UserDialog.rb"
+=======
+require "./view/configDialog.rb"
+>>>>>>> 45959c9f4286f783961463b6eedcae63268fed28
 
 require "./model/AssetManager.rb"
 require "./model/Generator.rb"

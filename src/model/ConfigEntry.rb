@@ -9,6 +9,6 @@ class ConfigEntry
     end
 
     def clone()
-        return new ConfigEntry(@name, @displayName, @type, @value);
+        return ConfigEntry.new(@name, @displayName, @type, @value);
     end
 end

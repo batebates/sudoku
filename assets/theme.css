@@ -79,3 +79,13 @@
     padding-top: 4px;
     padding-bottom: 4px;
 }
+
+#configEntry{
+    background-color: #e6f2ff;
+    border-bottom: 1px solid #b3d9ff;
+    border-top: 2px solid #ffffff;
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}

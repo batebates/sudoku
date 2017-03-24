@@ -1,16 +1,22 @@
 class UserDialog
     private_class_method :new
 
+    @selectedIndex
+
     def UserDialog.display()
         new();
     end
 
     def initialize()
-        dialog = Gtk::Dialog.new(:parent => Window.window(), :title => "Utilisateurs", :flags => [:modal, :destroy_with_parent], :buttons => [["_OK", :ok], ["_Cancel", :cancel]]);
+        @selectedIndex = 0;
+        dialog = Gtk::Dialog.new(:parent => Window.window(), :title => "Utilisateurs", :flags => [:modal, :destroy_with_parent], :buttons => [["_OK", :ok]]);
+        dialog.resizable = false;
+        dialog.decorated = false;
         dialogArea = dialog.content_area;
 
-        box = Gtk::Grid.new();
-        title = Gtk::Label.new("Choisissez un profil :");
+        vbox = Gtk::Box.new(:vertical, 0);
+        title = Gtk::Label.new("Choisissez un profil");
+        title.name = "userTitle";
         hbox = Gtk::Box.new(:horizontal, 4);
 
         userComboBox = Gtk::ComboBoxText.new();
@@ -21,23 +27,34 @@ class UserDialog
         userComboBox.set_active(0);
 
         editIcon = Gtk::Image.new(:file => AssetManager.assetsResource("edit.png"));
-        removeIcon = Gtk::Image.new(:file => AssetManager.assetsResource("cross.png"));
+        removeIcon = Gtk::Image.new(:file => AssetManager.assetsResource("eraser_big.png"));
 
         editButton = Gtk::Button.new();
         removeButton = Gtk::Button.new();
-        editButton.add(editIcon);
-        removeButton.add(removeIcon);
+        editButton.image=(editIcon);
+        removeButton.image=(removeIcon);
+        editButton.sensitive  = false;
+        removeButton.sensitive  = false;
+
+        userComboBox.signal_connect("changed") { |widget|
+            @selectedIndex = userComboBox.active;
+            editButton.sensitive = @selectedIndex != 0;
+            removeButton.sensitive = @selectedIndex != 0;
+        }
 
         hbox.pack_start(userComboBox, :expand => true, :fill => true, :padding => 0);
         hbox.add(editButton);
         hbox.add(removeButton);
+        hbox.set_margin_top(6);
+        hbox.set_margin_bottom(2);
 
-        box.attach(title, 0, 0, 1, 1);
-        box.attach(hbox, 0, 1, 1, 1);
-        box.set_border_width(5);
+        vbox.pack_start(title, :expand => true, :fill => true, :padding => 0);
+        vbox.add(hbox);
+        vbox.set_border_width(1);
 
-        box.show_all();
-        dialogArea.pack_start(box);
+        vbox.show_all();
+        dialogArea.pack_start(vbox);
+        dialogArea.set_border_width(8);
         response = dialog.run();
 
         if response == :ok
