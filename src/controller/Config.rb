@@ -9,13 +9,21 @@ class Config
         Config.addEntry(ConfigEntry.new("hover_square_color", "Couleur du carré survolé", "color", Colors::CL_HIGHLIGHT_SQUARE));
         Config.addEntry(ConfigEntry.new("number_color", "Couleur des chiffres", "color", Colors::CL_NUMBER));
         Config.addEntry(ConfigEntry.new("number_color_locked", "Couleur des chiffres vérouillés", "color", Colors::CL_NUMBER_LOCKED));
-
         Config.addEntry(ConfigEntry.new("show_line_highlight", "Surligner la ligne / colonne survolée ?", "bool", true));
         Config.addEntry(ConfigEntry.new("show_square_highlight", "Surligner le carré survolé ?", "bool", false));
     end
 
     def Config.addEntry(entry)
         @@entryList.push(entry);
+    end
+
+    def Config.getValue(key)
+        @@entryList.each { |value|
+            if(value.name == key)
+                return value.value;
+            end
+        }
+        return nil;
     end
 
     def Config.entries()

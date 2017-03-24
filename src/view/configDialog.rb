@@ -16,9 +16,9 @@ class ConfigDialog
 
 		@mainVB = Gtk::Box.new(:vertical,1)
 		@mainVB.name = "mainVB"
-		
+
 		#@confEntry = confEntry
-		@configDialog = Gtk::Dialog.new(:title=>"Config")
+		@configDialog = Gtk::Dialog.new(:parent => Window.window(), :title => "Configuration", :flags => [:modal, :destroy_with_parent])
 		@configDialog.set_default_size(300,500)
 
 		@configDialog.add_button("Appliquer",Gtk::ResponseType::OK)
@@ -36,12 +36,12 @@ class ConfigDialog
     	#res
 
     	result = @configDialog.run
-		
+
 
 		case result
 		when Gtk::ResponseType::OK
 				p "OK"
-				configApply(); #applique la config 
+				configApply(); #applique la config
 				@configDialog.destroy
 		when Gtk::ResponseType::CANCEL
 				p "Cancel"
@@ -74,18 +74,25 @@ class ConfigDialog
 			boolT = Gtk::Switch.new
 			boolT.set_active(modConf.value)
 			hBox.pack_end(boolT,:expand=>false,:fill=>false,:padding=>2)
+			boolT.signal_connect("notify") {
+				modConf.value = boolT.active?();
+			}
 		elsif (modConf.type == "color")
-			boolT = Gtk::ColorButton.new
-			boolT.set_rgba(modConf.value)
-			hBox.pack_end(boolT,:expand=>false,:fill=>false,:padding=>2)
+			colorB = Gtk::ColorButton.new
+			colorB.set_color(modConf.value)
+			hBox.pack_end(colorB,:expand=>false,:fill=>false,:padding=>2)
+			colorB.signal_connect("color-set") {
+				modConf.value.red = colorB.color.red
+				modConf.value.green = colorB.color.green
+				modConf.value.blue = colorB.color.blue
+			}
 		end
 		return hBox
 	end
 
 	def configApply()
-#		for modConf in entryNewList
-#			modConf.save().
-#		end
+		Config.set(@entryNewList);
+		Config.save();
 	end
 
 end

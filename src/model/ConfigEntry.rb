@@ -1,5 +1,6 @@
 class ConfigEntry
-    attr_reader :name, :displayName, :type, :value;
+    attr_reader :name, :displayName, :type
+    attr_accessor :value
 
     def initialize(name, displayName, type, value)
         @name = name;
