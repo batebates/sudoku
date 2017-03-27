@@ -6,6 +6,9 @@ class RegisterView
     end
 
     def initialize(newGame)
+        @avatarList = Dir[AssetManager.assetsDir() + "/avatar_big/*.png"];
+        @avatarIndex = 0;
+
         window = Window.window();
         SudokuAPI.API.timerPaused = true;
         root = Window.root;
@@ -27,7 +30,20 @@ class RegisterView
         rightButton.add(Gtk::Image.new(:file => AssetManager.assetsResource("./next.png")));
         rightButton.name = "createUserChooser";
         leftButton.name = "createUserChooser";
-        currentAvatar = Gtk::Image.new(:file => AssetManager.assetsResource("./avatar_big/professor.png"));
+
+        currentAvatar = Gtk::Image.new(:file => @avatarList[0]);
+
+        leftButton.signal_connect("clicked") {
+            index = ((@avatarIndex - 1) % @avatarList.length);
+            currentAvatar.file = @avatarList[index];
+            @avatarIndex = index;
+        }
+
+        rightButton.signal_connect("clicked") {
+            index = ((@avatarIndex + 1) % @avatarList.length);
+            currentAvatar.file = @avatarList[index];
+            @avatarIndex = index;
+        }
 
         chooseAvatarBox.add(leftButton);
         chooseAvatarBox.add(currentAvatar);
@@ -46,6 +62,7 @@ class RegisterView
         buttonConfirm.sensitive = false;
         buttonConfirm.signal_connect("clicked") {
             #TODO save user
+            SudokuAPI.API.username = nameEntry.text;
             root.remove(mainPanel);
             sudokuPanel.show_all();
         }

@@ -1,6 +1,8 @@
 class UserDialog
     private_class_method :new
 
+    @avatarList;
+
     def UserDialog.display()
         new();
     end

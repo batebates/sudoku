@@ -44,7 +44,8 @@ class Window
         CSSStyle.init();
         OverlayManager.hide();
 
-        if(true)#Debug
+        noUserFound = false;
+        if(noUserFound)#Debug
             RegisterView.display(false);
         end
 
