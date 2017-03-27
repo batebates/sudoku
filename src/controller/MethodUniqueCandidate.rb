@@ -7,12 +7,10 @@ class MethodUniqueCandidate < Method
 	def demoMethod
 		#TODO
 		#Assistant dit "Voici une démonstration"
-		fileName = "DeathStar"
 		#Sauvegarde de la grille actuelle
-		@sudoku.saveSudoku(fileName)
 		gridDemo = "005000070400000400000000000000404000000000000000000000000000000000000000000000000"
 		#Chargement et affichage de la grille de démo
-		@sudoku.loadSudoku(gridDemo)
+		SudokuAPI.API.initSudoku(gridDemo);
 		#"grisation" des cases non importantes
 		#Assistant dit on va s'occuper de cette ligne
 		#Mise en valeur de la case
@@ -25,6 +23,8 @@ class MethodUniqueCandidate < Method
 	def onSudokuMethod
 		#TODO
 		#Detection d'un endroit où appliquer la méthode
+		
 		#Coloration de la case + explication de l'assistant
 	end
+
 end
