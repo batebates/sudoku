@@ -23,6 +23,7 @@ class Window
         Header.init();
 
         # Split window into 2 parts : Left (Grid + Assistant) & Right (Menu)
+        @@rootContainer = Gtk::Box.new(:horizontal);
         mainContainer = Gtk::Grid.new();
         mainContainer.name = "background";
 
@@ -30,8 +31,9 @@ class Window
         ## Right
         Menu.init(mainContainer);
 
+        @@rootContainer.add(mainContainer);
         gridOverlay = Gtk::Overlay.new();
-        gridOverlay.add(mainContainer);
+        gridOverlay.add(@@rootContainer);
         OverlayManager.init(gridOverlay);
 
         #gridOverlay.show_all();
@@ -41,6 +43,11 @@ class Window
 
         CSSStyle.init();
         OverlayManager.hide();
+
+        if(true)#Debug
+            RegisterView.display(false);
+        end
+
         Gtk.main();
     end
 
@@ -55,8 +62,11 @@ class Window
         return leftContainer;
     end
 
-
     def Window.window()
         @@window;
+    end
+
+    def Window.root()
+        @@rootContainer;
     end
 end

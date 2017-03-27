@@ -16,6 +16,8 @@ require "./view/Menu.rb"
 require "./view/OptionsDialog.rb"
 require "./view/UserDialog.rb"
 require "./view/configDialog.rb"
+require "./view/RegisterView.rb"
+
 require "./model/AssetManager.rb"
 require "./model/Generator.rb"
 require "./model/Caze.rb"
