@@ -41,7 +41,7 @@ class SudokuAPI
 		return @@API;
 	end
 
-	def setSudoku(sudoku, sudokuStart, sudokuCompleted)
+	def setSudoku(sudoku, sudokuStart = "", sudokuCompleted = "")
 		@timer = 0
 		@sudoku = sudoku
 		@sudokuStart = sudokuStart
@@ -95,10 +95,10 @@ class SudokuAPI
 	#
 	#===Paramètres :
 	#* <b>y</b> : int : indique la coordonnée de l'axe des ordonnées de la ligne
-	def row(x)
+	def row(y)
 		tab = Array.new()
 		9.times do |i|
-			tab<<@sudoku.cazeAt(x,i)
+			tab<<@sudoku.cazeAt(i,y)
 		end
 		return tab
 	end
@@ -107,10 +107,10 @@ class SudokuAPI
 	#
 	#===Paramètres :
 	#* <b>x</b> : int : indique la coordonnée de l'axe des abscisses de la colonne
-	def column(y)
+	def column(x)
 		tab = Array.new()
 		9.times do |i|
-			tab<<@sudoku.cazeAt(i,y)
+			tab<<@sudoku.cazeAt(x,i)
 		end
 		return tab
 	end
@@ -121,7 +121,7 @@ class SudokuAPI
 	#* <b>x</b> : int : indique la coordonnée de l'axe des abscisses de la case
 	#* <b>y</b> : int : indique la coordonnée de l'axe des ordonnées de la case
 	def rowColumn(x,y)
-		return self.row(x) + self.column(y)
+		return self.row(y) + self.column(x)
 	end
 
 	#===Renvoie la région d'une case d'un sudoku dans un tableau
@@ -225,7 +225,7 @@ class SudokuAPI
 		sudoku = fileContent[0]
 		sudokuCompleted = fileContent[1]
 		sudokuStart = fileContent[2]
-		
+
 		self.setSudoku(Sudoku.create(sudoku), Sudoku.create(sudokuStart), Sudoku.create(sudokuCompleted))
 
 		loadFile.close
@@ -304,7 +304,7 @@ class SudokuAPI
 		changed(true);
 		notify_observers("username", @username);
 	end
-	
+
 	def hintMode=()
 
 	end
