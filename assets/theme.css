@@ -75,7 +75,8 @@
     padding-bottom: 4px;
 }
 
-#configEntry{
+#configEntry
+{
     background-color: #e6f2ff;
     border-bottom: 1px solid #b3d9ff;
     border-top: 2px solid #ffffff;
@@ -85,7 +86,42 @@
     padding-bottom: 4px;
 }
 
-#userDialog{
+#userDialog, #newUserDialog
+{
     border-radius: 6px;
     border: 2px outset #666666;
+}
+
+#createUserTitle
+{
+    color: #333333;
+    font-size: 24px;
+}
+
+#createUserChooser
+{
+    border: 0px solid black;
+    border-radius: 0px;
+    background-image: none;
+}
+
+#createUserChooser:hover
+{
+    border-radius: 10px;
+    background-image: -gtk-gradient (linear, left top, left bottom, from (#b3d9ff), to (#b3d9ff));
+}
+
+#createUserChooser:active
+{
+    background-image: -gtk-gradient (linear, left top, left bottom, from (#99ccff), to (#99ccff));
+}
+
+#createUserError
+{
+    color: red;
+}
+
+#createUserErrorValid
+{
+    color: green;
 }
