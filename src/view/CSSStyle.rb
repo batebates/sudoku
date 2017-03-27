@@ -6,17 +6,17 @@ class CSSStyle
     end
 
     def initialize()
-        @provider = Gtk::CssProvider.new();
-        @provider.load(:path  => AssetManager.assetsResource("theme.css"));
-        apply_style(Window.window(), @provider);
+        @@provider = Gtk::CssProvider.new();
+        @@provider.load(:path  => AssetManager.assetsResource("theme.css"));
+        CSSStyle.apply_style(Window.window());
     end
 
-    def apply_style(widget, provider)
+    def CSSStyle.apply_style(widget)
         style_context = widget.style_context
-        style_context.add_provider(provider, Gtk::StyleProvider::PRIORITY_USER)
+        style_context.add_provider(@@provider, Gtk::StyleProvider::PRIORITY_USER)
         return unless widget.respond_to?(:children)
         widget.children.each do |child|
-            apply_style(child, provider)
+            apply_style(child)
         end
     end
 end

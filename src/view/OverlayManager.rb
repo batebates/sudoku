@@ -20,13 +20,29 @@ class OverlayManager
             y = i / 3;
 
             buttonChoice = Gtk::Button.new();
+            buttonLabel = Gtk::Label.new((i + 1).to_s);
+            buttonBox = Gtk::Box.new(:horizontal, 0);
+            buttonBox.add(buttonLabel);
 
             buttonChoice.set_border_width(2);
-            buttonChoice.set_size_request(20, 20);
-            buttonChoice.add(Gtk::Label.new((i + 1).to_s));
+            buttonChoice.set_size_request(32, 32);
+            buttonChoice.add(buttonBox);
             buttonChoice.signal_connect("clicked") { |widget|
                 onClick(widget);
             }
+            if(x == 0)
+                buttonChoice.set_margin_left(4);
+            elsif(x == 2)
+                buttonChoice.set_margin_right(4);
+            end
+
+            if(y == 0)
+                buttonChoice.set_margin_top(4);
+            elsif(y == 2)
+                buttonChoice.set_margin_bottom(4);
+            end
+
+
             sudokuChoiceGrid.attach(buttonChoice, x, y, 1, 1);
             @@buttons.push(buttonChoice);
         end

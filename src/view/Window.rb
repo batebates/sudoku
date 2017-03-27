@@ -14,6 +14,7 @@ class Window
 
         @@window = Gtk::Window.new("Sudoku");
         @@window.set_size_request(@@WIDTH, @@HEIGHT);
+        @@window.set_resizable(false);
 
         # On window close event
         @@window.signal_connect("delete-event") { |widget|
@@ -22,6 +23,7 @@ class Window
         Header.init();
 
         # Split window into 2 parts : Left (Grid + Assistant) & Right (Menu)
+        @@rootContainer = Gtk::Box.new(:horizontal);
         mainContainer = Gtk::Grid.new();
         mainContainer.name = "background";
 
@@ -29,8 +31,9 @@ class Window
         ## Right
         Menu.init(mainContainer);
 
+        @@rootContainer.add(mainContainer);
         gridOverlay = Gtk::Overlay.new();
-        gridOverlay.add(mainContainer);
+        gridOverlay.add(@@rootContainer);
         OverlayManager.init(gridOverlay);
 
         #gridOverlay.show_all();
@@ -40,6 +43,12 @@ class Window
 
         CSSStyle.init();
         OverlayManager.hide();
+
+        noUserFound = false;
+        if(noUserFound)#Debug
+            RegisterView.display(false);
+        end
+
         Gtk.main();
     end
 
@@ -54,8 +63,11 @@ class Window
         return leftContainer;
     end
 
-
     def Window.window()
         @@window;
+    end
+
+    def Window.root()
+        @@rootContainer;
     end
 end

@@ -14,13 +14,18 @@ require "./view/OverlayManager.rb"
 require "./view/Header.rb"
 require "./view/Menu.rb"
 require "./view/OptionsDialog.rb"
+require "./view/UserDialog.rb"
+require "./view/ConfigDialog.rb"
+require "./view/RegisterView.rb"
 
 require "./model/AssetManager.rb"
 require "./model/Generator.rb"
 require "./model/Caze.rb"
 require "./model/Sudoku.rb"
+require "./model/ConfigEntry.rb"
 
 require "./controller/SudokuAPI.rb"
+require "./controller/Config.rb"
 =begin
 require "./controller/Method.rb"
 require "./controller/MethodCrossReduce.rb"
@@ -30,6 +35,7 @@ require "./controller/MethodTwinsAndTriplets.rb"
 require "./controller/MethodUniqueCandidate.rb"
 =end
 
-myGenerator = Generator.new(0)
-SudokuAPI.API.setSudoku(Sudoku.create(myGenerator.to_s), Sudoku.create(myGenerator.to_sPlayer), Sudoku.create(myGenerator.to_sCorrect));
+Config.registerConfigs();
+Config.load();
+SudokuAPI.API.setSudoku(Sudoku.create(Generator.new(0).to_s));
 Window.init();

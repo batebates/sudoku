@@ -1,4 +1,4 @@
-#<b>Auteur  :</b> Decrand Baptiste,Zerbane Mehdi
+#<b>Auteur  :</b> Decrand Baptiste,Zerbane Mehdi,Laville Martin
 #
 #<b>Version :</b> 1.0
 #
@@ -24,11 +24,13 @@ class SudokuAPI
 	@assistantMessage
 	@timerPaused
 	@timer
+	@username
 
 	attr_reader :sudoku
 	attr_reader :sudokuCompleted
 	attr_reader :sudokuStart
 	attr_reader :assistantMessage
+	attr_reader :username
 	attr_accessor :timerPaused, :timer
 
 #==========================
@@ -54,7 +56,6 @@ class SudokuAPI
         row(y).each{ |caze|
             candidats.delete(caze.value);
         }
-
         column(x).each{ |caze|
             candidats.delete(caze.value);
         }
@@ -94,10 +95,10 @@ class SudokuAPI
 	#
 	#===Paramètres :
 	#* <b>y</b> : int : indique la coordonnée de l'axe des ordonnées de la ligne
-	def row(y)
+	def row(x)
 		tab = Array.new()
 		9.times do |i|
-			tab<<@sudoku.cazeAt(i,y)
+			tab<<@sudoku.cazeAt(x,i)
 		end
 		return tab
 	end
@@ -106,10 +107,10 @@ class SudokuAPI
 	#
 	#===Paramètres :
 	#* <b>x</b> : int : indique la coordonnée de l'axe des abscisses de la colonne
-	def column(x)
+	def column(y)
 		tab = Array.new()
 		9.times do |i|
-			tab<<@sudoku.cazeAt(x,i)
+			tab<<@sudoku.cazeAt(i,y)
 		end
 		return tab
 	end
@@ -120,7 +121,7 @@ class SudokuAPI
 	#* <b>x</b> : int : indique la coordonnée de l'axe des abscisses de la case
 	#* <b>y</b> : int : indique la coordonnée de l'axe des ordonnées de la case
 	def rowColumn(x,y)
-		return self.row(y) + self.column(x)
+		return self.row(x) + self.column(y)
 	end
 
 	#===Renvoie la région d'une case d'un sudoku dans un tableau
@@ -141,13 +142,21 @@ class SudokuAPI
         return tab
 	end
 
+	#===Renvoie la Nème région d'un sudoku dans un tableau
+	#
+	#===Paramètres :
+	#* <b>n</b> : int : indique la région voulue (de 0 à 8)
+	def squareN(n)
+		square(n*3%9, n/3*3)
+	end
+
 	#===Renvoie la region,la colonne suivi de la ligne d'un case du sudoku dans un tableau
 	#
 	#===Paramètres :
 	#* <b>x</b> : int : indique la coordonnée de l'axe des abscisses de la case
 	#* <b>y</b> : int : indique la coordonnée de l'axe des ordonnées de la case
 	def squareRowColumn(x,y)
-		return square(x,y) + row(x) + column(y)
+		return square(x,y) + row(y) + column(x)
 	end
 
 	#===Affiche le message de l'assistant
@@ -175,7 +184,6 @@ class SudokuAPI
 		for i in 0..80
 			saveFile.write self.sudoku.cazeAt(i%9,i/9).getValue()
 		end
-
 		saveFile.write "\n"
 
 		for i in 0..80
@@ -203,6 +211,7 @@ class SudokuAPI
 	#===Paramètres :
 	#* <b>fileName</b> : string : nom du fichier à charger
 
+
 	def loadSudoku(fileName)
 		loadFile = File.new("save_files/"+fileName, "r")
 
@@ -226,6 +235,49 @@ class SudokuAPI
 		end
 	end
 
+	#===Retourne l'unité demandée sous forme de tableau
+	#
+	#===Paramètres :
+	#* <b>type</b> : type d'unité, 0 pour une ligne, 1 pour une colonne, 2 pour une région
+	#* <b>numero</b> : numero de la region dans l'ordre logique
+	def getUnite(type, numero)
+		if type == 0
+			tmp = row(numero)
+		elsif type == 1
+			tmp = column(numero)
+		else
+			tmp = square(numero)
+		end
+	end
+
+	#===Retourne le nombre de fois où un candidat est présent dans une unité
+	#
+	#===Paramètres :
+	# <b>unite</b> : tableau d'une unité
+	def nbCandidate(unite)
+		nbCandid = Array.new(9);
+		unite.each{ |caze|
+			candidats = candidateCaze(caze.x, caze.y)
+			candidats.each{ |candid|
+				nbCandid[candid]+=1
+			}
+		}
+		return nbCandidate
+	end
+
+	#===Regarde si une unité possède un candidat présent une seule fois
+	#
+	#===Paramètres :
+	#* <b>nbCandid</b> : prend un tableau retourné par nbCandidate
+	def uniqueCandidate(nbCandid)
+		res = false
+		nbCandid.each{ |nb|
+			if nb == 1
+				res = true
+			end
+		}
+		return res
+	end
     #===Renvoie la case correspondant aux coordonnées
 	#
 	#===Paramètres :
@@ -241,7 +293,19 @@ class SudokuAPI
 	#* <b>x</b> : int : indique la coordonnée de l'axe des abscisses de la case
 	#* <b>y</b> : int : indique la coordonnée de l'axe des ordonnées de la case
 	#* <b>val</b> : int : indique la nouvelle valeur de la case à modifier
+
 	def setValue(x,y,val)
 		 return cazeAt(x, y).value=(val)
+	end
+
+	def username=(username)
+		@username = username;
+
+		changed(true);
+		notify_observers("username", @username);
+	end
+	
+	def hintMode=()
+
 	end
 end
