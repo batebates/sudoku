@@ -9,7 +9,7 @@ class MethodTwinsAndTriplets
 	def demoMethod
 		fileName = "DeathStar"
 		#@sudoku.saveSudoku(fileName)
-		gridDemo = "300008109010905070200001000732000060000000000060000792000400007040806030903700008"	
+		gridDemo = "375648129010925070200371000732089060000267000060034792020453917147896235953712648"	
 
 		#new_ = SudokuAPI.API.setSudoku(gridDemo);
 		new_=SudokuAPI.API.setSudoku(Sudoku.create(gridDemo));
