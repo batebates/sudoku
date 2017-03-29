@@ -18,6 +18,7 @@ class MethodTwinsAndTriplets < Method
 				#new_.sudoku.cazeAt(x,y).color=CL_NUMBER_LOCKED;
 			end
 		end
+		
 		#Assistant dit on va s'occuper de cette ligne
 		new_assistantMessage=("nous allons nous occuper de cette ligne");
 
