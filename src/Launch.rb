@@ -3,6 +3,7 @@ require "gio2"
 require "gdk3"
 require "pango"
 require "observer"
+require "yaml"
 
 require "./view/Window.rb"
 require "./view/GridView.rb"

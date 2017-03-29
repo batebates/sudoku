@@ -34,11 +34,38 @@ class Config
         @@entryList = entryList;
     end
 
-    def Config.save()
+    def Config.save() 
+    #La liste de config clonée et modifiée via le Dialog
+        configSaveFile = File.new("save_files/config.yml","w")
+        
+        if(!configSaveFile.closed?)
+            puts "Fichier de configuration ouvert\n"
+        end
+
+        @@entryList.each{ |conf|
+            saveConf = conf.clone();
+            if(saveConf.type == "color")
+                saveConf.value = [saveConf.value.red, saveConf.value.green, saveConf.value.blue];
+            end
+            configSaveFile.puts YAML::dump(saveConf)
+            configSaveFile.puts ""
+        }   
+        configSaveFile.close
+
+        if(configSaveFile.closed?)
+            puts "Sauvegarde de la configuration terminée"
+        end
 
     end
 
     def Config.load()
+        aa = Array.new
+        configLoadFile = File.open("save_files/config.yml","r").each do |ob|
+            aa << YAML::load(ob)
+        end
 
+        configLoadFile.close
+
+        puts aa
     end
 end

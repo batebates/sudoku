@@ -3,6 +3,10 @@ class Colors
         return Gdk::Color.new(r * 65535, g * 65535, b * 65535);
     end
 
+    def Colors.clone(color) 
+    	return Gdk::Color.new(color.red, color.green, color.blue)
+    end
+
     CL_BLANK = Colors.toGdkColor(1,1,1);
     CL_HIGHLIGHT = Colors.toGdkColor(0.81,0.92,0.92);
     CL_HIGHLIGHT_LINE = Colors.toGdkColor(0.88,1,1);
