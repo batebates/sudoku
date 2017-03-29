@@ -20,14 +20,17 @@ class SudokuAPI
 #== Variables d'instance ==
 	@sudoku
 	@sudokuCompleted
+	@sudokuStart
 	@assistantMessage
 	@timerPaused
 	@timer
+	@username
 
 	attr_reader :sudoku
 	attr_reader :sudokuCompleted
 	attr_reader :sudokuStart
 	attr_reader :assistantMessage
+	attr_reader :username
 	attr_accessor :timerPaused, :timer
 
 #==========================
@@ -38,11 +41,11 @@ class SudokuAPI
 		return @@API;
 	end
 
-	def setSudoku(sudoku)
+	def setSudoku(sudoku, sudokuStart = "", sudokuCompleted = "")
 		@timer = 0
 		@sudoku = sudoku
-		@sudokuStart = sudoku
-		@sudokuCompleted = sudoku;
+		@sudokuStart = sudokuStart
+		@sudokuCompleted = sudokuCompleted;
 
 		changed(true);
 		notify_observers("newgrid", sudoku);
@@ -172,25 +175,25 @@ class SudokuAPI
 	#* <b>fileName</b> : string : nom du fichier de sauvegarde
 
 	def saveSudoku(fileName)
-		saveFile = File.open("save_files/" + fileName, "w")
+		saveFile = File.new("save_files/"+fileName, "w")
 
 		if(!saveFile.closed?)
 			print "Fichier de sauvegarde ouvert\n"
 		end
 
 		for i in 0..80
-			saveFile.write self.sudokuStart[i].getValue()
+			saveFile.write self.sudoku.cazeAt(i%9,i/9).getValue()
 		end
 		saveFile.write "\n"
 
 		for i in 0..80
-			saveFile.write self.sudoku[i].getValue()
+			saveFile.write self.sudokuCompleted.cazeAt(i%9,i/9).getValue()
 		end
 
 		saveFile.write "\n"
 
 		for i in 0..80
-			saveFile.write self.sudokuCompleted[i].getValue()
+			saveFile.write self.sudokuStart.cazeAt(i%9,i/9).getValue()
 		end
 
 		saveFile.write "\n"
@@ -210,21 +213,20 @@ class SudokuAPI
 
 
 	def loadSudoku(fileName)
-		loadFile = File.open(fileName, "r")
+		loadFile = File.new("save_files/"+fileName, "r")
 
 		if(!loadFile.closed?)
 			print "Fichier à charger ouvert\n"
 		end
 
-		fileContent = IO.readlines(fileName)
+		fileContent = IO.readlines(loadFile)
 
 		# Grids
 		sudoku = fileContent[0]
 		sudokuCompleted = fileContent[1]
+		sudokuStart = fileContent[2]
 
-		@sudoku = sudoku
-		@sudokuStart = sudoku
-		@sudokuCompleted = sudokuCompleted
+		self.setSudoku(Sudoku.create(sudoku), Sudoku.create(sudokuStart), Sudoku.create(sudokuCompleted))
 
 		loadFile.close
 
@@ -297,6 +299,13 @@ class SudokuAPI
 
 	def setValue(x,y,val)
 		 return cazeAt(x, y).value=(val)
+	end
+
+	def username=(username)
+		@username = username;
+
+		changed(true);
+		notify_observers("username", @username);
 	end
 
 	def hintMode=()

@@ -40,7 +40,7 @@ class SquareView
     def render(squareView, idget, ctx, x, y)
 
         #White background
-        ctx.set_source_rgb(@caze.color.red, @caze.color.green, @caze.color.blue);
+        setColor(ctx, @caze.color);
         ctx.rectangle(0, 0, @@size, @@size);
         ctx.fill();
 
@@ -70,9 +70,9 @@ class SquareView
 
         #Text
         if(@caze.locked)
-            ctx.set_source_rgb(Colors::CL_NUMBER_LOCKED.red, Colors::CL_NUMBER_LOCKED.green, Colors::CL_NUMBER_LOCKED.blue);
+            setColor(ctx, Colors::CL_NUMBER_LOCKED);
         else
-            ctx.set_source_rgb(Colors::CL_NUMBER.red, Colors::CL_NUMBER.green, Colors::CL_NUMBER.blue);
+            setColor(ctx, Colors::CL_NUMBER);
         end
 
         if(GridView.isHintMode() && @caze.value == 0)
@@ -152,10 +152,16 @@ class SquareView
     def onHover(event, widget)
 
         lastColor = @caze.color;
-        (SudokuAPI.API.row(@caze.y) + SudokuAPI.API.column(@caze.x) + SudokuAPI.API.square(@caze.x, @caze.y)).uniq.each{|value|
+        hoverList = [];
+
+        hoverList += (SudokuAPI.API.row(@caze.y) + SudokuAPI.API.column(@caze.x)) unless !Config.getValue("show_line_highlight");
+        hoverList += (SudokuAPI.API.square(@caze.x, @caze.y)) unless !Config.getValue("show_square_highlight");
+
+        hoverList.uniq.each{|value|
             value.lastColor = value.color;
-            value.color = value.x == @caze.x || value.y == @caze.y ? Colors::CL_HIGHLIGHT_LINE : Colors::CL_HIGHLIGHT_SQUARE;
+            value.color = (value.x == @caze.x || value.y == @caze.y) && Config.getValue("show_line_highlight") ? Colors::CL_HIGHLIGHT_LINE : Colors::CL_HIGHLIGHT_SQUARE;
         };
+
         @caze.lastColor = lastColor;
         @caze.color = Colors::CL_HIGHLIGHT;
     end
@@ -190,5 +196,9 @@ class SquareView
 
     def SquareView.selectedSquareView()
         @@selectedSquareView;
+    end
+
+    def setColor(ctx, color)
+        ctx.set_source_rgb(color.red / 65355.0, color.green / 65355.0, color.blue / 65355.0);
     end
 end

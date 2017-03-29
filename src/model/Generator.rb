@@ -53,7 +53,7 @@ class Generator
 
 		@gridPlayer = @grid
 		puts "Done ! #{@grid.to_s}";
-		return @grid;
+		return self;
 	end
 
 	#====Methode d'utilisation====
@@ -163,6 +163,10 @@ class Generator
 
 	def to_sCorrect()
 		return @gridCorrect.join("")
+	end
+	
+	def to_sPlayer()
+		return @gridPlayer.join("")
 	end
 
 	def get_grid()
@@ -295,6 +299,14 @@ class Generator
 		@grid[i+9],   @grid[i+10],  @grid[i+11],
 		@grid[i+18],  @grid[i+19],  @grid[i+20]
 		] - [0]
+	end
+
+	def getCorrect()
+		return @gridCorrect
+	end
+
+	def getPlayer()
+		return @gridPlayer
 	end
 
 end
