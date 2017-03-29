@@ -37,6 +37,6 @@ require "./controller/MethodUniqueCandidate.rb"
 =end
 
 Config.registerConfigs();
-Config.load();
+#Config.load();
 SudokuAPI.API.setSudoku(Sudoku.create(Generator.new(0).to_s));
 Window.init();

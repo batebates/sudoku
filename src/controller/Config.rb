@@ -18,9 +18,14 @@ class Config
     end
 
     def Config.getValue(key)
+        entry = Config.getEntry(key);
+        return entry != nil ? entry.value : nil;
+    end
+
+    def Config.getEntry(key)
         @@entryList.each { |value|
             if(value.name == key)
-                return value.value;
+                return value;
             end
         }
         return nil;
@@ -36,20 +41,21 @@ class Config
 
     def Config.save() 
     #La liste de config clonée et modifiée via le Dialog
-        configSaveFile = File.new("save_files/config.yml","w")
+        configSaveFile = File.new("save_files/"+SudokuAPI.API.username+".yml","w")
         
         if(!configSaveFile.closed?)
             puts "Fichier de configuration ouvert\n"
         end
 
+        configArray = [];
         @@entryList.each{ |conf|
             saveConf = conf.clone();
             if(saveConf.type == "color")
                 saveConf.value = [saveConf.value.red, saveConf.value.green, saveConf.value.blue];
             end
-            configSaveFile.puts YAML::dump(saveConf)
-            configSaveFile.puts ""
-        }   
+            configArray.push(saveConf);
+        }
+        configSaveFile.puts YAML::dump(configArray)
         configSaveFile.close
 
         if(configSaveFile.closed?)
@@ -59,13 +65,24 @@ class Config
     end
 
     def Config.load()
-        aa = Array.new
-        configLoadFile = File.open("save_files/config.yml","r").each do |ob|
-            aa << YAML::load(ob)
+
+        if(!File.file?("save_files/"+SudokuAPI.API.username+".yml"))
+            return;
         end
 
-        configLoadFile.close
+        configLoadFile = YAML.load_file("save_files/"+SudokuAPI.API.username+".yml")
+        configLoadFile.each {|config|
+            oldConf = Config.getEntry(config.name);
 
-        puts aa
+            if(oldConf != nil)
+                if(oldConf.type == "color")
+                    oldConf.value.red = config.value[0]
+                    oldConf.value.green = config.value[1]
+                    oldConf.value.blue = config.value[2]
+                else
+                    oldConf.value = config.value;
+                end
+            end
+        }
     end
 end
