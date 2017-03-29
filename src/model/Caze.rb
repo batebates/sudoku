@@ -18,24 +18,24 @@ class Caze
     @color
     @locked
     @lastColor
-    attr_reader :x, :y, :value, :color, :locked
-    attr_accessor :lastColor
+    attr_reader :x, :y, :value, :color
+    attr_accessor :lastColor, :locked
 
 #==========================
 
-	def initialize(x,y,value)
+	def initialize(x,y,value,locked)
 		@x = x.to_i
         @y = y.to_i
         @value = value.to_i
         @color = Colors::CL_BLANK
         @lastColor = @color
-        @locked = @value != 0;
+        @locked = locked;
 	end
 
 	private_class_method :new
 
-	def Caze.create(x,y,value)
-		new(x,y,value)
+	def Caze.create(x,y,value,locked)
+		new(x,y,value,locked)
 	end
 
     def getValue()
