@@ -21,17 +21,16 @@ require "./model/Caze.rb"
 require "./model/Sudoku.rb"
 
 require "./controller/SudokuAPI.rb"
-=begin
 
-require "./controller/MethodCrossReduce.rb"
+#require "./controller/MethodCrossReduce.rb"
 require "./controller/MethodGroupIsolated.rb"
 require "./controller/MethodInteractionsRegion.rb"
 require "./controller/MethodTwinsAndTriplets.rb"
 
-=end
+
 
 require "./controller/Methode.rb"
 require "./controller/MethodUniqueCandidate.rb"
 
 
-testd = MethodUniqueCandidate.new;
+testd = MethodTwinsAndTriplets.new.demoMethod;
