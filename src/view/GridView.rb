@@ -46,5 +46,9 @@ class GridView
                 value.updateCazeReference();
             }
         end
+	if(type == "hint") 
+	 	@@isHintMode = data;
+	end
+
     end
 end
