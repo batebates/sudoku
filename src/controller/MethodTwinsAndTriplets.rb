@@ -5,23 +5,25 @@ class MethodTwinsAndTriplets
 	end
 
 	def demoMethod
+		SudokuAPI.API.saveSudoku("old");
 		gridDemo = "375648129010925070200371000732089060000267000060034792020453917147896235953712648"	
 
-		new_=SudokuAPI.API
-		new_.setSudoku(Sudoku.create(gridDemo),Sudoku.create(gridDemo),Sudoku.create(gridDemo));
 
-		new_.assistantMessage=("Bienvenue dans la démo");
-		sleep(0.5);
+		SudokuAPI.API.setSudoku(Sudoku.create(gridDemo),Sudoku.create(gridDemo),Sudoku.create(gridDemo));
 
-		new_.cazeAt(0,4).color=Colors::CL_NUMBER_LOCKED;
-		new_.cazeAt(2,4).color=Colors::CL_NUMBER_LOCKED;
-		new_.cazeAt(6,4).color=Colors::CL_NUMBER;
-		new_.cazeAt(8,4).color=Colors::CL_NUMBER;
+		SudokuAPI.API.assistantMessage=("Bienvenue dans la démo");
 
-		new_.enableHint(true);
 
-		new_.assistantMessage=("Les 2 candidats 4, alignés dans cette région (en rouge), donnent la possibilité de supprimer les 4 dans les autres régions de cette ligne (en gris)");
-		sleep(2);
+		SudokuAPI.API.cazeAt(0,4).color=Colors::CL_NUMBER_LOCKED;
+		SudokuAPI.API.cazeAt(2,4).color=Colors::CL_NUMBER_LOCKED;
+		SudokuAPI.API.cazeAt(6,4).color=Colors::CL_NUMBER;
+		SudokuAPI.API.cazeAt(8,4).color=Colors::CL_NUMBER;
+
+		SudokuAPI.API.enableHint(true);
+
+		SudokuAPI.API.assistantMessage=("Les 2 candidats 4, alignés dans cette région (en rouge), donnent la possibilité de supprimer les 4 dans les autres régions de cette ligne (en gris)");
+		
+		SudokuAPI.API.loadSudoku("old");
 
 		
 
