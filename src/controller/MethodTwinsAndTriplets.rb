@@ -1,8 +1,13 @@
 class MethodTwinsAndTriplets
 	
-	@step = 0
+
 	@type = "textMethod"
-	
+	@step = 0
+
+	def initialize()
+		@step,@type=0,"textMethod"
+
+	end
 	def textMethod
 		@type = "textMethod"
 		SudokuAPI.API.assistantMessage=("Cette méthode nous permet de déduire dans quelle partie d'une région peut se trouver un symbole. En effet il n'est pas toujours évident de découvrir dès le début l'emplacement final et définitif. Si un candidat se trouve uniquement par exemple dans la dernière ligne d'une région il se trouvera donc obligatoirement dans cette ligne.")
@@ -30,8 +35,8 @@ class MethodTwinsAndTriplets
 		SudokuAPI.API.assistantMessage=("Les 2 candidats 4, alignés dans cette région (en rouge), donnent la possibilité de supprimer les 4 dans les autres régions de cette ligne (en gris)");
 		
 		SudokuAPI.API.loadSudoku("old");
+
 		@step+=1
-		
 	end
 
 	def onSudokuMethod
@@ -39,10 +44,10 @@ class MethodTwinsAndTriplets
 		SudokuAPI.API.assistantMessage=("Nous commençons par rechercher un candidat présent uniquement peut importe le nombre de fois dans une ligne dans une région");
 
 
-
-
-
 		@step+=1
+
+
+
 
 	end
 
