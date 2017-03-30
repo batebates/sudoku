@@ -287,6 +287,9 @@ class SudokuAPI
 		return nbCandidate
 	end
 
+
+	
+
 	#===Regarde si une unité possède un candidat présent une seule fois
 	#
 	#===Paramètres :
