@@ -1,4 +1,4 @@
-class MethodInteractionsRegion < Method
+class MethodInteractionsRegion < Methode
 
 	def textMethod
 		return "Dans le cas où un candidat est unique dans une unité, on peut en déduire que la case où il est présent contient bien ce candidat car il ne peut être nul part ailleurs."
@@ -7,7 +7,7 @@ class MethodInteractionsRegion < Method
 	def demoMethod
 		#TODO
 		gridDemo = "005000070400000400000000000000404000000000000000000000000000000000000000000000000"
-			
+
 		#load grille demo
 		#grisation des cases non importantes
 		#Assistant dit on va s'occuper de cette ligne

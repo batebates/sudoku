@@ -2,7 +2,7 @@ class GridView
     private_class_method :new
 
     @@squareViewList;
-    @@isHintMode = false;
+    @@isHintMode = true;
 
     def GridView.init(parent)
         new(parent);
