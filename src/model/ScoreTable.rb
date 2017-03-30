@@ -83,7 +83,6 @@ class ScoreTable
 	#
 	def scoreAff()
 		cpt=9
-
 		while cpt >= 0 do
 			puts self.score_tableau[cpt]
 			cpt-=1

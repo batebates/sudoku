@@ -57,9 +57,12 @@ class ScoreDialog
 		@scoreList = sCore.scores()
 		#end load
 
+		cpt = @scoreList.size
+		p cpt
 
-		for aka in @scoreList
-			@mainVB.pack_start(createScoreLine(aka))
+		while cpt > 0 do
+			cpt -= 1
+			@mainVB.pack_start(createScoreLine(@scoreList[cpt]))
 		end
 
 	end
