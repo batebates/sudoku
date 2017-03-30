@@ -96,6 +96,12 @@ class SudokuAPI
 	end
 
 
+	def setColorUnite(unite,color)
+		unite.each{ |caze|
+			setColor(caze.x, caze.y, color)
+		}
+	end
+
 	#===Execute la methode
 	#
 	#===Paramètres :
@@ -269,7 +275,7 @@ class SudokuAPI
 		elsif type == 1
 			tmp = column(numero)
 		else
-			tmp = square(numero)
+			tmp = squareN(numero)
 		end
 	end
 
@@ -285,7 +291,7 @@ class SudokuAPI
 				nbCandid[candid]+=1
 			}
 		}
-		return nbCandidate
+		return nbCandid
 	end
 
 	#===Retourne la case où un candidat est présent une seule fois
