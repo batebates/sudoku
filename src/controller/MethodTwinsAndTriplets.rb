@@ -1,6 +1,4 @@
 class MethodTwinsAndTriplets
-include Observable
-	@enable = false
 	
 	def textMethod
 		SudokuAPI.API.assistantMessage("Cette méthode nous permet de déduire dans quelle partie d'une région peut se trouver un symbole. En effet il n'est pas toujours évident de découvrir dès le début l'emplacement final et définitif. Si un candidat se trouve uniquement par exemple dans la dernière ligne d'une région il se trouvera donc obligatoirement dans cette ligne.")
@@ -29,10 +27,9 @@ include Observable
 
 	end
 
-	def onSudokuMethod
+	def onSudokuMethod(sudokuAPI)
+		sudokuAPI.assistantMessage=("Nous commençons par rechercher un candidat présent uniquement peut importe le nombre de fois dans une ligne dans une région");
 		
-		#Detection d'un endroit où appliquer la méthode
-		#Coloration de la case + explication de l'assistant
 	end
 
 	
