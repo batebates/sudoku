@@ -29,7 +29,7 @@ class Sudoku
 		str.split("").each_with_index { |value, index|
 			x = index % x_length;
 			y = index / x_length;
-			@tcaze[x][y] = Caze.create(x, y, value.to_i);
+			@tcaze[x][y] = Caze.create(x, y, value.to_i, false);
 		}
 	end
 

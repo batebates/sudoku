@@ -56,11 +56,19 @@ class Menu
 		}
 		
 		bSaveGrid.signal_connect("clicked"){
-			SudokuAPI.API.saveSudoku("Michel")
+			if(SudokuAPI.API.username == nil)
+				print("Créez un profil avant de charger")
+			else
+				SudokuAPI.API.saveSudoku(SudokuAPI.API.username)
+			end
 		}
 		
 		bLoadGrid.signal_connect("clicked"){
-			SudokuAPI.API.loadSudoku("Michel")
+			if(SudokuAPI.API.username == nil)
+				print("Créez un profil avant de charger")
+			else
+				SudokuAPI.API.loadSudoku(SudokuAPI.API.username)
+			end
 		}
 
 
