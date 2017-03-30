@@ -34,9 +34,14 @@ class MethodTwinsAndTriplets
 		
 	end
 
-	def onSudokuMethod(sudokuAPI)
+	def onSudokuMethod
 		@type = "onSudokuMethod"
-		sudokuAPI.assistantMessage=("Nous commençons par rechercher un candidat présent uniquement peut importe le nombre de fois dans une ligne dans une région");
+		SudokuAPI.API.assistantMessage=("Nous commençons par rechercher un candidat présent uniquement peut importe le nombre de fois dans une ligne dans une région");
+
+
+
+
+
 		@step+=1
 
 	end
