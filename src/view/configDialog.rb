@@ -61,6 +61,16 @@ class ConfigDialog
 		for modConf in @entryNewList
 			@mainVB.pack_start(createEntry(modConf))
 		end
+
+		hBox = Gtk::Box.new(:horizontal, 2)
+		hBox.name = "configEntry"
+		scoreBtn = Gtk::Button.new(:label=>"Tableau des Scores")
+		hBox.pack_start(scoreBtn,:expand=>true,:fill=>true,:padding=>2)
+		@mainVB.pack_start(hBox)
+		scoreBtn.signal_connect("clicked"){
+			ScoreDialog.init()
+		}
+
 	end
 
 	def createEntry(modConf)
