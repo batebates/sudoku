@@ -9,14 +9,31 @@ class Menu
 		myGenerator = nil
 
 		bNewGrid = createButton("grid.png", "Nouvelle partie");
+		bEasy = Gtk::Button.new(:label => "Facile");
+		bMedium = Gtk::Button.new(:label => "Moyen");
+		bHard = Gtk::Button.new(:label => "Difficile");
+		addPopHoverToButton(bNewGrid, :left, bEasy, bMedium, bHard);
+		bEasy.signal_connect("clicked") {
+			generateSudoku(0);
+			hidePopover(bEasy);
+		}
+		bMedium.signal_connect("clicked") {
+			generateSudoku(1);
+			hidePopover(bMedium);
+		}
+		bHard.signal_connect("clicked") {
+			generateSudoku(2);
+			hidePopover(bHard);
+		}
+
 		bSaveGrid = createButton("save.png", "Sauvegarder partie");
 		bLoadGrid = createButton("load.png", "Charger partie");
 
-		bMethod1 = createButton("info.png", "Méthode 1");
-		bMethod2 = createButton("info.png", "Méthode 2");
-		bMethod3 = createButton("info.png", "Méthode 3");
-		bMethod4 = createButton("info.png", "Méthode 4");
-		bMethod5 = createButton("info.png", "Méthode 5");
+		bMethod1 = createMethodButton("info.png", "Cross Reduce", "MethodCrossReduce");
+		bMethod2 = createMethodButton("info.png", "Group Isolated", "MethodGroupIsolated");
+		bMethod3 = createMethodButton("info.png", "Interactions Regions", "MethodInteractionsRegions");
+		bMethod4 = createMethodButton("info.png", "Twins & Triplets", "MethodeTwinsAndTriplets");
+		bMethod5 = createMethodButton("info.png", "Unique candidate", "MethodUniqueCandidate");
 
 		bOptions = createButton("gears.png", "Options");
 		bQuit = createButton("exit.png", "Quitter");
@@ -50,11 +67,6 @@ class Menu
 			ConfigDialog.init()
 		}
 
-		bNewGrid.signal_connect("clicked"){
-			myGenerator = Generator.new(0)
-			SudokuAPI.API.setSudoku(Sudoku.create(myGenerator.to_s), Sudoku.create(myGenerator.to_sPlayer), Sudoku.create(myGenerator.to_sCorrect));
-		}
-		
 		bSaveGrid.signal_connect("clicked"){
 			if(SudokuAPI.API.username == nil)
 				print("Créez un profil avant de charger")
@@ -62,7 +74,7 @@ class Menu
 				SudokuAPI.API.saveSudoku(SudokuAPI.API.username)
 			end
 		}
-		
+
 		bLoadGrid.signal_connect("clicked"){
 			if(SudokuAPI.API.username == nil)
 				print("Créez un profil avant de charger")
@@ -101,5 +113,57 @@ class Menu
 		box.pack_start(label, :expand => true, :fill => true, :padding => 0);
 
 		return box;
+	end
+
+	def addPopHoverToButton(widget, pos, *childs)
+		popover = Gtk::Popover.new(widget);
+		popover.position = pos;
+		container = Gtk::Box.new(:vertical, 0);
+		childs.each{ |child|
+			container.add(child);
+			child.margin = 2;
+			child.show();
+		}
+
+		container.show();
+		popover.add(container);
+
+		widget.signal_connect("clicked"){ |button|
+			popover.visible = true;
+		}
+	end
+
+	def hidePopover(widget)
+		widget.parent.parent.visible = false;
+	end
+
+	def generateSudoku(difficulty)
+		myGenerator = Generator.new(difficulty);
+		SudokuAPI.API.setSudoku(Sudoku.create(myGenerator.to_s), Sudoku.create(myGenerator.to_sPlayer), Sudoku.create(myGenerator.to_sCorrect));
+	end
+
+	def createMethodButton(icon, text, className)
+		button = createButton(icon, text);
+		bText = Gtk::Button.new(:label => "Texte assistant");
+		bDemo = Gtk::Button.new(:label => "Grille de démo");
+		bSudoku = Gtk::Button.new(:label => "Grille actuelle");
+		addPopHoverToButton(button, :left, bText, bDemo, bSudoku);
+
+		bText.signal_connect("clicked") {
+			methode = Object::const_get(className).new;
+			methode.textMethod();
+		}
+
+		bDemo.signal_connect("clicked") {
+			methode = Object::const_get(className).new;
+			methode.demoMethod();
+		}
+
+		bSudoku.signal_connect("clicked") {
+			methode = Object::const_get(className).new;
+			methode.onSudokuMethod();
+		}
+
+		return button;
 	end
 end

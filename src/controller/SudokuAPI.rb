@@ -288,7 +288,32 @@ class SudokuAPI
 		return nbCandidate
 	end
 
+	#===Retourne la case où un candidat est présent une seule fois
+	#
+	#===Paramètres :
+	#* <b>unite</b> : Unite où on cherche la case présentant un candidat unique
+	def cazeUniqueCandidate(unite)
+		candidate = 0
+		nbCandid = 0
 
+		while (candidate < 9 && caze != nil) do
+			i = 0
+			while(i < unite.length && nbCandid < 2) do
+				if(candidateCaze(unite[i].x, unite[i].y).include?(candidate))
+					nbCandid += 1
+					if(nbCandid == 0)
+						caze = unite[i]
+					else
+						caze = nil
+					end
+				end
+				i+=1
+			end
+			nbCandid = 0
+			candidate+=1
+		end
+		return caze
+	end
 	
 
 	#===Regarde si une unité possède un candidat présent une seule fois
