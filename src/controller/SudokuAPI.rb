@@ -41,14 +41,26 @@ class SudokuAPI
 		return @@API;
 	end
 
-	def setSudoku(sudoku, sudokuStart = "", sudokuCompleted = "")
+	def setSudoku(sudoku, sudokuStart = nil, sudokuCompleted = nil)
 		@timer = 0
 		@sudoku = sudoku
 		@sudokuStart = sudokuStart
 		@sudokuCompleted = sudokuCompleted;
-
+		if(@sudokuStart != nil)
+			lockSudoku()
+		end
 		changed(true);
 		notify_observers("newgrid", sudoku);
+	end
+	
+	def lockSudoku()
+		for i in 0...9
+			for j in 0...9
+				if(@sudokuStart.hasValue?(i,j))
+					@sudoku.cazeAt(i,j).locked=true
+				end
+			end
+		end
 	end
 
     def candidateCaze(x,y)
@@ -213,25 +225,35 @@ class SudokuAPI
 
 
 	def loadSudoku(fileName)
-		loadFile = File.new("save_files/"+fileName, "r")
+		filePath = "save_files/#{fileName}"
+		if(File.file?(filePath))
+			loadFile = File.new(filePath, "r")
 
-		if(!loadFile.closed?)
-			print "Fichier à charger ouvert\n"
-		end
+			if(!loadFile.closed?)
+				print "Fichier à charger ouvert\n"
+			else
+				print "Fichier non existant"
+			end
 
-		fileContent = IO.readlines(loadFile)
+			fileContent = IO.readlines(loadFile)
 
-		# Grids
-		sudoku = fileContent[0]
-		sudokuCompleted = fileContent[1]
-		sudokuStart = fileContent[2]
+			# Grids
+			sudoku = fileContent[0]
+			sudokuCompleted = fileContent[1]
+			sudokuStart = fileContent[2]
 
-		self.setSudoku(Sudoku.create(sudoku), Sudoku.create(sudokuStart), Sudoku.create(sudokuCompleted))
+			self.setSudoku(Sudoku.create(sudoku), Sudoku.create(sudokuStart), Sudoku.create(sudokuCompleted))
 
-		loadFile.close
+			loadFile.close
 
-		if(loadFile.closed?)
-			print "Chargement terminé !\n"
+			if(loadFile.closed?)
+				print "Chargement terminé !\n"
+			end
+			
+			return true
+		else
+			print("Fichier à charger non existant")
+			return false
 		end
 	end
 
@@ -264,6 +286,9 @@ class SudokuAPI
 		}
 		return nbCandidate
 	end
+
+
+	
 
 	#===Regarde si une unité possède un candidat présent une seule fois
 	#

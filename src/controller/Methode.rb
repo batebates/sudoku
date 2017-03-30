@@ -1,14 +1,4 @@
-class Method
-
-	@sudokuAPI
-	@grid
-	attr_reader :sudokuAPI
-	attr_reader :grid
-
-	def initialize(sudokuAPI)
-		self.sudokuAPI = sudokuAPI
-		self.grid = sudokuAPI.sudoku.tcaze
-	end
+class Methode
 
 	def textMethod
 		raise "Ceci est une methode abstraite. This is an abstact method.";
