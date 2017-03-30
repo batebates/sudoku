@@ -23,6 +23,14 @@ class Header
             UserDialog.display();
         };
 
+        testButton = Gtk::Button.new(:label => "Suivant");
+        testButton.signal_connect("clicked") {
+            methode = SudokuAPI.API.methode;
+            if(methode != nil)
+                methode.update();
+            end
+        }
+
         @timeLabel = Gtk::Label.new("00:00");
         @timeLabel.name = "headerLabel";
 
@@ -31,6 +39,7 @@ class Header
 
         header.pack_start(userButton);
         header.pack_start(@userLabel);
+        header.pack_start(testButton);
         header.pack_end(@timeLabel);
         header.pack_end(timeIcon);
 
