@@ -192,6 +192,7 @@ class SudokuAPI
 			return column(numUnite)
 		else
 			return squareN(numUnite)
+		end
 	end
 
 	#===Affiche le message de l'assistant
