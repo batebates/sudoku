@@ -14,23 +14,20 @@ require "./view/OverlayManager.rb"
 require "./view/Header.rb"
 require "./view/Menu.rb"
 require "./view/OptionsDialog.rb"
+require "./view/UserDialog.rb"
+require "./view/ConfigDialog.rb"
+require "./view/RegisterView.rb"
 
 require "./model/AssetManager.rb"
 require "./model/Generator.rb"
 require "./model/Caze.rb"
 require "./model/Sudoku.rb"
+require "./model/ConfigEntry.rb"
 
 require "./controller/SudokuAPI.rb"
-
-#require "./controller/MethodCrossReduce.rb"
-require "./controller/MethodGroupIsolated.rb"
-require "./controller/MethodInteractionsRegion.rb"
+require "./controller/Config.rb"
 require "./controller/MethodTwinsAndTriplets.rb"
 
-
-
-require "./controller/Methode.rb"
-require "./controller/MethodUniqueCandidate.rb"
-
-
+Config.registerConfigs();
+Config.load();
 testd = MethodTwinsAndTriplets.new.demoMethod;
