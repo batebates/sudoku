@@ -23,6 +23,7 @@ require "./model/Generator.rb"
 require "./model/Caze.rb"
 require "./model/Sudoku.rb"
 require "./model/ConfigEntry.rb"
+require "./model/ProfilManager.rb"
 
 require "./controller/SudokuAPI.rb"
 require "./controller/Config.rb"
@@ -37,6 +38,14 @@ require "./controller/MethodUniqueCandidate.rb"
 
 Config.registerConfigs();
 Config.load();
+
 myGenerator = Generator.new(0)
+
+=begin HOW TO USE PROFILS
+myProfil = ProfilManager.new()
+myProfil.loadFile()
+puts "Last found profile : " + myProfil.dernierJoueur()
+=end
+
 SudokuAPI.API.setSudoku(Sudoku.create(myGenerator.to_s), Sudoku.create(myGenerator.to_sPlayer), Sudoku.create(myGenerator.to_sCorrect));
 Window.init();
