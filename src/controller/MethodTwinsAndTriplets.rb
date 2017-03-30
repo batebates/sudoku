@@ -32,6 +32,7 @@ class MethodTwinsAndTriplets
 
 		SudokuAPI.API.enableHint(true);
 
+
 		SudokuAPI.API.assistantMessage=("Les 2 candidats 4, alignés dans cette région (en rouge), donnent la possibilité de supprimer les 4 dans les autres régions de cette ligne (en gris)");
 		
 		SudokuAPI.API.loadSudoku("old");

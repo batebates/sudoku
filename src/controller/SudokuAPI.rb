@@ -26,13 +26,14 @@ class SudokuAPI
 	@timer
 	@username
 	@hintenable
+	@methode
 
 	attr_reader :sudoku
 	attr_reader :sudokuCompleted
 	attr_reader :sudokuStart
 	attr_reader :assistantMessage
 	attr_reader :username
-	attr_accessor :timerPaused, :timer
+	attr_accessor :timerPaused, :timer, :methode
 
 #==========================
 
@@ -53,7 +54,7 @@ class SudokuAPI
 		changed(true);
 		notify_observers("newgrid", sudoku);
 	end
-	
+
 	def lockSudoku()
 		for i in 0...9
 			for j in 0...9
@@ -256,7 +257,7 @@ class SudokuAPI
 			if(loadFile.closed?)
 				print "Chargement terminé !\n"
 			end
-			
+
 			return true
 		else
 			print("Fichier à charger non existant")
@@ -320,7 +321,7 @@ class SudokuAPI
 		end
 		return caze
 	end
-	
+
 
 	#===Regarde si une unité possède un candidat présent une seule fois
 	#

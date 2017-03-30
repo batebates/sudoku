@@ -151,16 +151,22 @@ class Menu
 
 		bText.signal_connect("clicked") {
 			methode = Object::const_get(className).new;
+			SudokuAPI.API.methode = methode;
+			hidePopover(bText);
 			methode.textMethod();
 		}
 
 		bDemo.signal_connect("clicked") {
 			methode = Object::const_get(className).new;
+			SudokuAPI.API.methode = methode;
+			hidePopover(bDemo);
 			methode.demoMethod();
 		}
 
 		bSudoku.signal_connect("clicked") {
 			methode = Object::const_get(className).new;
+			SudokuAPI.API.methode = methode;
+			hidePopover(bSudoku);
 			methode.onSudokuMethod();
 		}
 
