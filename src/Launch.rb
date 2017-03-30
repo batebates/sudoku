@@ -37,12 +37,7 @@ require "./controller/MethodUniqueCandidate.rb"
 =end
 
 Config.registerConfigs();
-<<<<<<< HEAD
-#Config.load();
-SudokuAPI.API.setSudoku(Sudoku.create(Generator.new(0).to_s));
-=======
 Config.load();
 myGenerator = Generator.new(0)
 SudokuAPI.API.setSudoku(Sudoku.create(myGenerator.to_s), Sudoku.create(myGenerator.to_sPlayer), Sudoku.create(myGenerator.to_sCorrect));
->>>>>>> origin/lenrenko
 Window.init();
