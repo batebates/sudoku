@@ -12,33 +12,32 @@ class Methode
 		raise "Ceci est une methode abstraite. This is an abstact method.";
 	end
 
-	#===Retourne un tableau de 9 cases indiquant le nombre de fois où chaque candidat est présent dans l'unité
+	#===Retourne le nombre de fois où un candidat est présent dans une unité
 	#
 	#===Paramètres :
-	#* <b>unite</b> : unité à traiter
+	# <b>unite</b> : tableau d'une unité
 	def nbCandidate(unite)
-		tab = Array.new()
-		unite.each{ |g|
-            1.upto(9) do |elt|
-            	if(g[elt.to_s])
-            		tab[elt]+=1
-            	end
-            end
-        }
-        return tab
+		nbCandid = Array.new(9);
+		unite.each{ |caze|
+			candidats = candidateCaze(caze.x, caze.y)
+			candidats.each{ |candid|
+				nbCandid[candid]+=1
+			}
+		}
+		return nbCandidate
 	end
 
-	#===Indique si une unite comprend un candidat présent une seule fois
+	#===Regarde si une unité possède un candidat présent une seule fois, si c'est le cas, retourne le candidat en question, retourne 0 sinon
 	#
 	#===Paramètres :
-	#* <b>unite</b> : unité à traiter
-	def uniqueCandidate(unite)
-		tab = nbCandidate(unite)
-		tab.each{ |c|
-			if(c == 1)
-				return true
+	#* <b>nbCandid</b> : prend un tableau retourné par nbCandidate
+	def uniqueCandidate(nbCandid)
+		res = 0
+		nbCandid.each{ |nb|
+			if nb == 1
+				res = nb
 			end
 		}
-		return false
+		return res
 	end
 end

@@ -82,6 +82,16 @@ class SudokuAPI
 		return @sudoku.cazeAt(x,y).color;
 	end
 
+	#===Modifie la couleur d'une unite
+	#
+	#===Paramètres :
+	#* <b>x</b> : int : indique l'unite a modifier
+	#* <b>color</b> : int : indique la nouvelle couleur de la case à modifier
+	def setColorUnite(unite, color)
+		unite.each{ |caze|
+			setColor(caze.x, caze.y, color)
+		}
+	end
 
 	#===Execute la methode
 	#
@@ -129,7 +139,6 @@ class SudokuAPI
 	#===Paramètres :
 	#* <b>x</b> : int : indique la coordonnée de l'axe des abscisses de la case
 	#* <b>y</b> : int : indique la coordonnée de l'axe des ordonnées de la case
-	#* <b>val</b> : int : indique la nouvelle valeur de la case à modifier
 	def square(x,y)
 		x = (x / 3).to_i * 3
 		y = (y / 3).to_i * 3
@@ -157,6 +166,20 @@ class SudokuAPI
 	#* <b>y</b> : int : indique la coordonnée de l'axe des ordonnées de la case
 	def squareRowColumn(x,y)
 		return square(x,y) + row(y) + column(x)
+	end
+
+	#===Renvoie une unité du tableau
+	#
+	#===Paramètres :
+	#* <b>typeUnite</b> : int : indique le type d'unité souhaité, 0 pour une ligne, 1 pour une colonne, 2 sinon
+	#* <b>nbUnite</b> : int : indique quelle unité on souhaite obtenir
+	def unite(typeUnite, numUnite)
+		if(typeUnite == 0)
+			return row(numUnite)
+		elsif(typeUnite == 1)
+			return column(numUnite)
+		else
+			return squareN(numUnite)
 	end
 
 	#===Affiche le message de l'assistant
@@ -249,38 +272,10 @@ class SudokuAPI
 			tmp = square(numero)
 		end
 	end
-
-	#===Retourne le nombre de fois où un candidat est présent dans une unité
-	#
-	#===Paramètres :
-	# <b>unite</b> : tableau d'une unité
-	def nbCandidate(unite)
-		nbCandid = Array.new(9);
-		unite.each{ |caze|
-			candidats = candidateCaze(caze.x, caze.y)
-			candidats.each{ |candid|
-				nbCandid[candid]+=1
-			}
-		}
-		return nbCandidate
-	end
-
+	
 
 	
 
-	#===Regarde si une unité possède un candidat présent une seule fois
-	#
-	#===Paramètres :
-	#* <b>nbCandid</b> : prend un tableau retourné par nbCandidate
-	def uniqueCandidate(nbCandid)
-		res = false
-		nbCandid.each{ |nb|
-			if nb == 1
-				res = true
-			end
-		}
-		return res
-	end
     #===Renvoie la case correspondant aux coordonnées
 	#
 	#===Paramètres :
