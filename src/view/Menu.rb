@@ -32,7 +32,7 @@ class Menu
 		bMethod1 = createMethodButton("info.png", "Cross Reduce", "MethodCrossReduce");
 		bMethod2 = createMethodButton("info.png", "Group Isolated", "MethodGroupIsolated");
 		bMethod3 = createMethodButton("info.png", "Interactions Regions", "MethodInteractionsRegions");
-		bMethod4 = createMethodButton("info.png", "Twins & Triplets", "MethodeTwinsAndTriplets");
+		bMethod4 = createMethodButton("info.png", "Twins & Triplets", "MethodTwinsAndTriplets");
 		bMethod5 = createMethodButton("info.png", "Unique candidate", "MethodUniqueCandidate");
 
 		bOptions = createButton("gears.png", "Options");
