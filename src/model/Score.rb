@@ -1,6 +1,6 @@
 # Un score contient le nom du joueur,
 class Score
-
+    include Comparable
     #@nom_Joueur
     #@scores
     #@temps
@@ -19,8 +19,7 @@ class Score
     def Score.creer(nom_Joueur, scores)
       new(nom_Joueur,scores)
     end
-
-
+    
     def initialize(nom_Joueur,scores)
       @nom_Joueur = nom_Joueur
       @scores = scores
@@ -50,7 +49,10 @@ class Score
        return "pseudo #{@nom_Joueur} | #{@scores}"
      end
 
-     
+    
+    def <=>(other)
+        self.scores <=> other.scores
+    end
 
 
 end #end class

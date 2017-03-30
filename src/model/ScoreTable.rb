@@ -64,6 +64,7 @@ class ScoreTable
 	def scoreInsert(scoreToInsert, index)
 		self.score_tableau.insert(index, scoreToInsert)
 		self.score_tableau.shift()
+		@score_tableau.sort
 	end
 
 	#===cherche et insert un score dans le tableau, à sa place
@@ -75,6 +76,7 @@ class ScoreTable
 		if(index > -1) then
 			self.scoreInsert(scoreToInsert, index)
 		end
+		@score_tableau.sort
 	end
 
 	#===Affiche le tableau de score en ordre décroissant
@@ -101,7 +103,7 @@ class ScoreTable
 		#for cpt in 0...10
 		#	scoreFile.write (self.score_tableau[cpt].getNom()+":"+self.score_tableau[cpt].getScore().to_s()+"\n")
 		#end		
-
+		@score_tableau.sort
 		scoreFile.puts YAML::dump(@score_tableau)
 		scoreFile.close()
 
@@ -122,20 +124,18 @@ class ScoreTable
 		
 		scoreLoadFile.each{ |scL|
 			@loadedTableau.push(Score.creer(scL.nom_Joueur,scL.scores))
-		}		
-
-		self.scoreAff()
+		}
 	end
 
 	def scores()
 		if(@loadedTableau == nil)
 			return 1;
 		end
+		@loadedTableau.sort_by {|sc| sc.scores}
 		return @loadedTableau
 	end
 
 end
 
 sC = ScoreTable.build()
-sC.scoreInsertTab(Score.creer("Len",2000))
 sC.scoreSave

@@ -1,6 +1,9 @@
 ---
 - !ruby/object:Score
   nom_Joueur: Valentin
+  scores: 10
+- !ruby/object:Score
+  nom_Joueur: Valentin
   scores: 20
 - !ruby/object:Score
   nom_Joueur: Valentin
@@ -26,6 +29,3 @@
 - !ruby/object:Score
   nom_Joueur: Valentin
   scores: 100
-- !ruby/object:Score
-  nom_Joueur: Len
-  scores: 2000

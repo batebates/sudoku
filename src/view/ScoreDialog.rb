@@ -4,7 +4,6 @@ class ScoreDialog
 	@mainVB
 
 	@scoreList
-	@list
 
 	def ScoreDialog.init()
 		new()
@@ -21,7 +20,6 @@ class ScoreDialog
 		@mainVB.name = "mainVB"
 
 		#Init
-		initList()
 		initScore()
 		#End Init
 
@@ -41,41 +39,42 @@ class ScoreDialog
 
 	end
 
-	def initList
-		scrollWin = Gtk::ScrolledWindow.new
-		scrollWin.set_policy(:automatic,:automatic)
+	def initScore()
+		hBox = Gtk::Box.new(:horizontal,0)
+		pseuLab = Gtk::Label.new("Pseudo")
+		scoLab = Gtk::Label.new("Score")
+
+		hBox.pack_start(pseuLab, :expand=>true, :fill=>true, :padding=>2)
+		hBox.pack_start(scoLab, :expand=>true, :fill=>false, :padding=>2)
 		
-		@list = Gtk::ListStore.new(String, String)
+		hBox.name = "scoreHeader"
 
-		pseuCol = Gtk::TreeViewColumn.new("Pseudo",Gtk::CellRendererText.new,{:text=>0})
-		scoCol = Gtk::TreeViewColumn.new("Score",Gtk::CellRendererText.new,{:text=>0})
+		@mainVB.pack_start(hBox)
 
-		scoCol.set_sort_column_id(0)
-		pseuCol.set_sort_column_id(0)
+		#score load
+		sCore = ScoreTable.build()
+		sCore.scoreLoad()
+		@scoreList = sCore.scores()
+		#end load
 
-		treeView = Gtk::TreeView.new(@list)
 
-		treeView.append_column(pseuCol)
-		treeView.append_column(scoCol)
+		for aka in @scoreList
+			@mainVB.pack_start(createScoreLine(aka))
+		end
 
-		treeView.selection.set_mode(:single)
-
-		scrollWin.add_with_viewport(treeView)
-		@mainVB.pack_start(scrollWin)
 	end
 
-	def initScore
-		sC = ScoreTable.build()
-		sC.scoreLoad()
-		cp = 1;
+	def createScoreLine(score)
+		hBox = Gtk::Box.new(:horizontal,2)
+		hBox.name = "score"
 
-		@scoreList = sC.scores()
-		p @list
-		@scoreList.each { |sc|
+		pseuLab = Gtk::Label.new(score.getNom)
+		scoLab = Gtk::Label.new(score.getScore.to_s)
 
-			@list.append.set_value(,sc.getScore.to_s)
-			cp+=1
-		}
+		hBox.pack_start(pseuLab, :expand=>true, :fill=>true, :padding=>2)
+		hBox.pack_start(scoLab, :expand=>true, :fill=>false, :padding=>2)
+
+		return hBox
 	end
 
 end
