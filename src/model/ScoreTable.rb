@@ -1,4 +1,4 @@
-load "Score.rb"
+
 
 #== Utilisation :
 #

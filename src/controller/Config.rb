@@ -40,7 +40,6 @@ class Config
     end
 
     def Config.save() 
-    #La liste de config clonée et modifiée via le Dialog
         configSaveFile = File.new("save_files/"+SudokuAPI.API.username+".yml","w")
         
         if(!configSaveFile.closed?)
