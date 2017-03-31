@@ -363,13 +363,17 @@ class SudokuAPI
 		notify_observers("username", @username);
 	end
 
-	def hintMode=()
-
-	end
-
 	def enableHint(enable)
 		@hintenable = enable
 		changed(true);
 		notify_observers("hint", @hintenable);
+	end
+
+	def setCazeInvisible(x,y)
+
+	end
+
+	def setEditable(x,y)
+
 	end
 end

@@ -9,4 +9,5 @@ class Colors
     CL_HIGHLIGHT_SQUARE = Colors.toGdkColor(0.90,0.80,1);
     CL_NUMBER_LOCKED = Colors.toGdkColor(0.5,0,0);
     CL_NUMBER = Colors.toGdkColor(0.5,0.5,0.5);
+    CL_HIGHLIGHT_METHOD = Colors.toGdkColor(0.25,0.75,0.1)
 end
