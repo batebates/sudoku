@@ -65,10 +65,10 @@ class MethodUniqueCandidate < Methode
 			i+=1
 		end
 
-		candidat = candidatTmp
-		unite = uniteTmp
-
-		print unite
+		if candidatTmp != 0
+			candidat = candidatTmp
+			unite = uniteTmp
+		end
 
 
 		#dans le cas où rien n'a été détecté

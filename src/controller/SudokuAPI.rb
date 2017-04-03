@@ -304,33 +304,26 @@ class SudokuAPI
 		nbCandid = 0
 		cazeUnique = false
 		while (candidate < 10 && cazeUnique == false) do
-			print candidate
-			print " : "
 			i = 0
 			while(i < unite.length && nbCandid < 2) do
 				if(candidateCaze(unite[i].x, unite[i].y).include?(candidate))
 					if(nbCandid == 0)
 						caze = unite[i]
 						cazeUnique = true
-						print "test 5,"
 					else
 						caze = nil
 						cazeUnique = false
-						print "test 4, "
 					end
 					nbCandid += 1
-					print "test 1, "
 				else
-					print "test 3, "
 				end
 
 				i+=1
 			end
 			nbCandid = 0
 			candidate += 1
-			print "test 2\n"
 		end
-		print "\n"
+		print candidate-1
 		return caze
 	end
 
