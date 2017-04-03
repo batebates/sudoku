@@ -29,7 +29,7 @@ class Menu
 		bSaveGrid = createButton("save.png", "Sauvegarder partie");
 		bLoadGrid = createButton("load.png", "Charger partie");
 
-		bMethod1 = createMethodButton("info.png", "Cross Reduce", "MethodCrossReduce");
+		bMethod1 = createMethodButton("info.png", "Unicite", "MethodUnicite");
 		bMethod2 = createMethodButton("info.png", "Group Isolated", "MethodGroupIsolated");
 		bMethod3 = createMethodButton("info.png", "Interactions Regions", "MethodInteractionsRegions");
 		bMethod4 = createMethodButton("info.png", "Twins & Triplets", "MethodTwinsAndTriplets");
