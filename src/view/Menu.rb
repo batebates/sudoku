@@ -1,11 +1,14 @@
 class Menu
 	private_class_method :new
 
+	@menu
+
 	def Menu.init(parent)
 		new(parent);
 	end
 
 	def initialize(parent)
+		SudokuAPI.API.add_observer(self);
 		myGenerator = nil
 
 		bNewGrid = createButton("grid.png", "Nouvelle partie");
@@ -28,6 +31,7 @@ class Menu
 
 		bSaveGrid = createButton("save.png", "Sauvegarder partie");
 		bLoadGrid = createButton("load.png", "Charger partie");
+		bScoreTable = createButton("scoreboard.png", "Tableau des Scores");
 
 		bMethod1 = createMethodButton("info.png", "Cross Reduce", "MethodCrossReduce");
 		bMethod2 = createMethodButton("info.png", "Group Isolated", "MethodGroupIsolated");
@@ -43,6 +47,7 @@ class Menu
 		vBox.pack_start(bNewGrid);
 		vBox.pack_start(bSaveGrid);
 		vBox.pack_start(bLoadGrid);
+		vBox.pack_start(bScoreTable);
 		vBox.pack_start(createTitle("Méthodes"));
 		vBox.pack_start(bMethod1);
 		vBox.pack_start(bMethod2);
@@ -83,6 +88,7 @@ class Menu
 			end
 		}
 
+		@menu = vBox;
 
 		parent.attach(vBox, 1, 0, 1, 1);
 	end
@@ -171,5 +177,16 @@ class Menu
 		}
 
 		return button;
+	end
+
+	def update(type, data)
+		if(type == "hideMenu")
+			@menu.name = data ? "rightMenuHidden" : "rightMenu"
+			@menu.children.each { |widget|
+				if(widget.instance_of?(Gtk::Button))
+					widget.sensitive=!data
+				end
+			}
+		end
 	end
 end

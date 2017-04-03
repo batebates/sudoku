@@ -8,6 +8,7 @@ class UserDialog
     end
 
     def initialize()
+        SudokuAPI.API.timerPaused = true;
         dialog = Gtk::Dialog.new(:parent => Window.window(), :title => "Utilisateurs", :flags => [:modal, :destroy_with_parent], :buttons => [["_OK", :ok]]);
         dialog.resizable = false;
         dialog.decorated = false;
@@ -129,6 +130,7 @@ class UserDialog
             #Log user
             if(userIndex != 0)
                 SudokuAPI.API.username = user;
+                SudokuAPI.API.timerPaused = false;
             else #New user
                 RegisterView.display(false);
             end

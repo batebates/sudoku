@@ -11,6 +11,7 @@ class ConfigDialog
 	end
 
 	def initialize()
+		SudokuAPI.API.timerPaused = true;
 		@confEntry = Config.entries
 		@entryNewList = Array.new
 
@@ -49,8 +50,7 @@ class ConfigDialog
 		when Gtk::ResponseType::CLOSE
 				@configDialog.destroy
 		end
-
-
+		SudokuAPI.API.timerPaused = false;
 	end
 
 	def initConf(conf)

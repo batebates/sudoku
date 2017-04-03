@@ -65,6 +65,7 @@ class RegisterView
             SudokuAPI.API.username = nameEntry.text;
             root.remove(mainPanel);
             sudokuPanel.show_all();
+            SudokuAPI.API.timerPaused = false;
         }
 
         nameEntry.signal_connect("changed"){ |d|
@@ -75,6 +76,7 @@ class RegisterView
         buttonBack.signal_connect("clicked") {
             root.remove(mainPanel);
             sudokuPanel.show_all();
+            SudokuAPI.API.timerPaused = false;
         }
 
         buttonBox.pack_start(buttonConfirm, :expand => true, :fill => true, :padding => 0);

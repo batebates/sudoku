@@ -37,7 +37,7 @@ class AssistantView
         speechBox.pack_start(speechBoxInternal, :expand => true, :fill => true, :padding => 0);
         assistantGrid.pack_start(avatarImage, :expand => false, :fill => false, :padding => 0);
         assistantGrid.pack_start(speechBox, :expand => true, :fill => true, :padding => 0);
-        parent.attach(assistantGrid, 0, 1, 1, 1);
+        parent.attach(assistantGrid, 0, 2, 1, 1);
     end
 
     def update(type, message)

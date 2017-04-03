@@ -285,7 +285,7 @@ class SudokuAPI
 	#===Paramètres :
 	# <b>unite</b> : tableau d'une unité
 	def nbCandidate(unite)
-		nbCandid = Array.new(9,0);		
+		nbCandid = Array.new(9,0);
 		unite.each{ |caze|
 			candidats = candidateCaze(caze.x, caze.y)
 			candidats.each{ |candid|
@@ -308,7 +308,7 @@ class SudokuAPI
 			print " : "
 			i = 0
 			while(i < unite.length && nbCandid < 2) do
-				if(candidateCaze(unite[i].x, unite[i].y).include?(candidate))					
+				if(candidateCaze(unite[i].x, unite[i].y).include?(candidate))
 					if(nbCandid == 0)
 						caze = unite[i]
 						cazeUnique = true
@@ -377,17 +377,51 @@ class SudokuAPI
 		notify_observers("username", @username);
 	end
 
-	def enableHint(enable)
-		@hintenable = enable
+	def setCazeInvisible(x,y,invisible=true)
+		cazeAt(x, y).invisible=(invisible)
+	end
+
+	def setHintAt(x,y,hintEnabled)
+		cazeAt(x, y).hint=(hintEnabled)
+	end
+
+	def setEditable(x,y, locked)
+		cazeAt(x, y).locked=(locked)
+	end
+
+	def showNumber(number)
+		for x in 0...9
+			for y in 0...9
+				candidats = candidateCaze(x,y);
+				if(candidats.include?(number) && !cazeAt(x, y).locked)
+					cazeAt(x, y).color=Colors::CL_HIGHLIGHT_NUMBER_HINT;
+				end
+			end
+		end
+	end
+
+	def resetColors()
+		for x in 0...9
+			for y in 0...9
+				cazeAt(x, y).color=Colors::CL_BLANK;
+			end
+		end
+	end
+
+	def addExclude(x, y, number)
+		cazeAt(x, y).excludedHint.push(number);
+	end
+
+	def removeExclude(x, y, number)
+		cazeAt(x, y).excludedHint.delete(number);
+	end
+
+	def getExclude(x, y)
+		cazeAt(x, y).excludedHint;
+	end
+
+	def hideMenu(hidden)
 		changed(true);
-		notify_observers("hint", @hintenable);
-	end
-
-	def setCazeInvisible(x,y)
-
-	end
-
-	def setEditable(x,y)
-
+		notify_observers("hideMenu", hidden);
 	end
 end
