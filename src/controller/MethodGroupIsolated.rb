@@ -1,6 +1,7 @@
 class MethodGroupIsolated < Methode
 
 	def textMethod
+		SudokuAPI.API.hideMenu(true);
 		return "Dans le cas où un candidat est unique dans une unité, on peut en déduire que la case où il est présent contient bien ce candidat car il ne peut être nul part ailleurs."
 	end
 

@@ -30,6 +30,13 @@ class OverlayManager
             buttonChoice.signal_connect("clicked") { |widget|
                 onClick(widget);
             }
+            buttonChoice.add_events(Gdk::EventMask::BUTTON_PRESS_MASK);
+            buttonChoice.signal_connect("button_press_event") { |widget, event|
+                if(event.button == 3)
+                    onFlag(widget);
+                end
+            }
+
             if(x == 0)
                 buttonChoice.set_margin_left(4);
             elsif(x == 2)
@@ -53,19 +60,34 @@ class OverlayManager
         overlay.set_overlay_pass_through(@@overlayPanel, true);
     end
 
+    def onFlag(widget)
+        square = SquareView.selectedSquareView();
+        excluded = SudokuAPI.API.getExclude(square.caze.x, square.caze.y);
+        value = OverlayManager.buttonId(widget);
+
+        if(excluded.include?(value))
+            if(square.caze.value != value)
+                SudokuAPI.API.removeExclude(square.caze.x, square.caze.y, value);
+                OverlayManager.hide();
+                OverlayManager.show();
+            end
+        else
+            SudokuAPI.API.addExclude(square.caze.x, square.caze.y, value);
+            OverlayManager.hide();
+            OverlayManager.show();
+        end
+    end
+
     def onClick(widget)
         if(widget.name == "overlayButtonHide")
             OverlayManager.hide();
             return;
         end
 
+        value = OverlayManager.buttonId(widget);
+
         square = SquareView.selectedSquareView();
-        isEraser = !widget.children[0].class.instance_methods(false).include?(:label);
-        if(isEraser)
-            SquareView.selectedSquareView().caze.insertValue(square.caze.value);
-        else
-            SquareView.selectedSquareView().caze.insertValue(widget.children[0].label.to_i);
-        end
+        SquareView.selectedSquareView().caze.insertValue(value);
         OverlayManager.hide();
     end
 
@@ -90,13 +112,18 @@ class OverlayManager
         OverlayManager.clear();
 
         possibleValues = SudokuAPI.API.candidateCaze(caze.x, caze.y);
+        excludedValues = SudokuAPI.API.getExclude(caze.x, caze.y);
 
         if(caze.value != 0)
             possibleValues.push(caze.value);
         end
 
+        if(!(caze.hint || Config.getValue("show_hint")))
+            possibleValues = [1,2,3,4,5,6,7,8,9];
+        end
+
         for i in 0...9
-            if(possibleValues.include?(i + 1))
+            if(possibleValues.include?(i + 1) && !excludedValues.include?(i + 1))
                 if(caze.value == i + 1)
                     @@buttons[i].add(Gtk::Image.new(:file => AssetManager.assetsResource("eraser.png")));
                 else
@@ -108,12 +135,22 @@ class OverlayManager
         @@overlayPanel.show_all();
 
         for i in 0...9
-            if(!possibleValues.include?(i + 1))
+            if(!possibleValues.include?(i + 1) || excludedValues.include?(i + 1))
                 @@buttons[i].name = "overlayButtonHide";
             else
                 @@buttons[i].name = "overlayButtonShow";
             end
         end
+    end
+
+    def OverlayManager.buttonId(button)
+        id = 1;
+        @@buttons.each { |widget|
+            if(widget == button)
+                return id;
+            end
+            id+=1;
+        }
     end
 
     def OverlayManager.move(x, y)
