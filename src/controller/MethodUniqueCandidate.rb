@@ -5,6 +5,7 @@ class MethodUniqueCandidate < Methode
 
 	def demoMethod
 		if(@step == nil)
+
 			@step = 0
 
 			@type = "demoMethod"
@@ -26,36 +27,26 @@ class MethodUniqueCandidate < Methode
 			 		SudokuAPI.API.cazeAt(x,y).color=Colors::CL_NUMBER_LOCKED;
 
 				end
-			end
+			end			
 
-			# unite = 0
-			# 0.upto(26) do |u|
-			# 	candidat = SudokuAPI.API.uniqueCandidate(SudokuAPI.API.nbCandidate(SudokuAPI.API.getUnite(u/9,u%9)))
-			# 	if(candidat != 0)
-			# 		unite = u
-			# 	end
-			# end
+				#Assistant dit on va s'occuper de cette ligne
+				SudokuAPI.API.assistantMessage=("Nous allons effectuer la méthode sur cette ligne")
 
+			elsif(@step == 1)
+				#Mise en valeur de la case
+				SudokuAPI.API.cazeAt(4,0).color=Colors::CL_HIGHLIGHT_METHOD;
 
-			#SudokuAPI.API.setColorUnite(unite, Colors::CL_HIGHLIGHT)
-			#Assistant dit on va s'occuper de cette ligne
-			SudokuAPI.API.assistantMessage=("Nous allons effectuer la méthode sur cette ligne")
+				#"On peut remarquer que sur cette case machin truc"
+				SudokuAPI.API.assistantMessage=("On peut remarquer que 4 est candidat dans cette case et qu'il n'est présent nul par ailleurs dans l'unité.")
 
-		elsif(@step == 1)
-			#Mise en valeur de la case
-			SudokuAPI.API.cazeAt(4,0).color=Colors::CL_HIGHLIGHT_METHOD;
+			elsif(@step == 2)
+				#affichage du chiffre
+				SudokuAPI.API.cazeAt(4,0).value=(4)
 
-			#"On peut remarquer que sur cette case machin truc"
-			SudokuAPI.API.assistantMessage=("On peut remarquer que 4 est candidat dans cette case et qu'il n'est présent nul par ailleurs dans l'unité.")
-
-		elsif(@step == 2)
-			#affichage du chiffre
-			SudokuAPI.API.cazeAt(4,0).value=(4)
-
-			SudokuAPI.API.assistantMessage=("On en déduit donc que 4 est le chiffre présent dans cette case.")
-		elsif(@step == 3)
-			SudokuAPI.API.loadSudoku("old");
-			SudokuAPI.API.enableHint(false)
+				SudokuAPI.API.assistantMessage=("On en déduit donc que 4 est le chiffre présent dans cette case.")
+			elsif(@step == 3)
+				SudokuAPI.API.loadSudoku("old");
+				SudokuAPI.API.enableHint(false)
 		end
 
 		@step+=1
@@ -63,31 +54,38 @@ class MethodUniqueCandidate < Methode
 	end
 
 	def onSudokuMethod
-		#TODO
+		SudokuAPI.API.enableHint(true)
+
 		unite = nil
-		#Detection de l'unité où appliquer la méthode
-		0.upto(26) do |u|
-			candidat = uniqueCandidate(nbCandidate(getUnite(u/9,u%9)))
-			if(candidat != 0)
-				unite = u
-			end
+		candidatTmp = 0
+		i = 0
+		while(i < 26 && candidatTmp == 0) do
+			uniteTmp = SudokuAPI.API.getUnite(i/9,i%9)
+			candidatTmp = SudokuAPI.API.uniqueCandidate(SudokuAPI.API.nbCandidate(uniteTmp))				
+			i+=1
 		end
+
+		candidat = candidatTmp
+		unite = uniteTmp
+
+		print unite
+
+
 		#dans le cas où rien n'a été détecté
 		if unite == nil
-			assistantMessage("On ne peut pas appliquer cette méthode sur la grille")
+			SudokuAPI.API.assistantMessage=("On ne peut pas appliquer cette méthode sur la grille")
 		else
-			#Mise en valeur de l'unité où la méthode va s'appliquer
-			assistantMessage("On peut appliquer la méthode sur cette unité")
-			setColorUnite(unite, CL_NUMBER_LOCKED)
+			SudokuAPI.API.assistantMessage=("On peut appliquer la méthode sur cette unité")
 
-			caze = cazeUniqueCandidate
+			caze = SudokuAPI.API.cazeUniqueCandidate(unite)
+			
+
+			SudokuAPI.API.cazeAt(caze.x,caze.y).color=Colors::CL_HIGHLIGHT_METHOD;
+			SudokuAPI.API.cazeAt(caze.x,caze.y).value=(candidat)
 
 			#Mise en valeur de la case où le candidat est unique dans l'unité
-			assistantMessage("Cette case possède un candidat qui n'est présent qu'une seule fois dans l'unité")
-			setColor(caze.x, caze.y, CL_NUMBER)
-
-			#Changement de la valeur de la case
-			cazeAt(caze.x,caze.y).value=(candidat)
+			SudokuAPI.API.assistantMessage=("Cette case possède un candidat qui n'est présent qu'une seule fois dans l'unité")
+			
 		end
 		#Coloration de la case + explication de l'assistant
 	end

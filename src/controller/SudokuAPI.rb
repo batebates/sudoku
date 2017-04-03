@@ -99,7 +99,7 @@ class SudokuAPI
 
 	def setColorUnite(unite,color)
 		unite.each{ |caze|
-			setColor(caze.x, caze.y, color)
+			cazeAt(caze.x,caze.y).color=color;
 		}
 	end
 
@@ -285,11 +285,11 @@ class SudokuAPI
 	#===Paramètres :
 	# <b>unite</b> : tableau d'une unité
 	def nbCandidate(unite)
-		nbCandid = Array.new(9);
+		nbCandid = Array.new(9,0);		
 		unite.each{ |caze|
 			candidats = candidateCaze(caze.x, caze.y)
 			candidats.each{ |candid|
-				nbCandid[candid]+=1
+				nbCandid[candid-1]+=1
 			}
 		}
 		return nbCandid
@@ -300,25 +300,37 @@ class SudokuAPI
 	#===Paramètres :
 	#* <b>unite</b> : Unite où on cherche la case présentant un candidat unique
 	def cazeUniqueCandidate(unite)
-		candidate = 0
+		candidate = 1
 		nbCandid = 0
-
-		while (candidate < 9 && caze != nil) do
+		cazeUnique = false
+		while (candidate < 10 && cazeUnique == false) do
+			print candidate
+			print " : "
 			i = 0
 			while(i < unite.length && nbCandid < 2) do
-				if(candidateCaze(unite[i].x, unite[i].y).include?(candidate))
-					nbCandid += 1
+				if(candidateCaze(unite[i].x, unite[i].y).include?(candidate))					
 					if(nbCandid == 0)
 						caze = unite[i]
+						cazeUnique = true
+						print "test 5,"
 					else
 						caze = nil
+						cazeUnique = false
+						print "test 4, "
 					end
+					nbCandid += 1
+					print "test 1, "
+				else
+					print "test 3, "
 				end
+
 				i+=1
 			end
 			nbCandid = 0
-			candidate+=1
+			candidate += 1
+			print "test 2\n"
 		end
+		print "\n"
 		return caze
 	end
 
@@ -328,10 +340,12 @@ class SudokuAPI
 	#===Paramètres :
 	#* <b>nbCandid</b> : prend un tableau retourné par nbCandidate
 	def uniqueCandidate(nbCandid)
-		res = false
+		res = 0
+		i = 0
 		nbCandid.each{ |nb|
+			i+=1
 			if nb == 1
-				res = true
+				res = i
 			end
 		}
 		return res
