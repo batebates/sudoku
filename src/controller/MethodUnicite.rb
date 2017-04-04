@@ -14,7 +14,7 @@ class MethodUnicite
     when 0
       SudokuAPI.API.assistantMessage=("Cette méthode repose sur le principe qu'un sudoku possède une unique Solution")
     when 1
-      SudokuAPI.API.assistantMessage=("Ainsi si Quatres cellules dans deux régions différentes forme un rectangle comporte une paire de candidats identique sur trois de ces cellules ")
+      SudokuAPI.API.assistantMessage=("Ainsi si quatre cellules dans deux régions différentes forment un rectangle comporte une paire de candidats identiques sur trois de ces cellules ")
     when 2
       SudokuAPI.API.assistantMessage=("Et que la quatrième comporte cette paire ainsi que d'autres candidats")
     when 3

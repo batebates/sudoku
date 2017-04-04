@@ -12,6 +12,10 @@
 
 
 class MethodUniqueCandidate < Methode
+
+	@@caze = nil
+	@@candidat = nil
+
 	def textMethod
 		SudokuAPI.API.assistantMessage=("Dans le cas où un candidat est unique dans une unité, on peut en déduire que la case où il est présent contient bien ce candidat car il ne peut être nul part ailleurs.")
 	end
@@ -19,7 +23,6 @@ class MethodUniqueCandidate < Methode
 	def demoMethod
 		if(@step == nil)
 			SudokuAPI.API.hideMenu(true)
-			SudokuAPI.API.sudokuEditable(true)
 
 			@step = 0
 
@@ -32,6 +35,8 @@ class MethodUniqueCandidate < Methode
 
 			SudokuAPI.API.setSudoku(Sudoku.create(gridDemo),Sudoku.create(gridDemo),Sudoku.create(gridDemo));
 			
+
+			SudokuAPI.API.sudokuEditable(true)
 
 			SudokuAPI.API.assistantMessage=("Voici une démonstration de la méthode du candidat unique")
 
@@ -67,48 +72,63 @@ class MethodUniqueCandidate < Methode
 			#Chargement de la grille précédente
 			SudokuAPI.API.loadSudoku("old");
 			SudokuAPI.API.hideMenu(false)
-			SudokuAPI.API.sudokuEditable(false)
-		end
+			SudokuAPI.API.assistantMessage=("Bonjour, je suis l'assistant, je suis là pour vous aider")
 
-		
+		end
 
 		@step+=1
 
 	end
 
 	def onSudokuMethod
+		
+		
+		if(@step == nil)
+			SudokuAPI.API.sudokuEditable(true)
 
-		unite = nil
-		candidatTmp = 0
-		i = 0
-		#Detection d'une unité où appliquer la méthode
-		while(i < 26 && candidatTmp == 0) do
-			uniteTmp = SudokuAPI.API.getUnite(i/9,i%9)
-			candidatTmp = SudokuAPI.API.uniqueCandidate(SudokuAPI.API.nbCandidate(uniteTmp))				
-			i+=1
-		end
+			@step = 0
+			@type = "onSudokuMethod"
 
-		if candidatTmp != 0
-			candidat = candidatTmp
-			unite = uniteTmp
-		end
+			unite = nil
+			candidatTmp = 0
+			i = 0
+			#Detection d'une unité où appliquer la méthode
+			while(i < 26 && candidatTmp == 0) do
+				uniteTmp = SudokuAPI.API.getUnite(i/9,i%9)
+				candidatTmp = SudokuAPI.API.uniqueCandidate(SudokuAPI.API.nbCandidate(uniteTmp))				
+				i+=1
+			end
 
+			if candidatTmp != 0
+				@@candidat = candidatTmp
+				unite = uniteTmp
+			end
 
-		#dans le cas où rien n'a été détecté
-		if unite == nil
-			SudokuAPI.API.assistantMessage=("On ne peut pas appliquer cette méthode sur la grille")
-		else
+			if unite == nil
+				SudokuAPI.API.assistantMessage=("On ne peut pas appliquer cette méthode sur la grille")
+				@step = 2
+			else
 
-			caze = SudokuAPI.API.cazeUniqueCandidate(unite, candidat)			
+				@@caze = SudokuAPI.API.cazeUniqueCandidate(unite, @@candidat)	
+				SudokuAPI.API.assistantMessage=("On applique la méthode sur cette unité")
+				SudokuAPI.API.highlightUnite(unite)
+			end
 
-			SudokuAPI.API.cazeAt(caze.x,caze.y).color=Colors::CL_HIGHLIGHT_METHOD;
-			SudokuAPI.API.cazeAt(caze.x,caze.y).value=(candidat)
-
-			#Mise en valeur de la case où le candidat est unique dans l'unité
-			SudokuAPI.API.assistantMessage=("Cette case possède un candidat qui n'est présent qu'une seule fois dans l'unité")
+		elsif(@step == 1)
+			SudokuAPI.API.resetColors()
+			SudokuAPI.API.cazeAt(@@caze.x,@@caze.y).color=Colors::CL_HIGHLIGHT_METHOD;
+			SudokuAPI.API.cazeAt(@@caze.x,@@caze.y).value=(@@candidat)
 			
-		end
-		#Coloration de la case + explication de l'assistant
+			SudokuAPI.API.assistantMessage=("Cette case possède un candidat qui n'est présent qu'une seule fois dans l'unité")
+		
+		elsif(@step == 2)
+			SudokuAPI.API.resetColors()
+			SudokuAPI.API.assistantMessage=("Bonjour, je suis l'assistant, je suis là pour vous aider")
+			SudokuAPI.API.sudokuEditable(false)
+		end		
+
+		@step+=1
+
 	end
 
 end
