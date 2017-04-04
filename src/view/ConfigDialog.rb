@@ -102,9 +102,11 @@ class ConfigDialog
 		elsif (modConf.type == "avatar")
 			bBox = Gtk::Box.new(:horizontal,0)
 			leftBtn = Gtk::Button.new
-			leftBtn.add(Gtk::Image.new(:file=>AssetManager.assetsResource("./back.png")))
+			leftBtn.add(Gtk::Image.new(:file=>AssetManager.assetsResource("./back-small.png")))
 			rightBtn = Gtk::Button.new
-			rightBtn.add(Gtk::Image.new(:file=>AssetManager.assetsResource("./next.png")))
+			rightBtn.add(Gtk::Image.new(:file=>AssetManager.assetsResource("./next-small.png")))
+			leftBtn.name = "createUserChooser"
+			rightBtn.name= "createUserChooser"
 
 			p modConf.value
 			@currentAvatar = Gtk::Image.new(:file=>@avatarList[modConf.value])

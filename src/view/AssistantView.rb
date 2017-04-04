@@ -58,4 +58,8 @@ class AssistantView
             }
         end
     end
+
+    def AssistantView.assignImage(image)
+      @avatarImage.file = image
+    end
 end
