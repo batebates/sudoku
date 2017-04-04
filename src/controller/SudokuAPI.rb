@@ -278,6 +278,7 @@ class SudokuAPI
 		else
 			tmp = squareN(numero)
 		end
+		return tmp
 	end
 
 	#===Retourne le nombre de fois où un candidat est présent dans une unité
@@ -358,10 +359,10 @@ class SudokuAPI
 	#* <b>x</b> : int : indique la coordonnée de l'axe des abscisses de la case
 	#* <b>y</b> : int : indique la coordonnée de l'axe des ordonnées de la case
 	#* <b>val</b> : int : indique la nouvelle valeur de la case à modifier
-
 	def setValue(x,y,val)
 		 return cazeAt(x, y).value=(val)
 	end
+	
 
 	def username=(username)
 		@username = username;
@@ -377,6 +378,8 @@ class SudokuAPI
 	def setHintAt(x,y,hintEnabled)
 		cazeAt(x, y).hint=(hintEnabled)
 	end
+	
+	
 
 	def setEditable(x,y, locked)
 		cazeAt(x, y).locked=(locked)
@@ -412,9 +415,16 @@ class SudokuAPI
 	def getExclude(x, y)
 		cazeAt(x, y).excludedHint;
 	end
+	
+	def getInclude(x,y)
+		return [1,2,3,4,5,6,7,8,9] - getExclude(x,y)
+	end
 
 	def hideMenu(hidden)
 		changed(true);
 		notify_observers("hideMenu", hidden);
 	end
+	
+
 end
+
