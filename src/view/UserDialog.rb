@@ -131,6 +131,7 @@ class UserDialog
             if(userIndex != 0)
                 SudokuAPI.API.username = user;
                 SudokuAPI.API.timerPaused = false;
+                Config.load()
             else #New user
                 RegisterView.display(false);
             end

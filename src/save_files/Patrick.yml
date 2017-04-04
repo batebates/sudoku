@@ -3,7 +3,6 @@
   name: avatar
   displayName: Avatar du profil ?
   type: avatar
-  value: 10
   newValue: 0
 - !ruby/object:ConfigEntry
   name: grid_color
@@ -11,8 +10,8 @@
   type: color
   value:
   - 65535
-  - 25995
-  - 57253
+  - 65535
+  - 65535
   newValue: 0
 - !ruby/object:ConfigEntry
   name: hover_color

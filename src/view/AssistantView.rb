@@ -2,6 +2,7 @@ class AssistantView
     private_class_method :new;
 
     @assistantText
+    @avatarImage
 
     def AssistantView.init(parent)
         new(parent);
@@ -16,7 +17,7 @@ class AssistantView
         assistantGrid.set_hexpand(true);
         assistantGrid.set_vexpand(true);
 
-        avatarImage = Gtk::Image.new(:file => AssetManager.assetsResource("assistant.png"));
+        @avatarImage = Gtk::Image.new(:file => AssetManager.assetsResource("assistant.png"));
 
         # Speech bubble
         speechBox = Gtk::Box.new(:horizontal);
@@ -35,7 +36,7 @@ class AssistantView
         speechBoxInternal.add(@assistantText);
 
         speechBox.pack_start(speechBoxInternal, :expand => true, :fill => true, :padding => 0);
-        assistantGrid.pack_start(avatarImage, :expand => false, :fill => false, :padding => 0);
+        assistantGrid.pack_start(@avatarImage, :expand => false, :fill => false, :padding => 0);
         assistantGrid.pack_start(speechBox, :expand => true, :fill => true, :padding => 0);
         parent.attach(assistantGrid, 0, 2, 1, 1);
     end
@@ -56,5 +57,11 @@ class AssistantView
                 end
             }
         end
+    end
+
+    def AssistantView.defineImage(image)
+      if(SudokuAPI.API.username != nil)
+        @avatarImage = image
+      end
     end
 end
