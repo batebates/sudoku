@@ -226,6 +226,7 @@ class SudokuAPI
 			print "Fichier de sauvegarde ouvert\n"
 		end
 
+		# Grids
 		for i in 0..80
 			saveFile.write self.sudoku.cazeAt(i%9,i/9).getValue()
 		end
@@ -242,6 +243,23 @@ class SudokuAPI
 		end
 
 		saveFile.write "\n"
+
+		# Timer
+		saveFile.write self.timer
+
+		saveFile.write "\n"
+
+		# Excluded hints
+		for i in 0..80
+			caze = self.sudoku.cazeAt(i%9,i/9)
+			if(!(caze.excludedHint.empty?)) # If there is at least one excluded hints
+				saveFile.write (i%9).to_s + " " +  (i/9).to_s + " "
+				for j in 0..caze.excludedHint.size
+					saveFile.write caze.excludedHint[j].to_s + " "
+				end
+				saveFile.write "\n"
+			end
+		end
 
 		saveFile.close
 
@@ -275,6 +293,21 @@ class SudokuAPI
 
 			self.setSudoku(Sudoku.create(sudoku), Sudoku.create(sudokuStart), Sudoku.create(sudokuCompleted))
 
+			# Attributes
+			@timer = fileContent[3].to_i
+
+			ligneActu = 4
+
+			while(ligneActu < fileContent.size)
+				ligne = fileContent[ligneActu]
+				tabLigne = ligne.gsub(/\s+/m, ' ').strip.split(" ")
+
+				for nb in 2..tabLigne.size
+					addExclude((tabLigne[0].to_i)%9, (tabLigne[1].to_i)/9, (tabLigne[nb].to_i))
+				end
+				ligneActu += 1
+			end
+
 			loadFile.close
 
 			if(loadFile.closed?)
@@ -301,6 +334,7 @@ class SudokuAPI
 		else
 			tmp = squareN(numero)
 		end
+		return tmp
 	end
 
 	#===Retourne le nombre de fois où un candidat est présent dans une unité
@@ -365,6 +399,7 @@ class SudokuAPI
 	def setValue(x,y,val)
 		 return cazeAt(x, y).value=(val)
 	end
+	
 
 	#===Permet de modifier l'username
 	#
@@ -395,6 +430,8 @@ class SudokuAPI
 	def setHintAt(x,y,hintEnabled)
 		cazeAt(x, y).hint=(hintEnabled)
 	end
+	
+	
 
 	#===Permet d'activer la visibilité des indices d'une unité
 	#
@@ -482,6 +519,10 @@ class SudokuAPI
 	def getExclude(x, y)
 		cazeAt(x, y).excludedHint;
 	end
+	
+	def getInclude(x,y)
+		return [1,2,3,4,5,6,7,8,9] - getExclude(x,y)
+	end
 
 	#===Permet d'activer/désactiver le menu
 	#
@@ -492,3 +533,4 @@ class SudokuAPI
 		notify_observers("hideMenu", hidden);
 	end
 end
+
