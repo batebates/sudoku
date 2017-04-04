@@ -1,4 +1,4 @@
-class MethodCrossReduce < Method
+class MethodCrossReduce < Methode
   #===renvoi un texte expliquant la methode de reduction par croix
   def textMethod()
     raise "Pour placer un chiffre, rayez toutes les lignes, colonnes et régions qui contiennent déjà ce chiffre. Le chiffre devient alors candidat pour toutes les cases non rayées"
@@ -14,7 +14,7 @@ class MethodCrossReduce < Method
         if ncase.getValue ==0
             tcandidats = Array.new()
             sRC = @sudokuAPI.squareRowColumn(ncase.x,ncase.y)
-            1..9 do |n|
+            1..9.each do |n|
               if(!sRC.include?(n) && ncase.candidats[n]==true)
                 tcandidats.push(n)
               end

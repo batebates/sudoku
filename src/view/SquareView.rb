@@ -69,34 +69,44 @@ class SquareView
         ctx.stroke();
 
         #Text
-        if(@caze.locked)
-            setColor(ctx, Colors::CL_NUMBER_LOCKED);
-        else
-            setColor(ctx, Colors::CL_NUMBER);
+        if(@caze.invisible)
+            return;
         end
 
-        if(GridView.isHintMode() && @caze.value == 0)
-            ctx.set_font_size(10);
-            possibilities = possibleValues = SudokuAPI.API.candidateCaze(caze.x, caze.y);
-            hintString = "";
-            ctx.set_font_size(10);
+        if(@caze.value == 0)
+            hintEnabled = (@caze.hint || Config.getValue("show_hint"));
+            possibilities = SudokuAPI.API.candidateCaze(caze.x, caze.y);
+            excludedValues = SudokuAPI.API.getExclude(caze.x, caze.y);
 
-            for i in 0..9
-                hintString += possibilities.include?(i) ? i.to_s() : " ";
+            ctx.set_font_size(12);
 
-                if(i % 3 == 0)
+            for i in 0...9
+                x = (i % 3) - 1;
+                y = (i / 3) - 1;
+
+                excluded = excludedValues.include?(i + 1);
+                if((possibilities.include?(i + 1) && hintEnabled) || excluded)
+                    setColor(ctx, Colors::CL_NUMBER);
                     ctx.select_font_face("Arial", Cairo::FONT_SLANT_NORMAL, Cairo::FONT_WEIGHT_NORMAL);
-                    textSize = ctx.text_extents(hintString);
-                    ctx.move_to((@@size / 2) - (textSize.width / 2),  (@@size / 2) + (textSize.height / 2) + ((i / 3) - 2) * (textSize.height + 2));
-                    ctx.show_text(hintString);
+                    textSize = ctx.text_extents((i + 1).to_s);
+                    ctx.move_to((@@size / 2) - (textSize.width / 2) + (x * 12), (@@size / 2) + (textSize.height / 2) + (y * 12));
+                    ctx.show_text((i + 1).to_s);
 
-                    hintString = "";
+                    if(excluded)
+                        setColor(ctx, Colors::CL_NUMBER_LOCKED);
+                        ctx.select_font_face("Arial", Cairo::FONT_SLANT_NORMAL, Cairo::FONT_WEIGHT_BOLD);
+                        textSize = ctx.text_extents("X");
+                        ctx.move_to((@@size / 2) - (textSize.width / 2) + (x * 12), (@@size / 2) + (textSize.height / 2) + (y * 12));
+                        ctx.show_text("X");
+                    end
                 end
             end
         else
             if(!@caze.locked)
+                setColor(ctx, Colors::CL_NUMBER);
                 ctx.select_font_face("Comic sans MS", Cairo::FONT_SLANT_NORMAL, Cairo::FONT_WEIGHT_BOLD);
             else
+                setColor(ctx, Colors::CL_NUMBER_LOCKED);
                 ctx.select_font_face("Arial", Cairo::FONT_SLANT_NORMAL, Cairo::FONT_WEIGHT_BOLD);
             end
             ctx.set_font_size(13);
@@ -167,9 +177,16 @@ class SquareView
     end
 
     def onLeave(event, widget)
-        (SudokuAPI.API.row(@caze.y) + SudokuAPI.API.column(@caze.x) + SudokuAPI.API.square(@caze.x, @caze.y)).uniq.each{|value|
+        hoverList = [];
+
+        hoverList += (SudokuAPI.API.row(@caze.y) + SudokuAPI.API.column(@caze.x)) unless !Config.getValue("show_line_highlight");
+        hoverList += (SudokuAPI.API.square(@caze.x, @caze.y)) unless !Config.getValue("show_square_highlight");
+
+        hoverList.uniq.each{|value|
             value.color = value.lastColor;
         };
+
+        @caze.color = @caze.lastColor;
     end
 
     def redraw()

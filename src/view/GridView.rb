@@ -2,7 +2,6 @@ class GridView
     private_class_method :new
 
     @@squareViewList;
-    @@isHintMode = false;
 
     def GridView.init(parent)
         new(parent);
@@ -31,13 +30,6 @@ class GridView
 
     def GridView.isHintMode()
         @@isHintMode;
-    end
-
-    def GridView.setHintMode(enabled)
-        @@isHintMode = enabled;
-        @@squareViewList.each { |value|
-            value.redraw();
-        }
     end
 
     def update(type, data)

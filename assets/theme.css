@@ -35,6 +35,12 @@
 {
     background-color: #e6f2ff;
     box-shadow: -2px 0px 2px rgba(0,0,0,0.6);
+    opacity: 1;
+}
+
+#rightMenuHidden
+{
+    opacity: 0.5;
 }
 
 #rightMenu #menuButton
@@ -148,4 +154,50 @@
     font-size: 16px;
     font-family: "Comic sans ms";
     background-color: #e6f2ff;
+}
+
+#hintPanel
+{
+    opacity: 1;
+}
+
+#hintPanelHidden
+{
+    opacity: 0.5;
+}
+
+#hintButton,#hintButtonEnabled
+{
+    background-image: -gtk-gradient (linear, left top, left bottom, from (#ffffff), to (#ffffff));
+    border-radius: 0px;
+    border: 2px solid #333333;
+    border-left: 1px solid #333333;
+    border-right: 1px solid #333333;
+}
+
+#hintButton:first-child
+{
+    border-left: 2px solid #333333;
+    border-radius: 4px 0px 0px 4px;
+}
+
+#hintButton:last-child
+{
+    border-right: 2px solid #333333;
+    border-radius: 0px 4px 4px 0px;
+}
+
+#hintButton:hover
+{
+    background-image: -gtk-gradient (linear, left top, left bottom, from (#b3d9ff), to (#b3d9ff));
+}
+
+#hintButtonEnabled
+{
+    background-image: -gtk-gradient (linear, left top, left bottom, from (#afff7e), to (#afff7e));
+}
+
+#hintButtonEnabled:hover
+{
+    background-image: -gtk-gradient (linear, left top, left bottom, from (#96ff55), to (#96ff55));
 }

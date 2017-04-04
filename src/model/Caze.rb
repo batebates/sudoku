@@ -19,8 +19,11 @@ class Caze
     @color
     @locked
     @lastColor
-    attr_reader :x, :y, :value, :color
-    attr_accessor :lastColor, :locked
+    @invisible
+    @hint
+    @excludedHint
+    attr_reader :x, :y, :value, :color, :invisible, :hint, :locked, :excludedHint
+    attr_accessor :lastColor
 
 #==========================
 
@@ -31,6 +34,9 @@ class Caze
         @color = Colors::CL_BLANK
         @lastColor = @color
         @locked = locked;
+        @invisible = false;
+        @hint = false;
+        @excludedHint = [];
 	end
 
 	private_class_method :new
@@ -55,6 +61,24 @@ class Caze
         notify_observers("value", @value);
     end
 
+    def invisible=(invisible)
+        @invisible = invisible
+        changed(true);
+        notify_observers("invisible", @invisible);
+    end
+
+    def hint=(hintEnabled)
+        @hint = hintEnabled
+        changed(true);
+        notify_observers("hint", @hint);
+    end
+
+    def locked=(locked)
+        @locked = locked
+        changed(true);
+        notify_observers("locked", @locked);
+    end
+    
     def insertValue(value)
         self.value = value == self.value ? 0 : value;
     end

@@ -30,14 +30,14 @@ require "./model/ProfilManager.rb"
 
 require "./controller/SudokuAPI.rb"
 require "./controller/Config.rb"
-=begin
-require "./controller/Method.rb"
+
+require "./controller/Methode.rb"
 require "./controller/MethodCrossReduce.rb"
 require "./controller/MethodGroupIsolated.rb"
 require "./controller/MethodInteractionsRegion.rb"
 require "./controller/MethodTwinsAndTriplets.rb"
+require "./controller/MethodUnicite.rb"
 require "./controller/MethodUniqueCandidate.rb"
-=end
 
 Config.registerConfigs();
 #Config.load();

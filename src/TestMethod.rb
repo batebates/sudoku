@@ -26,8 +26,9 @@ require "./model/ConfigEntry.rb"
 
 require "./controller/SudokuAPI.rb"
 require "./controller/Config.rb"
-require "./controller/MethodTwinsAndTriplets.rb"
+
+require "./controller/MethodUniqueCandidate.rb"
 
 Config.registerConfigs();
 Config.load();
-testd = MethodTwinsAndTriplets.new.demoMethod;
+testd = MethodUniqueCandidate.new.demoMethod;
