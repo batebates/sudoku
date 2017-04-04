@@ -20,9 +20,14 @@ class Config
     end
 
     def Config.getValue(key)
+        entry = Config.getEntry(key);
+        return entry != nil ? entry.value : nil;
+    end
+
+    def Config.getEntry(key)
         @@entryList.each { |value|
             if(value.name == key)
-                return value.value;
+                return value;
             end
         }
         return nil;
@@ -36,11 +41,49 @@ class Config
         @@entryList = entryList;
     end
 
-    def Config.save()
+    def Config.save() 
+        configSaveFile = File.new("save_files/"+SudokuAPI.API.username+".yml","w")
+        
+        if(!configSaveFile.closed?)
+            puts "Fichier de configuration ouvert\n"
+        end
+
+        configArray = [];
+        @@entryList.each{ |conf|
+            saveConf = conf.clone();
+            if(saveConf.type == "color")
+                saveConf.value = [saveConf.value.red, saveConf.value.green, saveConf.value.blue];
+            end
+            configArray.push(saveConf);
+        }
+        configSaveFile.puts YAML::dump(configArray)
+        configSaveFile.close
+
+        if(configSaveFile.closed?)
+            puts "Sauvegarde de la configuration terminée"
+        end
 
     end
 
     def Config.load()
 
+        if(!File.file?("save_files/"+SudokuAPI.API.username+".yml"))
+            return;
+        end
+
+        configLoadFile = YAML.load_file("save_files/"+SudokuAPI.API.username+".yml")
+        configLoadFile.each {|config|
+            oldConf = Config.getEntry(config.name);
+
+            if(oldConf != nil)
+                if(oldConf.type == "color")
+                    oldConf.value.red = config.value[0]
+                    oldConf.value.green = config.value[1]
+                    oldConf.value.blue = config.value[2]
+                else
+                    oldConf.value = config.value;
+                end
+            end
+        }
     end
 end

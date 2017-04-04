@@ -1,0 +1,31 @@
+---
+- !ruby/object:Score
+  nom_Joueur: Valentin
+  scores: 10
+- !ruby/object:Score
+  nom_Joueur: Valentin
+  scores: 20
+- !ruby/object:Score
+  nom_Joueur: Valentin
+  scores: 30
+- !ruby/object:Score
+  nom_Joueur: Valentin
+  scores: 40
+- !ruby/object:Score
+  nom_Joueur: Valentin
+  scores: 50
+- !ruby/object:Score
+  nom_Joueur: Valentin
+  scores: 60
+- !ruby/object:Score
+  nom_Joueur: Valentin
+  scores: 70
+- !ruby/object:Score
+  nom_Joueur: Valentin
+  scores: 80
+- !ruby/object:Score
+  nom_Joueur: Valentin
+  scores: 90
+- !ruby/object:Score
+  nom_Joueur: Valentin
+  scores: 100

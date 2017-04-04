@@ -41,11 +41,11 @@ class ConfigDialog
 
 		case result
 		when Gtk::ResponseType::OK
-				p "OK"
+				p "Config OK"
 				configApply(); #applique la config
 				@configDialog.destroy
 		when Gtk::ResponseType::CANCEL
-				p "Cancel"
+				p "Config Cancel"
 				@configDialog.destroy
 		when Gtk::ResponseType::CLOSE
 				@configDialog.destroy
@@ -61,6 +61,17 @@ class ConfigDialog
 		for modConf in @entryNewList
 			@mainVB.pack_start(createEntry(modConf))
 		end
+
+		hBox = Gtk::Box.new(:horizontal, 2)
+		hBox.name = "configEntry"
+
+		scoreBtn = Gtk::Button.new(:label=>"Tableau des Scores")
+		hBox.pack_start(scoreBtn,:expand=>true,:fill=>true,:padding=>2)
+		@mainVB.pack_start(hBox)
+		scoreBtn.signal_connect("clicked"){
+			ScoreDialog.init()
+		}
+
 	end
 
 	def createEntry(modConf)
@@ -70,6 +81,7 @@ class ConfigDialog
 		#css
 		nameLab = Gtk::Label.new(modConf.displayName)
 		hBox.pack_start(nameLab,:expand=>false,:fill=>true,:padding=>2)
+
 		if(modConf.type == "bool")
 			boolT = Gtk::Switch.new
 			boolT.set_active(modConf.value)
@@ -80,17 +92,26 @@ class ConfigDialog
 		elsif (modConf.type == "color")
 			colorB = Gtk::ColorButton.new
 			colorB.set_color(modConf.value)
+			modConf.newValue = Colors.clone(modConf.value)
+
 			hBox.pack_end(colorB,:expand=>false,:fill=>false,:padding=>2)
 			colorB.signal_connect("color-set") {
-				modConf.value.red = colorB.color.red
-				modConf.value.green = colorB.color.green
-				modConf.value.blue = colorB.color.blue
+				modConf.newValue.red = colorB.color.red
+				modConf.newValue.green = colorB.color.green
+				modConf.newValue.blue = colorB.color.blue
 			}
 		end
 		return hBox
 	end
 
 	def configApply()
+		@entryNewList.each{ |cl|
+			if cl.type == "color"
+				cl.value.red = cl.newValue.red
+				cl.value.green = cl.newValue.green
+				cl.value.blue = cl.newValue.blue
+			end
+		}
 		Config.set(@entryNewList);
 		Config.save();
 	end
