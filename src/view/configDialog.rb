@@ -64,6 +64,7 @@ class ConfigDialog
 
 		hBox = Gtk::Box.new(:horizontal, 2)
 		hBox.name = "configEntry"
+
 		scoreBtn = Gtk::Button.new(:label=>"Tableau des Scores")
 		hBox.pack_start(scoreBtn,:expand=>true,:fill=>true,:padding=>2)
 		@mainVB.pack_start(hBox)
@@ -80,7 +81,7 @@ class ConfigDialog
 		#css
 		nameLab = Gtk::Label.new(modConf.displayName)
 		hBox.pack_start(nameLab,:expand=>false,:fill=>true,:padding=>2)
-		
+
 		if(modConf.type == "bool")
 			boolT = Gtk::Switch.new
 			boolT.set_active(modConf.value)
@@ -104,7 +105,7 @@ class ConfigDialog
 	end
 
 	def configApply()
-		@entryNewList.each{ |cl| 
+		@entryNewList.each{ |cl|
 			if cl.type == "color"
 				cl.value.red = cl.newValue.red
 				cl.value.green = cl.newValue.green
