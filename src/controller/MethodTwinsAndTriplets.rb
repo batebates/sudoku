@@ -1,5 +1,5 @@
 class MethodTwinsAndTriplets
-	
+
 
 	@type = "textMethod"
 	@step = 0
@@ -18,7 +18,7 @@ class MethodTwinsAndTriplets
 		@type = "demoMethod"
 		if(@step==0)
 			SudokuAPI.API.saveSudoku("old");
-			gridDemo = "375648129010925070200371000732089060000267000060034792020453917147896235953712648"	
+			gridDemo = "375648129010925070200371000732089060000267000060034792020453917147896235953712648"
 			SudokuAPI.API.setSudoku(Sudoku.create(gridDemo),Sudoku.create(gridDemo),Sudoku.create(gridDemo));
 			SudokuAPI.API.assistantMessage=("Bienvenue dans la démo (cliquez sur suivant pour continuer");
 		elsif(@step==1)
@@ -30,7 +30,7 @@ class MethodTwinsAndTriplets
 			SudokuAPI.API.enableHint(true);
 
 			SudokuAPI.API.assistantMessage=("Les 2 candidats 4, alignés dans cette région (en rouge), donnent la possibilité de supprimer les 4 dans les autres régions de cette ligne (en gris)");
-		elsif(@step==2)	
+		elsif(@step==2)
 			SudokuAPI.API.loadSudoku("old");
 			SudokuAPI.API.assistantMessage=("Bonjour, je suis l'assistant, je suis là pour vous aider");
 		end
@@ -55,7 +55,5 @@ class MethodTwinsAndTriplets
 		end
 	end
 
-	
+
 end
-
-

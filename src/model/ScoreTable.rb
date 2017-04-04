@@ -1,4 +1,4 @@
-load "Score.rb"
+
 
 #== Utilisation :
 #
@@ -9,7 +9,8 @@ load "Score.rb"
 class ScoreTable
 
 	#tableau contenant 10 valeur Score
-	@score_tableau
+	@score_tableau = []
+	@loadedTableau = []
 
 	attr_accessor :score_tableau
 	private_class_method :new
@@ -29,6 +30,11 @@ class ScoreTable
   			@score_tableau.insert(cpt, Score.creer("Valentin", 10+10*cpt))
   			cpt+=1
 		end
+	end
+
+	def ScoreTable.scores()
+		scoreLoad()
+		return @score_tableau
 	end
 
 	#====Methode de manipulation====
@@ -58,6 +64,7 @@ class ScoreTable
 	def scoreInsert(scoreToInsert, index)
 		self.score_tableau.insert(index, scoreToInsert)
 		self.score_tableau.shift()
+		@score_tableau.sort
 	end
 
 	#===cherche et insert un score dans le tableau, à sa place
@@ -69,13 +76,13 @@ class ScoreTable
 		if(index > -1) then
 			self.scoreInsert(scoreToInsert, index)
 		end
+		@score_tableau.sort
 	end
 
 	#===Affiche le tableau de score en ordre décroissant
 	#
 	def scoreAff()
 		cpt=9
-
 		while cpt >= 0 do
 			puts self.score_tableau[cpt]
 			cpt-=1
@@ -86,17 +93,19 @@ class ScoreTable
 	#===Enregistre le tableau des scores dans un fichier texte
 	#
 	def scoreSave()
-		scoreFile = File.new("save_score", "w") 
+		scoreFile = File.new("save_files/save_score.yml", "w") 
 	
 		if(!scoreFile.closed?)
 			print "Sauvegarde du tableau de score...\n"
 		end
 
-		for cpt in 0...10
-			scoreFile.write (self.score_tableau[cpt].getNom()+":"+self.score_tableau[cpt].getScore().to_s()+"\n")
-		end		
-		
+		#for cpt in 0...10
+		#	scoreFile.write (self.score_tableau[cpt].getNom()+":"+self.score_tableau[cpt].getScore().to_s()+"\n")
+		#end		
+		@score_tableau.sort
+		scoreFile.puts YAML::dump(@score_tableau)
 		scoreFile.close()
+
 		if(scoreFile.closed?)
 			print "Sauvegarde du tableau de score terminée !\n"
 		end
@@ -106,38 +115,26 @@ class ScoreTable
 	#===Charge et affiche le tableau des scores à partir d'un fichier texte
 	#
 	def scoreLoad()
-		scoreLoad = File.open("save_score", "r")
-		cpt=0
-
-		if(!scoreLoad.closed?)
-			print "Chargement du tableau de score...\n"
+		if(!File.file?("save_files/save_score.yml"))
+			return 1
 		end
-
-		scoreLoad.each_line{ |ligne|
-			score = []
-			score = ligne.gsub(/:+/m, ':').strip.split(":")
-			self.score_tableau[cpt] = Score.creer(score[0], score[1].to_i())
-			cpt+=1
-		}	
+		@loadedTableau = Array.new()
+		scoreLoadFile = YAML.load_file("save_files/save_score.yml")
 		
-		scoreLoad.close()
-		if(scoreLoad.closed?)
-			print "Tableau de score chargé !\n"
+		scoreLoadFile.each{ |scL|
+			@loadedTableau.push(Score.creer(scL.nom_Joueur,scL.scores))
+		}
+	end
+
+	def scores()
+		if(@loadedTableau == nil)
+			return 1;
 		end
-		self.scoreAff()
+		@loadedTableau.sort_by {|sc| sc.scores}
+		return @loadedTableau
 	end
 
 end
 
-#test = ScoreTable.build()
-#test.scoreAff()
-
-#scoreTest1 = Score.creer("Dimitri", 2500)
-#test.scoreInsertTab(scoreTest1)
-#test.scoreSave()
-
-#scoreTest2 = Score.creer("DarkVador", 2000)
-#test.scoreInsertTab(scoreTest2)
-#test.scoreAff()
-
-#test.scoreLoad()
+sC = ScoreTable.build()
+sC.scoreSave

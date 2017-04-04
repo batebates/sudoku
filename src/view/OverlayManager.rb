@@ -72,9 +72,11 @@ class OverlayManager
                 OverlayManager.show();
             end
         else
-            SudokuAPI.API.addExclude(square.caze.x, square.caze.y, value);
-            OverlayManager.hide();
-            OverlayManager.show();
+            if(square.caze.value != value)
+                SudokuAPI.API.addExclude(square.caze.x, square.caze.y, value);
+                OverlayManager.hide();
+                OverlayManager.show();
+            end
         end
     end
 

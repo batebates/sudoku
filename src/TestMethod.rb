@@ -26,6 +26,7 @@ require "./model/ConfigEntry.rb"
 
 require "./controller/SudokuAPI.rb"
 require "./controller/Config.rb"
+
 require "./controller/MethodUniqueCandidate.rb"
 
 Config.registerConfigs();

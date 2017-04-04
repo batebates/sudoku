@@ -6,7 +6,7 @@
 
 class ProfilManager
 
-	# la Classe Profile permet de gerer les  profiles
+	# la Classe Profile permet de gerer les  profils
 
 	@@listeProfil = [];
 	@@dernierPseudo = nil;
@@ -24,7 +24,7 @@ class ProfilManager
 			ProfilManager.save()
 			return true
 		else
-			puts "Pseudo deja pris"
+			return false
 		end
 		return false
 	end
@@ -42,7 +42,7 @@ class ProfilManager
 			ProfilManager.save()
 			return true
 		else
-			puts "Pseudo non présent"
+			return false
 		end
 		return false
 	end
@@ -76,8 +76,9 @@ class ProfilManager
 			@@dernierPseudo = nom;
 			ProfilManager.save();
 			SudokuAPI.API.username = nom;
+			return true
 		else
-			puts "Pseudo non présent"
+			return false
 		end
 	end
 
@@ -104,7 +105,7 @@ class ProfilManager
 		@@listeProfil.index(nom) != nil;
 	end
 
-	#=== Methode Sauvegardant les profiles dans un fichier txt
+	#=== Methode Sauvegardant les profils dans un fichier txt
 	#
 	def ProfilManager.save()
 		userFile = File.new("save_files/users.yml","w")
@@ -139,13 +140,12 @@ class ProfilManager
 		end
 	end
 
-	#===Affiche le tableau des profiles
+	#===Affiche le tableau des profils
 	#
 	def ProfilManager.toAff()
 		print "\n Affichage des profils :\n"
 		@@listeProfil.each { |profil|
-			puts profil
+			puts "   - " + profil
 		}
 	end
-
 end
