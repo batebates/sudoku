@@ -58,10 +58,4 @@ class AssistantView
             }
         end
     end
-
-    def AssistantView.defineImage(image)
-      if(SudokuAPI.API.username != nil)
-        @avatarImage = image
-      end
-    end
 end

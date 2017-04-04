@@ -129,7 +129,6 @@ class ConfigDialog
 				modConf.newValue = @avatarIndex
 			}
 
-			AssistantView.defineImage(@currentAvatar)
 			bBox.add(leftBtn)
 			bBox.add(@currentAvatar)
 			bBox.add(rightBtn)
