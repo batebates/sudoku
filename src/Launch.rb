@@ -3,6 +3,7 @@ require "gio2"
 require "gdk3"
 require "pango"
 require "observer"
+require "yaml"
 
 require "./view/Window.rb"
 require "./view/GridView.rb"
@@ -26,6 +27,7 @@ require "./model/ConfigEntry.rb"
 
 require "./controller/SudokuAPI.rb"
 require "./controller/Config.rb"
+require "./controller/ProfilManager.rb"
 
 require "./controller/Methode.rb"
 require "./controller/MethodCrossReduce.rb"
@@ -33,6 +35,11 @@ require "./controller/MethodGroupIsolated.rb"
 require "./controller/MethodInteractionsRegion.rb"
 require "./controller/MethodTwinsAndTriplets.rb"
 require "./controller/MethodUniqueCandidate.rb"
+
+ProfilManager.loadFile();
+if(ProfilManager.dernierJoueur() != nil)
+    ProfilManager.connecter(ProfilManager.dernierJoueur());
+end
 
 Config.registerConfigs();
 Config.load();

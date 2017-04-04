@@ -61,8 +61,8 @@ class RegisterView
         buttonConfirm = Gtk::Button.new(:label => "Valider");
         buttonConfirm.sensitive = false;
         buttonConfirm.signal_connect("clicked") {
-            #TODO save user
-            SudokuAPI.API.username = nameEntry.text;
+            ProfilManager.ajouter(nameEntry.text);
+            ProfilManager.connecter(nameEntry.text);
             root.remove(mainPanel);
             sudokuPanel.show_all();
             SudokuAPI.API.timerPaused = false;

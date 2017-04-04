@@ -1,5 +1,3 @@
-require "yaml"
-
 # encoding: UTF-8
 
 ##
@@ -21,9 +19,9 @@ class ProfilManager
 	#=== Return :
 	#<b>return vrai si l'ajout est fait, faux sinon</b>
 	def ProfilManager.ajouter(pseudo)
-		if(!self.existe(pseudo))
+		if(!ProfilManager.existe(pseudo))
 			@@listeProfil.push(pseudo)
-			self.save()
+			ProfilManager.save()
 			return true
 		else
 			puts "Pseudo deja pris"
@@ -39,9 +37,9 @@ class ProfilManager
 	#=== Return :
 	#<b>return vrai si la suppression est faite, faux sinon</b>
 	def ProfilManager.supprimer(pseudo)
-		if(self.existe(pseudo))
+		if(ProfilManager.existe(pseudo))
 			@@listeProfil.delete_at(@@listeProfil.index(pseudo))
-			self.save()
+			ProfilManager.save()
 			return true
 		else
 			puts "Pseudo non présent"
@@ -58,12 +56,12 @@ class ProfilManager
 	#=== Return :
 	#<b>return vrai si le pseudo a été renommer, faux sinon</b>
 	def ProfilManager.rename(oldName, newName)
-		if(self.existe(oldName) && !self.existe(newName))
+		if(ProfilManager.existe(oldName) && !ProfilManager.existe(newName))
 			@@listeProfil[@@listeProfil.index(oldName)] = newName;
 			if(@@dernierPseudo == oldName)
-				@@dernierPseudo = newname
+				@@dernierPseudo = newName
 			end
-			self.save();
+			ProfilManager.save();
 			return true
 		end
 		return false
@@ -74,9 +72,10 @@ class ProfilManager
 	#=== Paramètres:
 	#<b>nom</b>  	: nom du joueur qui se connecte
 	def ProfilManager.connecter(nom)
-		if(self.existe(nom))
+		if(ProfilManager.existe(nom))
 			@@dernierPseudo = nom;
-			self.save();
+			ProfilManager.save();
+			SudokuAPI.API.username = nom;
 		else
 			puts "Pseudo non présent"
 		end
@@ -91,7 +90,7 @@ class ProfilManager
 	#=== Methode de classe permettant de recuperer la liste des pseudo
 	#
 	def ProfilManager.listeProfile()
-		return @@listeProfile
+		return @@listeProfil
 	end
 
 	#=== Methode permettant de tester l'existence d'un profil
@@ -108,12 +107,12 @@ class ProfilManager
 	#=== Methode Sauvegardant les profiles dans un fichier txt
 	#
 	def ProfilManager.save()
-		userFile = File.new("users.yml","w")
-        
+		userFile = File.new("save_files/users.yml","w")
+
 		if(!userFile.closed?)
             puts "Ouverture liste utilisateur\n"
 		end
-	
+
 		dumpArray = [];
 		dumpArray.push(@@dernierPseudo);
 		dumpArray.push(@@listeProfil);
@@ -129,15 +128,15 @@ class ProfilManager
 	#=== Methode de classes permettant de charger un tableau de profil a partir d'un fichier
 	#
 	def ProfilManager.loadFile()
-		if(!File.file?("users.yml"))
+		if(!File.file?("save_files/users.yml"))
             return;
 		end
 
-		userFile = YAML.load_file("users.yml")
+		userFile = YAML.load_file("save_files/users.yml")
 		if(userFile)
 			@@dernierPseudo = userFile[0];
 			@@listeProfil = userFile[1];
-		end	
+		end
 	end
 
 	#===Affiche le tableau des profiles
@@ -150,24 +149,3 @@ class ProfilManager
 	end
 
 end
-
-
-profil = ProfilManager.new()
-ProfilManager.loadFile()
-ProfilManager.ajouter("Valentin")
-ProfilManager.ajouter("Dimitri")
-ProfilManager.toAff()
-
-ProfilManager.supprimer("Valentin")
-ProfilManager.rename("Dimitri", "The Mighty Dimitri")
-ProfilManager.ajouter("Valention The Boss")
-ProfilManager.toAff()
-
-
-ProfilManager.connecter("The Mighty Dimitri")
-puts"\nDernier Joueur = "+ProfilManager.dernierJoueur().to_s
-
-
-
-
-

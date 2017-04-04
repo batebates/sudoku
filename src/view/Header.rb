@@ -34,7 +34,7 @@ class Header
         @timeLabel = Gtk::Label.new("00:00");
         @timeLabel.name = "headerLabel";
 
-        @userLabel = Gtk::Label.new("???");
+        @userLabel = Gtk::Label.new(SudokuAPI.API.username);
         @userLabel.name = "headerLabel";
 
         header.pack_start(userButton);

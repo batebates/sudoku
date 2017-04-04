@@ -45,9 +45,8 @@ class Window
         CSSStyle.init();
         OverlayManager.hide();
 
-        noUserFound = false;
-        if(noUserFound)#Debug
-            RegisterView.display(false);
+        if(ProfilManager.dernierJoueur() == nil)
+            RegisterView.display(true);
         end
 
         Gtk.main();
