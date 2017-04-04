@@ -6,7 +6,7 @@
 
 class ProfilManager
 
-	# la Classe Profile permet de gerer les  profiles
+	# la Classe Profile permet de gerer les  profils
 
 	@@listeProfil = [];
 	@@dernierPseudo = nil;
@@ -16,11 +16,16 @@ class ProfilManager
 	#=== Paramètres:
 	#<b>pseudo</b>  	: pseudo du joueur
 	def ajouter(pseudo)
-		if(!self.existe(pseudo))
+		if(setDernierJoueur(pseudo)) # On modifie le tout si dernier joueur a été changé ...
+			self.save()
+		end
+
+		if(!self.existe(pseudo)) # ... Ou si on ajoute un nouveau joueur
 			@@listeProfil.push(pseudo)
 			self.save()
+			return true
 		else
-			puts "Pseudo deja pris"
+			return false
 		end
 	end
 
@@ -32,8 +37,9 @@ class ProfilManager
 		if(self.existe(pseudo))
 			@@listeProfil.delete_at(@@listeProfil.index(pseudo))
 			self.save()
+			return true
 		else
-			puts "Pseudo non présent"
+			return false
 		end
 	end
 
@@ -59,8 +65,9 @@ class ProfilManager
 	def connecter(nom)
 		if(self.existe(nom))
 			@@dernierPseudo = nom;
+			return true
 		else
-			puts "Pseudo non présent"
+			return false
 		end
 	end
 
@@ -68,6 +75,21 @@ class ProfilManager
 	#
 	def dernierJoueur()
 		return @@dernierPseudo
+	end
+
+	#=== Methode de classe permettant de remplacer le dernier joueur
+	#
+	#=== Paramètres:
+	#<b>joueurPseudo</b>  	: nom du joueur
+	#=== Return :
+	#<b>return vrai si le pseudo a été changé, faux sinon</b>
+	def setDernierJoueur(joueurPseudo)
+		if joueurPseudo == dernierJoueur
+			return false
+		else
+			@@dernierPseudo = joueurPseudo
+			return true
+		end
 	end
 
 	#=== Methode permettant de tester l'existence d'un profil
@@ -81,16 +103,18 @@ class ProfilManager
 		@@listeProfil.index(nom) != nil;
 	end
 
-	#=== Methode Sauvegardant les profiles dans un fichier txt
+	#=== Methode Sauvegardant les profils dans un fichier txt
 	#
 	def save()
-		file = open("saveProfil", "w")
+		file = open("save_files/Profils", "w")
 
 		if(!file.closed?)
-			#print "Sauvegarde des profiles...\n"
+			#print "Sauvegarde des profils...\n"
 		end
 
-		file.write(@@dernierPseudo.to_s() + "\n")
+		if(@@dernierPseudo != nil)
+			file.write(@@dernierPseudo.to_s() + "\n" + "\n")
+		end
 
 		@@listeProfil.each { |profil|
 			file.write(profil + "\n")
@@ -98,50 +122,62 @@ class ProfilManager
 
 		file.close()
 		if(file.closed?)
-			#print "Sauvegarde des profiles terminées!\n"
+			#print "Sauvegarde des profils terminées!\n"
 		end
 	end
 
 	#=== Methode de classes permettant de charger un tableau de profil a partir d'un fichier
 	#
 	def loadFile()
-		profilList = File.open("saveProfil", "r")
-		cpt=0
+		@@listeProfil = Array.new()
+		if(File.file?("save_files/Profils"))
+			profilList = File.open("save_files/Profils", "r")
+			fileContent = IO.readlines(profilList)
 
-		if(!profilList.closed?)
-			#print "Chargement des profiles...\n"
-		end
-	
-		@@dernierPseudo = profilList.readline()
-		profilList.each_line{ |ligne|
-			if(!ligne.empty?())			
-				@@listeProfil.push(ligne)
+			# Grids
+			if(! profilList.eof? )
+				if(!profilList.closed?)
+					#print "Chargement des profils...\n"
+				end
+				profil = Array.new()
+				@@dernierPseudo = profilList.readline().gsub("\n",'')
+				profilList.each_line{ |ligne|
+					if(!ligne.empty?() && ligne != "\n")
+						@@listeProfil.push(ligne.gsub("\n",''))
+					end
+				}
 			end
-		}	
-		
-		profilList.close()
-		if(profilList.closed?)
-			#print "Profiles chargés !\n"
+
+			profilList.close()
+			if(profilList.closed?)
+				#print "profils chargés !\n"
+			end
+
+			return true
+		else
+			return false
 		end
 	end
 
-	#===Affiche le tableau des profiles
+	#===Affiche le tableau des profils
 	#
 	def toAff()
-		print "\n Affichage des profils :\n"
 		@@listeProfil.each { |profil|
-			puts profil
+			puts "   - " + profil
 		}
 	end
-
 end
 
-
+=begin
 profil = ProfilManager.new()
+profil.ajouter("Alduin")
+profil.ajouter("Alduin")
+profil.ajouter("Alduin")
+profil.ajouter("Dovahkiin")
+profil.ajouter("Miraak")
 profil.loadFile()
-profil.ajouter("Valentin")
-profil.ajouter("Dimitri")
 profil.toAff()
+profil.save()
 
 #profil.supprimer("Valentin")
 #profil.rename("Dimitri", "DemiTruie")
@@ -153,8 +189,4 @@ profil.toAff()
 #puts"Dernier Joueur = "+profil.dernierJoueur()
 #profil.connecter("DemiTruie")
 #puts"Dernier Joueur = "+profil.dernierJoueur()
-
-
-
-
-
+=end
