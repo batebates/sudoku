@@ -123,9 +123,9 @@ class SudokuAPI
 	end
 
 
-	def setColorUnite(unite,color)
+	def highlightUnite(unite)
 		unite.each{ |caze|
-			cazeAt(caze.x,caze.y).color=color;
+			cazeAt(caze.x,caze.y).color=Colors::CL_HIGHLIGHT_METHOD;
 		}
 	end
 
@@ -462,7 +462,11 @@ class SudokuAPI
 	def sudokuEditable(locked)
 		0.upto(8) do |x|
 			0.upto(8) do |y|
-			 	setEditable(x,y,locked)
+				if(!locked && @sudokuStart.hasValue?(x,y) == false)
+			 		setEditable(x,y,locked)
+			 	elsif(locked)
+			 		setEditable(x,y,locked)
+			 	end
 			end
 		end
 	end
