@@ -3,6 +3,7 @@
   name: avatar
   displayName: Avatar du profil ?
   type: avatar
+  value: 0
   newValue: 0
 - !ruby/object:ConfigEntry
   name: grid_color
