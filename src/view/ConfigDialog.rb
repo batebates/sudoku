@@ -110,6 +110,7 @@ class ConfigDialog
 
 			p modConf.value
 			@currentAvatar = Gtk::Image.new(:file=>@avatarList[modConf.value])
+			
 
 			if(!modConf.value)
 					@avatarIndex = modConf.value

@@ -57,9 +57,9 @@ class AssistantView
                 end
             }
         end
-    end
 
-    def AssistantView.assignImage(image)
-      @avatarImage.file = image
+        if(type == "assistantImage")
+          @avatarImage.file = message
+        end
     end
 end
