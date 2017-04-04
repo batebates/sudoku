@@ -15,7 +15,7 @@ class ScoreDialog
 
 		@scoreDialog.add_button("Quitter",Gtk::ResponseType::OK)
 		@scoreDialog.set_default_response(Gtk::ResponseType::CANCEL)
-	
+
 		@mainVB = Gtk::Box.new(:vertical, 2)
 		@mainVB.name = "mainVB"
 
@@ -46,7 +46,7 @@ class ScoreDialog
 
 		hBox.pack_start(pseuLab, :expand=>true, :fill=>true, :padding=>2)
 		hBox.pack_start(scoLab, :expand=>true, :fill=>false, :padding=>2)
-		
+
 		hBox.name = "scoreHeader"
 
 		@mainVB.pack_start(hBox)
@@ -58,8 +58,6 @@ class ScoreDialog
 		#end load
 
 		cpt = @scoreList.size
-		p cpt
-
 		while cpt > 0 do
 			cpt -= 1
 			@mainVB.pack_start(createScoreLine(@scoreList[cpt]))

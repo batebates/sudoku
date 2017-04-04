@@ -24,12 +24,9 @@ require "./model/Generator.rb"
 require "./model/Caze.rb"
 require "./model/Sudoku.rb"
 require "./model/ConfigEntry.rb"
-<<<<<<< HEAD
 require "./model/Score.rb"
 require "./model/ScoreTable.rb"
-=======
 require "./model/ProfilManager.rb"
->>>>>>> refs/remotes/origin/master
 
 require "./controller/SudokuAPI.rb"
 require "./controller/Config.rb"
@@ -43,12 +40,8 @@ require "./controller/MethodUniqueCandidate.rb"
 =end
 
 Config.registerConfigs();
-<<<<<<< HEAD
 #Config.load();
-=======
-Config.load();
 
->>>>>>> refs/remotes/origin/master
 myGenerator = Generator.new(0)
 
 =begin HOW TO USE PROFILS
