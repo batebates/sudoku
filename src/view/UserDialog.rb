@@ -21,7 +21,7 @@ class UserDialog
         hbox = Gtk::Box.new(:horizontal, 4);
 
         userComboBox = Gtk::ComboBoxText.new();
-        users = ["Nouveau profil..."] + ["Michel", "Patrick", "Luc"];
+        users = ["Nouveau profil..."] + ProfilManager.listeProfile();
         users.reverse_each { |value|
             userComboBox.prepend_text(value);
         }
@@ -71,19 +71,22 @@ class UserDialog
 
         validateButton.signal_connect("clicked") {
             idActive = userComboBox.active;
-            userComboBox.remove(idActive);
-            userComboBox.insert_text(idActive, nameEntry.text);
-            userComboBox.set_active(idActive);
+            result = ProfilManager.rename(userComboBox.active_text, nameEntry.text);
+            if(result)
+                userComboBox.remove(idActive);
+                userComboBox.insert_text(idActive, nameEntry.text);
+                userComboBox.set_active(idActive);
 
-            #TODO Edit saves
+                hbox.remove(nameEntry);
+                hbox.remove(validateButton);
+                hbox.remove(cancelButton);
 
-            hbox.remove(nameEntry);
-            hbox.remove(validateButton);
-            hbox.remove(cancelButton);
-
-            hbox.pack_start(userComboBox, :expand => true, :fill => true, :padding => 0);
-            hbox.add(editButton);
-            hbox.add(removeButton);
+                hbox.pack_start(userComboBox, :expand => true, :fill => true, :padding => 0);
+                hbox.add(editButton);
+                hbox.add(removeButton);
+            else
+                puts "Failed"
+            end
         }
 
         cancelButton.signal_connect("clicked") {
@@ -102,9 +105,8 @@ class UserDialog
             confirmDialog.secondary_text = "Le profil ne poura pas être récupéré. Ses scores et configurations seront effacés";
             confirmResponse = confirmDialog.run();
 
-            #TODO Remove user
-
             if(confirmResponse == :yes)
+                ProfilManager.supprimer(userComboBox.active_text);
                 userComboBox.remove(userComboBox.active);
                 userComboBox.set_active(0);
             end
@@ -129,9 +131,9 @@ class UserDialog
 
             #Log user
             if(userIndex != 0)
-                SudokuAPI.API.username = user;
                 SudokuAPI.API.timerPaused = false;
                 Config.load()
+                ProfilManager.connecter(userComboBox.active_text);
             else #New user
                 RegisterView.display(false);
             end

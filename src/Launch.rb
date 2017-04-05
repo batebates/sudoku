@@ -26,10 +26,10 @@ require "./model/Sudoku.rb"
 require "./model/ConfigEntry.rb"
 require "./model/Score.rb"
 require "./model/ScoreTable.rb"
-require "./model/ProfilManager.rb"
 
 require "./controller/SudokuAPI.rb"
 require "./controller/Config.rb"
+require "./controller/ProfilManager.rb"
 
 require "./controller/Methode.rb"
 require "./controller/MethodCrossReduce.rb"
@@ -38,6 +38,11 @@ require "./controller/MethodInteractionsRegion.rb"
 require "./controller/MethodTwinsAndTriplets.rb"
 require "./controller/MethodUnicite.rb"
 require "./controller/MethodUniqueCandidate.rb"
+
+ProfilManager.loadFile();
+if(ProfilManager.dernierJoueur() != nil)
+    ProfilManager.connecter(ProfilManager.dernierJoueur());
+end
 
 Config.registerConfigs();
 #Config.load();
