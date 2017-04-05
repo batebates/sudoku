@@ -532,7 +532,11 @@ class SudokuAPI
 	end
 
 	def getInclude(x,y)
-		return [1,2,3,4,5,6,7,8,9] - getExclude(x,y)
+		if(cazeAt(x,y).value !=0)
+			return [0]
+		else
+			return (candidateCaze(x,y) - getExclude(x,y).uniq - [0]).sort
+		end
 	end
 
 	#===Permet d'activer/désactiver le menu
