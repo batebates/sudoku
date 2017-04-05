@@ -1,12 +1,18 @@
 ---
 - !ruby/object:ConfigEntry
+  name: avatar
+  displayName: Avatar du profil ?
+  type: avatar
+  value: professor
+  newValue: 0
+- !ruby/object:ConfigEntry
   name: grid_color
   displayName: Couleur de la grille
   type: color
   value:
-  - 61166
-  - 61166
-  - 60652
+  - 65535
+  - 65535
+  - 65535
   newValue: 0
 - !ruby/object:ConfigEntry
   name: hover_color
@@ -57,11 +63,17 @@
   name: show_line_highlight
   displayName: Surligner la ligne / colonne survolée ?
   type: bool
-  value: true
+  value: false
   newValue: 0
 - !ruby/object:ConfigEntry
   name: show_square_highlight
   displayName: Surligner le carré survolé ?
   type: bool
   value: false
+  newValue: 0
+- !ruby/object:ConfigEntry
+  name: show_hint
+  displayName: Afficher les valeurs possibles ?
+  type: bool
+  value: true
   newValue: 0

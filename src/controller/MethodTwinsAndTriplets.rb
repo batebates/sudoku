@@ -63,6 +63,8 @@ class MethodTwinsAndTriplets
 	end
 
 	def onSudokuMethod
+		SudokuAPI.API.saveSudoku("old");
+
 		@type = "onSudokuMethod"
 		if(@step==0)
 			SudokuAPI.API.assistantMessage=("Nous allons appliquer cette méthode sur la grille actuel (cliquez sur suivant pour continuer)");
@@ -79,8 +81,9 @@ class MethodTwinsAndTriplets
 			else
 				SudokuAPI.API.assistantMessage=("Il n'est pas possible d'appliquer cette méthode sur la grille.");
 			end
-		elsif(@step==3)
-			
+		elsif(@step==2)
+			SudokuAPI.API.loadSudoku("old");
+			SudokuAPI.API.assistantMessage=("");
 		end
 		@step+=1
 	end
