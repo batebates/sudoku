@@ -3,16 +3,16 @@
   name: avatar
   displayName: Avatar du profil ?
   type: avatar
-  value: 10
+  value: 0
   newValue: 0
 - !ruby/object:ConfigEntry
   name: grid_color
   displayName: Couleur de la grille
   type: color
   value:
-  - 65535
-  - 25995
-  - 57253
+  - 54227
+  - 55255
+  - 53199
   newValue: 0
 - !ruby/object:ConfigEntry
   name: hover_color
@@ -55,21 +55,21 @@
   displayName: Couleur des chiffres vérouillés
   type: color
   value:
-  - 32767
   - 0
-  - 0
+  - 3099
+  - 65535
   newValue: 0
 - !ruby/object:ConfigEntry
   name: show_line_highlight
   displayName: Surligner la ligne / colonne survolée ?
   type: bool
-  value: false
+  value: true
   newValue: 0
 - !ruby/object:ConfigEntry
   name: show_square_highlight
   displayName: Surligner le carré survolé ?
   type: bool
-  value: false
+  value: true
   newValue: 0
 - !ruby/object:ConfigEntry
   name: show_hint
