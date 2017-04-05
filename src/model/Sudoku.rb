@@ -17,6 +17,11 @@ class Sudoku
 	attr_reader :tcaze
 #==========================
 
+
+	#===Initialise une grille de sudoku
+	#
+	#===Paramètres :
+	#* <b>str</b> : String : indique la chaine de caractère décrivant le contenu du soduku
 	def initialize(str)
 		x_length = 9
         y_length = 9
@@ -35,6 +40,10 @@ class Sudoku
 
 	private_class_method :new
 
+	#===Créé une grille de sudoku
+	#
+	#===Paramètres :
+	#* <b>str</b> : String : indique la chaine de caractère décrivant le contenu du soduku
 	def Sudoku.create(caze)
 		new(caze)
 	end
@@ -82,7 +91,6 @@ class Sudoku
 	end
 
 #===Affiche le sudoku
-#
     def to_s
         cpt=0
         @tcaze.each do |tab|
