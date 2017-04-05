@@ -10,6 +10,7 @@ class ScoreDialog
 	end
 
 	def initialize()
+		SudokuAPI.API.timerPaused = true;
 		@scoreDialog = Gtk::Dialog.new(:parent => Window.window(), :title => "Tableau des Scores", :flags => [:modal, :destroy_with_parent])
 		@scoreDialog.set_default_size(300,500)
 
@@ -31,9 +32,10 @@ class ScoreDialog
 
 		case result
 		when Gtk::ResponseType::OK
-			p "Score quit"
+			SudokuAPI.API.timerPaused = false;
 			@scoreDialog.destroy
 		when Gtk::ResponseType::CLOSE
+			SudokuAPI.API.timerPaused = false;
 			@scoreDialog.destroy
 		end
 
