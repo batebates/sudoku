@@ -12,6 +12,7 @@ class MethodUnicite
 		@type = "textMethod"
     case @step
     when 0
+    	SudokuAPI.API.sudokuEditable(true)
       SudokuAPI.API.assistantMessage=("Cette méthode repose sur le principe qu'un sudoku possède une unique solution")
     when 1
       SudokuAPI.API.assistantMessage=("Ainsi si quatre cellules dans deux régions différentes forment un rectangle comporte une paire de candidats identiques sur trois de ces cellules ")
@@ -21,6 +22,9 @@ class MethodUnicite
       SudokuAPI.API.assistantMessage=("Alors la solution de cette cellule est forcement parmis ces candidats en plus.")
     when 4
       SudokuAPI.API.assistantMessage=("En effet la grille possède une solution unique, il ne peut pas y avoir 4 paires identiques formant un rectangle sur deux regions differentes")
+    when 5
+    	SudokuAPI.API.assistantMessage=("");
+     	SudokuAPI.API.sudokuEditable(false)
     end
 		@step+=1
 	end
@@ -29,22 +33,23 @@ class MethodUnicite
 		@type = "demoMethod"
   	case @step
 	  	when 0
+	  			SudokuAPI.API.sudokuEditable(true)
 				SudokuAPI.API.saveSudoku("old");
 				gridDemo = "375648129010925070200371000732089060400267000060034792020453917147896235953712648"
 				SudokuAPI.API.setSudoku(Sudoku.create(gridDemo),Sudoku.create(gridDemo),Sudoku.create(gridDemo));
 				SudokuAPI.API.assistantMessage=("Bienvenue dans la démo (cliquez sur suivant pour continuer");
-			when 1
-				SudokuAPI.API.cazeAt(0,1).color=Colors::CL_NUMBER_LOCKED;
-				SudokuAPI.API.cazeAt(2,1).color=Colors::CL_NUMBER;
-				SudokuAPI.API.cazeAt(0,6).color=Colors::CL_NUMBER_LOCKED;
-				SudokuAPI.API.cazeAt(2,6).color=Colors::CL_NUMBER_LOCKED;
+		when 1
+			SudokuAPI.API.cazeAt(0,1).color=Colors::CL_NUMBER_LOCKED;
+			SudokuAPI.API.cazeAt(2,1).color=Colors::CL_HIGHLIGHT_METHOD;
+			SudokuAPI.API.cazeAt(0,6).color=Colors::CL_NUMBER_LOCKED;
+			SudokuAPI.API.cazeAt(2,6).color=Colors::CL_NUMBER_LOCKED;
 
-				0.upto(8) do |i|
-					0.upto(8) do |j|
-						SudokuAPI.API.setHintAt(i,j,true)
-					end
+			0.upto(8) do |i|
+				0.upto(8) do |j|
+					SudokuAPI.API.setHintAt(i,j,true)
 				end
-				SudokuAPI.API.assistantMessage=("Les quatres cases colorées possèdent la même paire de candidats 6 et 8 ");
+			end
+			SudokuAPI.API.assistantMessage=("Les quatres cases colorées possèdent la même paire de candidats 6 et 8 ");
 		 when 2
 		   SudokuAPI.API.assistantMessage=("Comme la solution d'un sudoku est unique, la case grisé qui possède des candidats en plus de la paire n'a pour solution que ces candidats");
 		 when 3
@@ -52,6 +57,7 @@ class MethodUnicite
 		 when 4
 				SudokuAPI.API.loadSudoku("old");
 				SudokuAPI.API.assistantMessage=("Bonjour, je suis l'assistant, je suis là pour vous aider");
+				SudokuAPI.API.sudokuEditable(false)
 		 end
 		@step+=1
 	end
@@ -59,24 +65,26 @@ class MethodUnicite
 	def onSudokuMethod
 		@type = "onSudokuMethod"
 		case @step
-		when 0
-			tab = regionPaireCandidats
-			if(tab != nil)
-			puts("Affichage de tab")
-			tab.each do |elt|
-				puts(elt)
-			end
-				SudokuAPI.API.assistantMessage=("On recherche quatres cellules composées d'une paire de candidats identiques formant un rectangle sur deux régions différentes");
+			when 0
+				SudokuAPI.API.sudokuEditable(true)
+				tab = regionPaireCandidats
+				if(tab != nil)
+				puts("Affichage de tab")
 				tab.each do |elt|
-					print "case:"
-					print elt.x
-					print elt.y
-					print "\n"
-					SudokuAPI.API.cazeAt(elt.x,elt.y).color=Colors::CL_NUMBER_LOCKED
+					puts(elt)
 				end
-			else
-				SudokuAPI.API.assistantMessage=("La Méthode choisi n'est pas applicable sur cette grille pour le moment ");
-			end
+					SudokuAPI.API.assistantMessage=("On recherche quatres cellules composées d'une paire de candidats identiques formant un rectangle sur deux régions différentes");
+					tab.each do |elt|
+						SudokuAPI.API.cazeAt(elt.x,elt.y).color=Colors::CL_NUMBER_LOCKED
+					end
+					SudokuAPI.API.cazeAt(tab.first.x,tab.first.y).color=Colors::CL_HIGHLIGHT_METHOD
+				else
+					SudokuAPI.API.assistantMessage=("La Méthode choisi n'est pas applicable sur cette grille pour le moment ");
+				end
+			when 1
+					SudokuAPI.API.getInclude(tab.first.x,tab.first.y) - SudokuAPI.API.getInclude(tab.last.x,tab.last.y).each {|n| SudokuAPI.API.addExclude(tab.first.x, tab.first.y, n)}
+					SudokuAPI.API.sudokuEditable(false)
+		
 		end
 	
 
