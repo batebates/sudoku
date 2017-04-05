@@ -1,4 +1,4 @@
-class MethodTwinsAndTriplets
+class MethodTwinsAndTriplets < Methode
 	
 	@type = "textMethod"
 	@step = 0
@@ -20,7 +20,7 @@ class MethodTwinsAndTriplets
 			SudokuAPI.API.saveSudoku("old");
 			gridDemo = "375648129010925070200371000732089060000267000060034792020453917147896235953712648"	
 			SudokuAPI.API.setSudoku(Sudoku.create(gridDemo),Sudoku.create(gridDemo),Sudoku.create(gridDemo));
-			SudokuAPI.API.assistantMessage=("Bienvenue dans la démo (cliquez sur suivant pour continuer)");
+			SudokuAPI.API.assistantMessage=("Bienvenue dans la démo (Appuyez sur Suivant)");
 		elsif(@step==1)
 			SudokuAPI.API.cazeAt(0,4).color=Colors::CL_NUMBER_LOCKED;
 			SudokuAPI.API.cazeAt(2,4).color=Colors::CL_NUMBER_LOCKED;
@@ -31,7 +31,31 @@ class MethodTwinsAndTriplets
 		elsif(@step==2)	
 			SudokuAPI.API.enableHint(true);
 			SudokuAPI.API.loadSudoku("old");
-			SudokuAPI.API.assistantMessage=("");
+			SudokuAPI.API.assistantMessage=("Bonjour, je suis l'assistant, je suis là pour vous aider.")
+		end
+		@step+=1
+	end
+
+	def onSudokuMethod
+		@type = "onSudokuMethod"
+		if(@step==0)
+			SudokuAPI.API.assistantMessage=("Nous allons appliquer cette méthode sur la grille actuel (cliquez sur suivant pour continuer)");
+		elsif(@step==1)
+			@compteur=0
+			0.upto(8) do |region|
+				1.upto(3) do |n|
+					traitementOnRow(region,1,n)
+					traitementOnRow(region,0,n)
+				end
+			end
+			if(@cand!=nil)
+				SudokuAPI.API.assistantMessage=("Le candidat " + @cand.to_s + " n'est présent que sur ces deux cases, il est donc obliger de le placer ici.");
+			else
+				SudokuAPI.API.assistantMessage=("Il n'est pas possible d'appliquer cette méthode sur la grille.");
+			end
+		elsif(@step==2)
+			SudokuAPI.API.resetColors()
+			SudokuAPI.API.assistantMessage=("Bonjour, je suis l'assistant, je suis là pour vous aider.")
 		end
 		@step+=1
 	end
@@ -60,32 +84,6 @@ class MethodTwinsAndTriplets
 			end
 		}
 		return end_
-	end
-
-	def onSudokuMethod
-		SudokuAPI.API.saveSudoku("old");
-
-		@type = "onSudokuMethod"
-		if(@step==0)
-			SudokuAPI.API.assistantMessage=("Nous allons appliquer cette méthode sur la grille actuel (cliquez sur suivant pour continuer)");
-		elsif(@step==1)
-			@compteur=0
-			0.upto(8) do |region|
-				1.upto(3) do |n|
-					traitementOnRow(region,1,n)
-					traitementOnRow(region,0,n)
-				end
-			end
-			if(@cand!=nil)
-				SudokuAPI.API.assistantMessage=("Le candidat " + @cand.to_s + " n'est présent que sur ces deux cases, il est donc obliger de le placer ici.");
-			else
-				SudokuAPI.API.assistantMessage=("Il n'est pas possible d'appliquer cette méthode sur la grille.");
-			end
-		elsif(@step==2)
-			SudokuAPI.API.loadSudoku("old");
-			SudokuAPI.API.assistantMessage=("");
-		end
-		@step+=1
 	end
 
 	def traitementOnRow(region,sens,ligne)
