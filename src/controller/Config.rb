@@ -67,7 +67,7 @@ class Config
 
     def Config.load()
 
-        if(!File.file?("save_files/"+SudokuAPI.API.username+".yml"))
+        if(SudokuAPI.API.username == nil || !File.file?("save_files/"+SudokuAPI.API.username+".yml"))
             return;
         end
 

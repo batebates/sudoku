@@ -45,15 +45,8 @@ if(ProfilManager.dernierJoueur() != nil)
 end
 
 Config.registerConfigs();
-#Config.load();
+Config.load();
 
 myGenerator = Generator.new(0)
-
-=begin HOW TO USE PROFILS
-myProfil = ProfilManager.new()
-myProfil.loadFile()
-puts "Last found profile : " + myProfil.dernierJoueur()
-=end
-
 SudokuAPI.API.setSudoku(Sudoku.create(myGenerator.to_s), Sudoku.create(myGenerator.to_sPlayer), Sudoku.create(myGenerator.to_sCorrect));
 Window.init();

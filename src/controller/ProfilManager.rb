@@ -37,9 +37,18 @@ class ProfilManager
 	#=== Return :
 	#<b>return vrai si la suppression est faite, faux sinon</b>
 	def ProfilManager.supprimer(pseudo)
-		if(ProfilManager.existe(pseudo))
+		if(ProfilManager.existe(pseudo) && pseudo != @@dernierPseudo)
 			@@listeProfil.delete_at(@@listeProfil.index(pseudo))
 			ProfilManager.save()
+
+			if (File.file?("save_files/" + pseudo + ".yml"))
+				File.delete("save_files/" + pseudo + ".yml");
+			end
+
+			if (File.file?("save_files/" + pseudo))
+				File.delete("save_files/" + pseudo);
+			end
+
 			return true
 		else
 			return false
@@ -62,6 +71,15 @@ class ProfilManager
 				@@dernierPseudo = newName
 			end
 			ProfilManager.save();
+
+			if (File.file?("save_files/" + oldName + ".yml"))
+				File.rename("save_files/" + oldName + ".yml", "save_files/" + newName + ".yml");
+			end
+
+			if (File.file?("save_files/" + oldName))
+				File.rename("save_files/" + oldName, "save_files/" + newName);
+			end
+
 			return true
 		end
 		return false
