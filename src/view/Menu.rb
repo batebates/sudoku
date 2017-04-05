@@ -88,6 +88,10 @@ class Menu
 			end
 		}
 
+		bScoreTable.signal_connect("clicked"){
+			ScoreDialog.init()
+		}
+
 		@menu = vBox;
 
 		parent.attach(vBox, 1, 0, 1, 1);

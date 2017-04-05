@@ -5,22 +5,26 @@ class ConfigDialog
 
 	@mainVB #main vbox
 	@entryNewList
+	@avatarList
+	@currentAvatar
 
 	def ConfigDialog.init()
 		new()
 	end
 
 	def initialize()
-		SudokuAPI.API.timerPaused = true;
 		@confEntry = Config.entries
 		@entryNewList = Array.new
+
+		@avatarList = Dir[AssetManager.assetsDir() + "/avatar_small/*.png"]
+		@avatarIndex = 0;
 
 		@mainVB = Gtk::Box.new(:vertical,1)
 		@mainVB.name = "mainVB"
 
 		#@confEntry = confEntry
 		@configDialog = Gtk::Dialog.new(:parent => Window.window(), :title => "Configuration", :flags => [:modal, :destroy_with_parent])
-		@configDialog.set_default_size(300,500)
+		@configDialog.set_default_size(300,600)
 
 		@configDialog.add_button("Appliquer",Gtk::ResponseType::OK)
 		@configDialog.add_button(Gtk::Stock::CANCEL, Gtk::ResponseType::CANCEL)
@@ -50,7 +54,8 @@ class ConfigDialog
 		when Gtk::ResponseType::CLOSE
 				@configDialog.destroy
 		end
-		SudokuAPI.API.timerPaused = false;
+
+
 	end
 
 	def initConf(conf)
@@ -64,13 +69,7 @@ class ConfigDialog
 
 		hBox = Gtk::Box.new(:horizontal, 2)
 		hBox.name = "configEntry"
-
-		scoreBtn = Gtk::Button.new(:label=>"Tableau des Scores")
-		hBox.pack_start(scoreBtn,:expand=>true,:fill=>true,:padding=>2)
 		@mainVB.pack_start(hBox)
-		scoreBtn.signal_connect("clicked"){
-			ScoreDialog.init()
-		}
 
 	end
 
@@ -100,7 +99,46 @@ class ConfigDialog
 				modConf.newValue.green = colorB.color.green
 				modConf.newValue.blue = colorB.color.blue
 			}
+		elsif (modConf.type == "avatar")
+			bBox = Gtk::Box.new(:horizontal,0)
+			leftBtn = Gtk::Button.new
+			leftBtn.add(Gtk::Image.new(:file=>AssetManager.assetsResource("./back-small.png")))
+			rightBtn = Gtk::Button.new
+			rightBtn.add(Gtk::Image.new(:file=>AssetManager.assetsResource("./next-small.png")))
+			leftBtn.name = "createUserChooser"
+			rightBtn.name= "createUserChooser"
+
+			p modConf.value
+			@currentAvatar = Gtk::Image.new(:file=>@avatarList[modConf.value])
+			
+
+			if(!modConf.value)
+					@avatarIndex = modConf.value
+			else
+					@avatarIndex = 0
+			end
+
+			leftBtn.signal_connect("clicked"){
+				index = ((@avatarIndex - 1) % @avatarList.length)
+				@currentAvatar.file = @avatarList[index]
+				@avatarIndex = index
+				modConf.newValue = @avatarIndex
+			}
+
+			rightBtn.signal_connect("clicked"){
+				index = ((@avatarIndex + 1) % @avatarList.length)
+				@currentAvatar.file = @avatarList[index]
+				@avatarIndex = index
+				modConf.newValue = @avatarIndex
+			}
+
+			bBox.add(leftBtn)
+			bBox.add(@currentAvatar)
+			bBox.add(rightBtn)
+
+			hBox.pack_end(bBox)
 		end
+
 		return hBox
 	end
 
@@ -110,6 +148,8 @@ class ConfigDialog
 				cl.value.red = cl.newValue.red
 				cl.value.green = cl.newValue.green
 				cl.value.blue = cl.newValue.blue
+			elsif cl.type == "avatar"
+				cl.value = cl.newValue
 			end
 		}
 		Config.set(@entryNewList);

@@ -3,7 +3,7 @@ class Config
     @@entryList = [];
 
     def Config.registerConfigs()
-        Config.addEntry(ConfigEntry.new("avatar", "Avatar du profil ?", "avatar", "professor"));
+        Config.addEntry(ConfigEntry.new("avatar", "Avatar du profil ?", "avatar", 0));
         Config.addEntry(ConfigEntry.new("grid_color", "Couleur de la grille", "color", Colors::CL_BLANK));
         Config.addEntry(ConfigEntry.new("hover_color", "Couleur de la case survolée", "color", Colors::CL_HIGHLIGHT));
         Config.addEntry(ConfigEntry.new("hover_line_color", "Couleur de la ligne / colonne survolée", "color", Colors::CL_HIGHLIGHT_LINE));
@@ -41,9 +41,9 @@ class Config
         @@entryList = entryList;
     end
 
-    def Config.save() 
+    def Config.save()
         configSaveFile = File.new("save_files/"+SudokuAPI.API.username+".yml","w")
-        
+
         if(!configSaveFile.closed?)
             puts "Fichier de configuration ouvert\n"
         end
