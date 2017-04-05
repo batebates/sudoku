@@ -11,13 +11,15 @@ class AssistantView
     def initialize(parent)
         @updateTextThread = nil;
         SudokuAPI.API.add_observer(self);
+        Config.instance.add_observer(self);
         # Split container in 2 parts : Left (Avatar), Right (Speech bubble)
         assistantGrid = Gtk::Box.new(:horizontal, 0);
 
         assistantGrid.set_hexpand(true);
         assistantGrid.set_vexpand(true);
 
-        @avatarImage = Gtk::Image.new(:file => AssetManager.assetsResource("assistant.png"));
+        avatarList = Dir[AssetManager.assetsDir() + "/avatar_small/*.png"];
+        @avatarImage = Gtk::Image.new(:file => avatarList[Config.getValue("avatar")]);
 
         # Speech bubble
         speechBox = Gtk::Box.new(:horizontal);
@@ -58,8 +60,9 @@ class AssistantView
             }
         end
 
-        if(type == "assistantImage")
-          @avatarImage.file = message
+        if(type == "config")
+            avatarList = Dir[AssetManager.assetsDir() + "/avatar_small/*.png"];
+            @avatarImage.file = avatarList[Config.getValue("avatar")];
         end
     end
 end

@@ -141,8 +141,8 @@ class UserDialog
             #Log user
             if(userIndex != 0)
                 SudokuAPI.API.timerPaused = false;
-                Config.load()
                 ProfilManager.connecter(userComboBox.active_text);
+                Config.load()
             else #New user
                 RegisterView.display(false);
             end

@@ -1,6 +1,8 @@
 class Config
-    private_class_method :new
+    include Observable
+
     @@entryList = [];
+    @@instance = Config.new();
 
     def Config.registerConfigs()
         Config.addEntry(ConfigEntry.new("avatar", "Avatar du profil ?", "avatar", 0));
@@ -39,6 +41,9 @@ class Config
 
     def Config.set(entryList)
         @@entryList = entryList;
+
+        @@instance.changed(true);
+		@@instance.notify_observers("config", entryList);
     end
 
     def Config.save()
@@ -85,5 +90,12 @@ class Config
                 end
             end
         }
+
+        @@instance.changed(true);
+		@@instance.notify_observers("config", nil);
+    end
+
+    def Config.instance()
+        @@instance;
     end
 end
