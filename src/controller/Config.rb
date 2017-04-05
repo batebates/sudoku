@@ -26,6 +26,13 @@ class Config
         return entry != nil ? entry.value : nil;
     end
 
+    def Config.setValue(key, value)
+        entry = Config.getEntry(key);
+        if(entry != nil)
+            entry.value = value;
+        end
+    end
+
     def Config.getEntry(key)
         @@entryList.each { |value|
             if(value.name == key)

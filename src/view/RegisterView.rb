@@ -63,6 +63,9 @@ class RegisterView
         buttonConfirm.signal_connect("clicked") {
             ProfilManager.ajouter(nameEntry.text);
             ProfilManager.connecter(nameEntry.text);
+            Config.setValue("avatar", @avatarIndex);
+            Config.save();
+            Config.load();
             root.remove(mainPanel);
             sudokuPanel.show_all();
             SudokuAPI.API.timerPaused = false;
