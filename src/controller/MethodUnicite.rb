@@ -74,7 +74,6 @@ class MethodUnicite
 				SudokuAPI.API.assistantMessage=("La Méthode choisi n'est pas applicable sur cette grille pour le moment ");
 			end
 		end
-
 		#TODO enableHint False
 
 		@step+=1
@@ -121,6 +120,7 @@ class MethodUnicite
 	def getHintEquals(lst,c1)
 		return lst.keep_if{|c2| SudokuAPI.API.getInclude(c1.x,c1.y) == SudokuAPI.API.getInclude(c2.x,c2.y)}
 	end
+
 
 
 	def rowCaseParallel(pair,c)
