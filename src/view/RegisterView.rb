@@ -63,6 +63,9 @@ class RegisterView
         buttonConfirm.signal_connect("clicked") {
             ProfilManager.ajouter(nameEntry.text);
             ProfilManager.connecter(nameEntry.text);
+            Config.setValue("avatar", @avatarIndex);
+            Config.save();
+            Config.load();
             root.remove(mainPanel);
             sudokuPanel.show_all();
             SudokuAPI.API.timerPaused = false;
@@ -114,10 +117,15 @@ class RegisterView
             result = false;
         end
 
+        if(ProfilManager.listeProfile.include?(nameEntry.text))
+            nameError.label = "Le nom est déjà pris !";
+            result = false;
+        end
+
         buttonConfirm.sensitive = result;
 
         if(result)
-            nameError.label = "Nom valide";
+            nameError.label = "Le nom est valide";
             nameError.name = "createUserErrorValid";
         else
             nameError.name = "createUserError";

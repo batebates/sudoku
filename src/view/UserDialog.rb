@@ -85,7 +85,10 @@ class UserDialog
                 hbox.add(editButton);
                 hbox.add(removeButton);
             else
-                puts "Failed"
+                errorDialog = Gtk::MessageDialog.new(:parent => Window.window(), :flags => [:modal, :destroy_with_parent], :type => :error, :buttons => :ok, :message => "Erreur");
+                errorDialog.secondary_text = "Le profil existe déjà !";
+                errorDialog.run();
+                errorDialog.destroy();
             end
         }
 
@@ -100,15 +103,21 @@ class UserDialog
         }
 
         removeButton.signal_connect("clicked") {
-
             confirmDialog = Gtk::MessageDialog.new(:parent => Window.window(), :flags => [:modal, :destroy_with_parent], :type => :question, :buttons => :yes_no, :message => "Supprimer le profil #{userComboBox.active_text} ?");
             confirmDialog.secondary_text = "Le profil ne poura pas être récupéré. Ses scores et configurations seront effacés";
             confirmResponse = confirmDialog.run();
 
             if(confirmResponse == :yes)
-                ProfilManager.supprimer(userComboBox.active_text);
-                userComboBox.remove(userComboBox.active);
-                userComboBox.set_active(0);
+                result = ProfilManager.supprimer(userComboBox.active_text);
+                if(result)
+                    userComboBox.remove(userComboBox.active);
+                    userComboBox.set_active(0);
+                else
+                    errorDialog = Gtk::MessageDialog.new(:parent => Window.window(), :flags => [:modal, :destroy_with_parent], :type => :error, :buttons => :ok, :message => "Erreur");
+                    errorDialog.secondary_text = "Le profil est en cours d'utilisation !";
+                    errorDialog.run();
+                    errorDialog.destroy();
+                end
             end
 
             confirmDialog.destroy();
@@ -132,8 +141,8 @@ class UserDialog
             #Log user
             if(userIndex != 0)
                 SudokuAPI.API.timerPaused = false;
-                Config.load()
                 ProfilManager.connecter(userComboBox.active_text);
+                Config.load()
             else #New user
                 RegisterView.display(false);
             end

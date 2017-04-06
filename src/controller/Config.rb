@@ -1,6 +1,8 @@
 class Config
-    private_class_method :new
+    include Observable
+
     @@entryList = [];
+    @@instance = Config.new();
 
     def Config.registerConfigs()
         Config.addEntry(ConfigEntry.new("avatar", "Avatar du profil ?", "avatar", 0));
@@ -24,6 +26,13 @@ class Config
         return entry != nil ? entry.value : nil;
     end
 
+    def Config.setValue(key, value)
+        entry = Config.getEntry(key);
+        if(entry != nil)
+            entry.value = value;
+        end
+    end
+
     def Config.getEntry(key)
         @@entryList.each { |value|
             if(value.name == key)
@@ -39,6 +48,9 @@ class Config
 
     def Config.set(entryList)
         @@entryList = entryList;
+
+        @@instance.changed(true);
+		@@instance.notify_observers("config", entryList);
     end
 
     def Config.save()
@@ -67,7 +79,7 @@ class Config
 
     def Config.load()
 
-        if(!File.file?("save_files/"+SudokuAPI.API.username+".yml"))
+        if(SudokuAPI.API.username == nil || !File.file?("save_files/"+SudokuAPI.API.username+".yml"))
             return;
         end
 
@@ -85,5 +97,12 @@ class Config
                 end
             end
         }
+
+        @@instance.changed(true);
+		@@instance.notify_observers("config", nil);
+    end
+
+    def Config.instance()
+        @@instance;
     end
 end

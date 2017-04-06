@@ -17,7 +17,7 @@ class ConfigDialog
 		@entryNewList = Array.new
 
 		@avatarList = Dir[AssetManager.assetsDir() + "/avatar_small/*.png"]
-		@avatarIndex = 0;
+		@avatarIndex = Config.getValue("avatar");
 
 		@mainVB = Gtk::Box.new(:vertical,1)
 		@mainVB.name = "mainVB"
@@ -108,16 +108,11 @@ class ConfigDialog
 			leftBtn.name = "createUserChooser"
 			rightBtn.name= "createUserChooser"
 
-			p modConf.value
 			@currentAvatar = Gtk::Image.new(:file=>@avatarList[modConf.value])
-			
 
-			if(!modConf.value)
-					@avatarIndex = modConf.value
-			else
-					@avatarIndex = 0
-			end
 
+			@avatarIndex = modConf.value
+			modConf.newValue = @avatarIndex
 			leftBtn.signal_connect("clicked"){
 				index = ((@avatarIndex - 1) % @avatarList.length)
 				@currentAvatar.file = @avatarList[index]
