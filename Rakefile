@@ -4,5 +4,5 @@
 task :default => [:test]
 
 task :test do 
-	ruby "test/Test.rb"
+	ruby "src/Test.rb"
 end
