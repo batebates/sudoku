@@ -1,4 +1,4 @@
-{<img src="https://travis-ci.org/batebates/sudoku.svg?branch=master" alt="Build Status" />}[https://travis-ci.org/batebates/sudoku]
+<img src="https://travis-ci.org/batebates/sudoku.svg?branch=master" alt="Build Status" />
 [![Issue Count](https://codeclimate.com/github/batebates/sudoku/badges/issue_count.svg)](https://codeclimate.com/github/batebates/sudoku)
 [![Code Climate](https://codeclimate.com/github/batebates/sudoku/badges/gpa.svg)](https://codeclimate.com/github/batebates/sudoku)
 [![Inline docs](http://inch-ci.org/github/batebates/sudoku.svg?branch=master)](http://inch-ci.org/github/batebates/sudoku)
