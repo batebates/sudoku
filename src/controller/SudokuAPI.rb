@@ -66,6 +66,13 @@ class SudokuAPI
 		return @@API;
 	end
 
+
+	#=== Set l'ensemble des grilles de sudoku
+	#
+	#===Paramètres :
+	#* <b>sudoku</b> : Sudoku : sudoku actuel
+	#* <b>sudokuStart</b> : Sudoku : sudoku du debut
+	#* <b>sudokuCompleted</b> : Sudoku : sudoku fini
 	def setSudoku(sudoku, sudokuStart = nil, sudokuCompleted = nil)
 		@timer = 0
 		@sudoku = sudoku
@@ -78,6 +85,7 @@ class SudokuAPI
 		notify_observers("newgrid", sudoku);
 	end
 
+	#=== Met en lecture seul les cases contenant les valeurs initiale du sudoku
 	def lockSudoku()
 		for i in 0...9
 			for j in 0...9
@@ -108,8 +116,6 @@ class SudokuAPI
 
             candidats.delete(caze.value);
         }
-				#print SudokuAPI.API.getExclude(x,y)
-				#print "\n"
         return candidats;
     end
 
@@ -124,11 +130,19 @@ class SudokuAPI
 		@sudoku.cazeAt(x,y).color=color;
 	end
 
+	#===Recupere la couleur d'une case
+	#
+	#===Paramètres :
+	#* <b>x</b> : int : indique la coordonnée de l'axe des abscisses de la case
+	#* <b>y</b> : int : indique la coordonnée de l'axe des ordonnées de la case
 	def getColor(x,y)
 		return @sudoku.cazeAt(x,y).color;
 	end
 
-
+	#===Met en couleur une unite
+	#
+	#===Paramètres :
+	#* <b>unite</b> : ArrayList : indique l'unite (liste de case) à mettre en couleur
 	def highlightUnite(unite)
 		unite.each{ |caze|
 			cazeAt(caze.x,caze.y).color=Colors::CL_HIGHLIGHT_METHOD;
@@ -534,7 +548,11 @@ class SudokuAPI
 	end
 
 	def getInclude(x,y)
-		return [1,2,3,4,5,6,7,8,9] - getExclude(x,y)
+		if(cazeAt(x,y).value !=0)
+			return [0]
+		else
+			return (candidateCaze(x,y) - getExclude(x,y).uniq - [0]).sort
+		end
 	end
 
 	#===Permet d'activer/désactiver le menu

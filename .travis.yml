@@ -1,5 +1,4 @@
-
-language: ruby
+language: Ruby
 rvm:
   - 2.3
 
@@ -12,17 +11,19 @@ install:
   - sudo apt-get install ruby-dev
   - gem install bundler
   - bundler install --with=travis
+
 script:
   - rake test
+
+
 branches:
   only:
   - master
   - batebates
-  
- 
+
 addons:
     code_climate:
-      repo_token: 3ad359967ad2924ee23cb4e0f0d10c98d6b9e1f9
+        repo_token: 3ad359967ad2924ee23cb4e0f0d10c98d6b9e1f9
 
 after_success:
-  - bundle exec codeclimate-test-reporter  
+- bundle exec codeclimate-test-reporter  

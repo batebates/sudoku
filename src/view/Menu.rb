@@ -33,11 +33,11 @@ class Menu
 		bLoadGrid = createButton("load.png", "Charger partie");
 		bScoreTable = createButton("scoreboard.png", "Tableau des Scores");
 
-		bMethod1 = createMethodButton("info.png", "Unicite", "MethodUnicite");
-		bMethod2 = createMethodButton("info.png", "Group Isolated", "MethodGroupIsolated");
-		bMethod3 = createMethodButton("info.png", "Interactions Regions", "MethodInteractionsRegions");
-		bMethod4 = createMethodButton("info.png", "Twins & Triplets", "MethodTwinsAndTriplets");
-		bMethod5 = createMethodButton("info.png", "Unique candidate", "MethodUniqueCandidate");
+		bMethod1 = createMethodButton("info.png", "Réduction par croix", "MethodCrossReduce");
+		bMethod2 = createMethodButton("info.png", "Candidat unique", "MethodUniqueCandidate");
+		bMethod3 = createMethodButton("info.png", "Jumeaux et Triplés", "MethodTwinsAndTriplets");
+		bMethod4 = createMethodButton("info.png", "Unicité", "MethodUnicite");
+
 
 		bOptions = createButton("gears.png", "Options");
 		bQuit = createButton("exit.png", "Quitter");
@@ -53,7 +53,6 @@ class Menu
 		vBox.pack_start(bMethod2);
 		vBox.pack_start(bMethod3);
 		vBox.pack_start(bMethod4);
-		vBox.pack_start(bMethod5);
 		vBox.pack_start(createTitle("Autres"));
 		vBox.pack_start(bOptions);
 		vBox.pack_start(bQuit);
