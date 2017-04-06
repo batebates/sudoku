@@ -59,6 +59,10 @@ class Caze
         @value = value
         changed(true);
         notify_observers("value", @value);
+			
+		if (SudokuAPI.API.sudoku.valid?())
+			SudokuAPI.API.won=(true)
+		end
     end
 
     def invisible=(invisible)

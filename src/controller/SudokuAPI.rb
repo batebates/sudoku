@@ -48,7 +48,9 @@ class SudokuAPI
 	@username
 	@hintenable
 	@methode
+	@won
 
+	attr_reader :won
 	attr_reader :sudoku
 	attr_reader :sudokuCompleted
 	attr_reader :sudokuStart
@@ -94,16 +96,20 @@ class SudokuAPI
     def candidateCaze(x,y)
         candidats = [1,2,3,4,5,6,7,8,9];
         row(y).each{ |caze|
+
             candidats.delete(caze.value);
         }
         column(x).each{ |caze|
+
             candidats.delete(caze.value);
         }
 
         square(x, y).each{ |caze|
+
             candidats.delete(caze.value);
         }
-
+				#print SudokuAPI.API.getExclude(x,y)
+				#print "\n"
         return candidats;
     end
 
@@ -399,7 +405,7 @@ class SudokuAPI
 	def setValue(x,y,val)
 		 return cazeAt(x, y).value=(val)
 	end
-	
+
 
 	#===Permet de modifier l'username
 	#
@@ -430,8 +436,8 @@ class SudokuAPI
 	def setHintAt(x,y,hintEnabled)
 		cazeAt(x, y).hint=(hintEnabled)
 	end
-	
-	
+
+
 
 	#===Permet d'activer la visibilité des indices d'une unité
 	#
@@ -502,7 +508,10 @@ class SudokuAPI
 	#* <b>y</b> : int : indique la coordonnée de l'axe des ordonnées de la case
 	#* <b>number</b> : int : indice a exclure
 	def addExclude(x, y, number)
-		cazeAt(x, y).excludedHint.push(number);
+		if(!cazeAt(x, y).excludedHint.include?(number))
+			cazeAt(x, y).excludedHint.push(number);
+		end
+		return @self
 	end
 
 	#===Permet de réactiver des indices d'une case
@@ -521,9 +530,9 @@ class SudokuAPI
 	#* <b>x</b> : int : indique la coordonnée de l'axe des abscisses de la case
 	#* <b>y</b> : int : indique la coordonnée de l'axe des ordonnées de la case
 	def getExclude(x, y)
-		cazeAt(x, y).excludedHint;
+		cazeAt(x, y).excludedHint
 	end
-	
+
 	def getInclude(x,y)
 		return [1,2,3,4,5,6,7,8,9] - getExclude(x,y)
 	end
@@ -536,5 +545,10 @@ class SudokuAPI
 		changed(true);
 		notify_observers("hideMenu", hidden);
 	end
-end
 
+	def won=(won)
+		@won = won;
+		changed(true);
+		notify_observers("won", won);
+	end
+end

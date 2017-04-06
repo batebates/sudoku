@@ -3,26 +3,16 @@
   name: avatar
   displayName: Avatar du profil ?
   type: avatar
-<<<<<<< HEAD
   value: 0
-=======
-  value: professor
->>>>>>> 1fe1482500a0a8fba619afe9b714577ef889e3b2
   newValue: 0
 - !ruby/object:ConfigEntry
   name: grid_color
   displayName: Couleur de la grille
   type: color
   value:
-<<<<<<< HEAD
-  - 54227
-  - 55255
-  - 53199
-=======
   - 65535
   - 65535
   - 65535
->>>>>>> 1fe1482500a0a8fba619afe9b714577ef889e3b2
   newValue: 0
 - !ruby/object:ConfigEntry
   name: hover_color
@@ -65,9 +55,9 @@
   displayName: Couleur des chiffres vérouillés
   type: color
   value:
+  - 32767
   - 0
-  - 3099
-  - 65535
+  - 0
   newValue: 0
 - !ruby/object:ConfigEntry
   name: show_line_highlight
@@ -79,17 +69,11 @@
   name: show_square_highlight
   displayName: Surligner le carré survolé ?
   type: bool
-  value: true
-  newValue: 0
-- !ruby/object:ConfigEntry
-  name: show_hint
-  displayName: Afficher les valeurs possibles ?
-  type: bool
   value: false
   newValue: 0
 - !ruby/object:ConfigEntry
   name: show_hint
   displayName: Afficher les valeurs possibles ?
   type: bool
-  value: true
+  value: false
   newValue: 0

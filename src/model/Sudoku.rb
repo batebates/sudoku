@@ -95,4 +95,52 @@ class Sudoku
             end
         end
     end
+
+
+	def rowValue(y)
+		values = [];
+		SudokuAPI.API.row(y).each { |caze|
+			values.push(caze.value);
+		}
+		return values;
+	end
+
+	def columnValue(x)
+		values = [];
+		SudokuAPI.API.column(x).each { |caze|
+			values.push(caze.value);
+		}
+
+		return values;
+	end
+
+	def squareValue(x,y)
+		values = [];
+		SudokuAPI.API.square(x,y).each { |caze|
+			values.push(caze.value);
+		}
+
+		return values;
+	end
+
+#===Verifie Validité de la grille
+#
+	def valid?()
+		cptX = 0
+		cptY = 0
+		if(gridFull()) #Verifie si grille pleine
+			for i in 0...9
+				if rowValue(i).uniq.length != rowValue(i).length
+					return false
+				elsif columnValue(i).uniq.length != columnValue(i).length
+					return false
+				elsif squareValue((x%3),(y/3).floor).uniq.length != squareValue((x%3),(y/3).floor).length
+					return false;
+				end
+			end
+
+			return true
+		end
+		return true
+	end
 end
