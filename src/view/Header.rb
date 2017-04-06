@@ -12,7 +12,7 @@ class Header
         SudokuAPI.API.add_observer(self);
         header = Gtk::HeaderBar.new();
         header.set_title(Window.window.title);
-        header.set_subtitle("Demo");
+        header.set_subtitle("Groupe A");
         header.set_show_close_button(true);
 
         timeIcon = Gtk::Image.new(:file => AssetManager.assetsResource("clock.png"));
