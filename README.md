@@ -1,5 +1,7 @@
-<a href="https://codeclimate.com/github/batebates/sudoku"><img src="https://codeclimate.com/github/batebates/sudoku/badges/gpa.svg" /></a>
-<a href="https://codeclimate.com/github/batebates/sudoku"><img src="https://codeclimate.com/github/batebates/sudoku/badges/issue_count.svg" /></a>
+[![Build Status](https://travis-ci.org/batebates/sudoku.svg?branch=master)](https://travis-ci.org/batebates/sudoku)
+[![Issue Count](https://codeclimate.com/github/batebates/sudoku/badges/issue_count.svg)](https://codeclimate.com/github/batebates/sudoku)
+[![Code Climate](https://codeclimate.com/github/batebates/sudoku/badges/gpa.svg)](https://codeclimate.com/github/batebates/sudoku)
+[![Inline docs](http://inch-ci.org/github/batebates/sudoku.svg?branch=master)](http://inch-ci.org/github/batebates/sudoku)
 
 # Sudoku 
 
