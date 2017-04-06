@@ -7,3 +7,8 @@ group :test do
   gem "test"
   gem "rake"
 end
+
+
+group :production do
+  gem 'gtk3'
+end
