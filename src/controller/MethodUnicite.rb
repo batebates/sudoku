@@ -1,30 +1,26 @@
-class MethodUnicite
+class MethodUnicite < Methode
 
 
-	@type = "textMethod"
-	@step = 0
-
-	def initialize()
-		@step,@type=0,"textMethod"
-
-	end
 	def textMethod
-		@type = "textMethod"
     case @step
-    when 0
-    	SudokuAPI.API.sudokuEditable(true)
-      SudokuAPI.API.assistantMessage=("Cette méthode repose sur le principe qu'un sudoku possède une unique solution")
-    when 1
-      SudokuAPI.API.assistantMessage=("Ainsi si quatre cellules dans deux régions différentes forment un rectangle comporte une paire de candidats identiques sur trois de ces cellules ")
-    when 2
-      SudokuAPI.API.assistantMessage=("Et que la quatrième comporte cette paire ainsi que d'autres candidats")
-    when 3
-      SudokuAPI.API.assistantMessage=("Alors la solution de cette cellule est forcement parmis ces candidats en plus.")
-    when 4
-      SudokuAPI.API.assistantMessage=("En effet la grille possède une solution unique, il ne peut pas y avoir 4 paires identiques formant un rectangle sur deux regions differentes")
-    when 5
-    	SudokuAPI.API.assistantMessage=("");
-     	SudokuAPI.API.sudokuEditable(false)
+		 when nil
+		 	@type = "textMethod"
+			@step = 0
+		 	SudokuAPI.API.hideMenu(true)
+		 	SudokuAPI.API.sudokuEditable(true)
+		   SudokuAPI.API.assistantMessage=("Cette méthode repose sur le principe\nqu'un sudoku possède une unique solution")
+		 when 1
+		   SudokuAPI.API.assistantMessage=("Ainsi si quatre cellules dans deux régions différentes\forment un rectangle comporte une paire de candidats identiques\n sur trois de ces cellules ")
+		 when 2
+		   SudokuAPI.API.assistantMessage=("Et que la quatrième comporte cette paire ainsi\nque d'autres candidats")
+		 when 3
+		   SudokuAPI.API.assistantMessage=("Alors la solution de cette cellule est forcement\nparmis ces candidats en plus.")
+		 when 4
+		   SudokuAPI.API.assistantMessage=("En effet la grille possède une solution unique, il ne peut pas y avoir\n4 paires identiques formant un rectangle sur deux regions differentes")
+		 when 5
+		 	SudokuAPI.API.assistantMessage=("");
+		  	SudokuAPI.API.hideMenu(false)
+			SudokuAPI.API.sudokuEditable(false)
     end
 		@step+=1
 	end
@@ -32,12 +28,14 @@ class MethodUnicite
 	def demoMethod
 		@type = "demoMethod"
   	case @step
-	  	when 0
+	  	when nil
+				@step = 0
+	  			SudokuAPI.API.hideMenu(true)
 	  			SudokuAPI.API.sudokuEditable(true)
 				SudokuAPI.API.saveSudoku("old");
 				gridDemo = "375648129010925070200371000732089060400267000060034792020453917147896235953712648"
 				SudokuAPI.API.setSudoku(Sudoku.create(gridDemo),Sudoku.create(gridDemo),Sudoku.create(gridDemo));
-				SudokuAPI.API.assistantMessage=("Bienvenue dans la démo (cliquez sur suivant pour continuer");
+				SudokuAPI.API.assistantMessage=("Bienvenue dans la démo (cliquez sur suivant pour continuer)");
 		when 1
 			SudokuAPI.API.cazeAt(0,1).color=Colors::CL_NUMBER_LOCKED;
 			SudokuAPI.API.cazeAt(2,1).color=Colors::CL_HIGHLIGHT_METHOD;
@@ -49,14 +47,15 @@ class MethodUnicite
 					SudokuAPI.API.setHintAt(i,j,true)
 				end
 			end
-			SudokuAPI.API.assistantMessage=("Les quatres cases colorées possèdent la même paire de candidats 6 et 8 ");
+			SudokuAPI.API.assistantMessage=("Les quatres cases colorées possèdent la même paire\nde candidats 6 et 8 ");
 		 when 2
-		   SudokuAPI.API.assistantMessage=("Comme la solution d'un sudoku est unique, la case grisé qui possède des candidats en plus de la paire n'a pour solution que ces candidats");
+		   SudokuAPI.API.assistantMessage=("Comme la solution d'un sudoku est unique,\nla case grisé qui possède des candidats en plus de\nla paire n'a pour solution que ces candidats");
 		 when 3
 		   SudokuAPI.API.assistantMessage=("On peut donc éliminer la paire de candidat de cette cellule");
 		 when 4
 				SudokuAPI.API.loadSudoku("old");
 				SudokuAPI.API.assistantMessage=("Bonjour, je suis l'assistant, je suis là pour vous aider");
+				SudokuAPI.API.hideMenu(false)
 				SudokuAPI.API.sudokuEditable(false)
 		 end
 		@step+=1
@@ -65,7 +64,9 @@ class MethodUnicite
 	def onSudokuMethod
 		@type = "onSudokuMethod"
 		case @step
-			when 0
+			when nil
+				@step = 0
+				SudokuAPI.API.hideMenu(true)
 				SudokuAPI.API.sudokuEditable(true)
 				tab = regionPaireCandidats
 				if(tab != nil)
@@ -79,15 +80,14 @@ class MethodUnicite
 					end
 					SudokuAPI.API.cazeAt(tab.first.x,tab.first.y).color=Colors::CL_HIGHLIGHT_METHOD
 				else
-					SudokuAPI.API.assistantMessage=("La Méthode choisi n'est pas applicable sur cette grille pour le moment ");
+					SudokuAPI.API.assistantMessage=("La Méthode choisi n'est pas applicable\nsur cette grille pour le moment ");
 				end
 			when 1
 					SudokuAPI.API.getInclude(tab.first.x,tab.first.y) - SudokuAPI.API.getInclude(tab.last.x,tab.last.y).each {|n| SudokuAPI.API.addExclude(tab.first.x, tab.first.y, n)}
+					SudokuAPI.API.hideMenu(false)
 					SudokuAPI.API.sudokuEditable(false)
 		
 		end
-	
-
 		@step+=1
 	end
 
@@ -244,14 +244,6 @@ class MethodUnicite
 					end
 			end
 		return nil
-	end
-
-	def update
-		if(@type == "demoMethod")
-			self.demoMethod()
-		elsif(@type == "onSudokuMethod")
-			self.onSudokuMethod()
-		end
 	end
 
 

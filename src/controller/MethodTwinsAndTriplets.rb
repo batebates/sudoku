@@ -1,30 +1,34 @@
 class MethodTwinsAndTriplets < Methode
 	
-	@type = "textMethod"
-	@step = 0
-	@compteur
-	@cand = nil
-	def initialize()
-		@step,@type,@compteur=0,"textMethod",0
 
-	end
+	@compteur = 0
+	@cand = nil
 	def textMethod
-		@type = "textMethod"
+		puts(@step)
 		case @step
-			when 0
-		SudokuAPI.API.assistantMessage=("Cette méthode nous permet de déduire dans quelle partie d'une \nrégion peut se trouver un symbole. En effet il n'est pas toujours\névident de découvrir dès le début l'emplacement final et définitif.")
+			when nil
+			@type = "textMethod"
+			@step = 0
+			SudokuAPI.API.hideMenu(true)
+			SudokuAPI.API.sudokuEditable(true)
+			SudokuAPI.API.assistantMessage=("Cette méthode nous permet de déduire dans quelle partie d'une \nrégion peut se trouver un symbole. En effet il n'est pas toujours\névident de découvrir dès le début l'emplacement final et définitif.")
 			when 1
-			SudokuAPI.API.assistantMessage=("\n Si un candidat se trouve uniquement par exemple dans la dernière ligne d'une région\n il se trouvera donc obligatoirement dans cette ligne.")
+			SudokuAPI.API.assistantMessage=("Si un candidat se trouve uniquement par exemple dans la dernière\n ligne d'une région il se trouvera donc obligatoirement\ndans cette ligne.")
 			when 2
 				SudokuAPI.API.assistantMessage=("Bonjour,je suis l'assistant, je suis là pour vous aider")
+				SudokuAPI.API.hideMenu(false)
+				SudokuAPI.API.sudokuEditable(false)
 		end
 		@step+=1
 	end
 
 	def demoMethod
 		@type = "demoMethod"
-		if(@step==0)
+		if(@step==nil)
+			@step = 0
 			SudokuAPI.API.saveSudoku("old");
+			SudokuAPI.API.hideMenu(true)
+			SudokuAPI.API.sudokuEditable(true)
 			gridDemo = "375648129010925070200371000732089060000267000060034792020453917147896235953712648"	
 			SudokuAPI.API.setSudoku(Sudoku.create(gridDemo),Sudoku.create(gridDemo),Sudoku.create(gridDemo));
 			SudokuAPI.API.assistantMessage=("Bienvenue dans la démo (Appuyez sur Suivant)");
@@ -33,9 +37,11 @@ class MethodTwinsAndTriplets < Methode
 			SudokuAPI.API.cazeAt(2,4).color=Colors::CL_NUMBER_LOCKED;
 			SudokuAPI.API.cazeAt(6,4).color=Colors::CL_NUMBER;
 			SudokuAPI.API.cazeAt(8,4).color=Colors::CL_NUMBER;
-			SudokuAPI.API.assistantMessage=("Les 2 candidats 4, alignés dans cette région (en rouge), donnent la possibilité\nde supprimer les 4 dans les autres régions de cette ligne (en gris)");
+			SudokuAPI.API.assistantMessage=("Les 2 candidats 4, alignés dans cette région (en rouge),\n donnent la possibilité de supprimer les 4 dans les autres régions\n de cette ligne (en gris)");
 		elsif(@step==2)	
 			SudokuAPI.API.loadSudoku("old");
+			SudokuAPI.API.hideMenu(false)
+			SudokuAPI.API.sudokuEditable(false)
 			SudokuAPI.API.assistantMessage=("Bonjour, je suis l'assistant, je suis là pour vous aider.")
 		end
 		@step+=1
@@ -43,8 +49,11 @@ class MethodTwinsAndTriplets < Methode
 
 	def onSudokuMethod
 		@type = "onSudokuMethod"
-		if(@step==0)
-			SudokuAPI.API.assistantMessage=("Nous allons appliquer cette méthode sur la grille actuel (cliquez sur suivant pour continuer)");
+		if(@step==nil)
+			@step = 0
+			SudokuAPI.API.hideMenu(true)
+			SudokuAPI.API.sudokuEditable(true)
+			SudokuAPI.API.assistantMessage=("Nous allons appliquer cette méthode sur la grille actuel \n(cliquez sur suivant pour continuer)");
 		elsif(@step==1)
 			@compteur=0
 			0.upto(8) do |region|
@@ -54,11 +63,13 @@ class MethodTwinsAndTriplets < Methode
 				end
 			end
 			if(@cand!=nil)
-				SudokuAPI.API.assistantMessage=("Le candidat " + @cand.to_s + " n'est présent que sur ces deux cases, il est donc obliger de le placer ici.");
+				SudokuAPI.API.assistantMessage=("Le candidat " + @cand.to_s + " n'est présent que sur ces deux cases,\n il est donc obliger de le placer ici.");
 			else
 				SudokuAPI.API.assistantMessage=("Il n'est pas possible d'appliquer cette méthode sur la grille.");
 			end
 		elsif(@step==2)
+			SudokuAPI.API.hideMenu(false)
+			SudokuAPI.API.sudokuEditable(false)
 			SudokuAPI.API.resetColors()
 			SudokuAPI.API.assistantMessage=("Bonjour, je suis l'assistant, je suis là pour vous aider.")
 		end
@@ -145,15 +156,5 @@ class MethodTwinsAndTriplets < Methode
 		end
 		return sous_region
 	end
-
-	def update
-		if(@type == "demoMethod")
-			self.demoMethod()
-		elsif(@type == "onSudokuMethod")
-			self.onSudokuMethod()
-		end
-	end
-
-	
 end
 

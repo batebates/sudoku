@@ -18,12 +18,14 @@ class MethodUniqueCandidate < Methode
 
 	def textMethod
 		if(@step == nil)
+			SudokuAPI.API.hideMenu(true)
 			SudokuAPI.API.sudokuEditable(true)
 			@step = 0
 			@type = "textMethod"
 			SudokuAPI.API.assistantMessage=("Dans le cas où un candidat est unique dans une unité, on peut en\ndéduire que la case où il est présent contient bien ce candidat car\nil ne peut être nul part ailleurs. (Appuyez sur Suivant)")
 		elsif(@step == 1)
 			SudokuAPI.API.assistantMessage=("Bonjour, je suis l'assistant, je suis là pour vous aider")
+			SudokuAPI.API.hideMenu(false)
 			SudokuAPI.API.sudokuEditable(false)
 		end	
 		@step+=1
@@ -32,6 +34,7 @@ class MethodUniqueCandidate < Methode
 	def demoMethod
 		if(@step == nil)
 			SudokuAPI.API.hideMenu(true)
+			SudokuAPI.API.sudokuEditable(true)
 
 			@step = 0
 
@@ -51,10 +54,9 @@ class MethodUniqueCandidate < Methode
 
 			#grisage des cases non importantes
 			0.upto(8) do |x|
-			 	1.upto(8) do |y|
+				1.upto(8) do |y|
 			 		#SudokuAPI.API.setCazeInvisble(x,y)
 			 		SudokuAPI.API.cazeAt(x,y).color=Colors::CL_NUMBER_LOCKED;
-
 				end
 			end			
 
@@ -80,9 +82,10 @@ class MethodUniqueCandidate < Methode
 		elsif(@step == 3)
 			#Chargement de la grille précédente
 			SudokuAPI.API.loadSudoku("old");
+			SudokuAPI.API.sudokuEditable(false)
 			SudokuAPI.API.hideMenu(false)
 			SudokuAPI.API.assistantMessage=("Bonjour, je suis l'assistant, je suis là pour vous aider.")
-
+			
 		end
 
 		@step+=1
@@ -93,6 +96,7 @@ class MethodUniqueCandidate < Methode
 		
 		
 		if(@step == nil)
+			SudokuAPI.API.hideMenu(true)
 			SudokuAPI.API.sudokuEditable(true)
 
 			@step = 0
@@ -133,6 +137,7 @@ class MethodUniqueCandidate < Methode
 		elsif(@step == 2)
 			SudokuAPI.API.resetColors()
 			SudokuAPI.API.assistantMessage=("Bonjour, je suis l'assistant, je suis là pour vous aider")
+			SudokuAPI.API.hideMenu(false)
 			SudokuAPI.API.sudokuEditable(false)
 		end		
 
