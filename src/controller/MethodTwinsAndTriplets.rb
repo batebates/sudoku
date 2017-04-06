@@ -4,7 +4,6 @@ class MethodTwinsAndTriplets < Methode
 	@compteur = 0
 	@cand = nil
 	def textMethod
-		puts(@step)
 		case @step
 			when nil
 			@type = "textMethod"
@@ -35,8 +34,8 @@ class MethodTwinsAndTriplets < Methode
 		elsif(@step==1)
 			SudokuAPI.API.cazeAt(0,4).color=Colors::CL_NUMBER_LOCKED;
 			SudokuAPI.API.cazeAt(2,4).color=Colors::CL_NUMBER_LOCKED;
-			SudokuAPI.API.cazeAt(6,4).color=Colors::CL_NUMBER;
-			SudokuAPI.API.cazeAt(8,4).color=Colors::CL_NUMBER;
+			SudokuAPI.API.cazeAt(6,4).color=Colors::CL_HIGHLIGHT_METHOD;
+			SudokuAPI.API.cazeAt(8,4).color=Colors::CL_HIGHLIGHT_METHOD;
 			SudokuAPI.API.assistantMessage=("Les 2 candidats 4, alignés dans cette région (en rouge),\n donnent la possibilité de supprimer les 4 dans les autres régions\n de cette ligne (en gris)");
 		elsif(@step==2)	
 			SudokuAPI.API.loadSudoku("old");
