@@ -48,7 +48,9 @@ class SudokuAPI
 	@username
 	@hintenable
 	@methode
+	@won
 
+	attr_reader :won
 	attr_reader :sudoku
 	attr_reader :sudokuCompleted
 	attr_reader :sudokuStart
@@ -542,5 +544,11 @@ class SudokuAPI
 	def hideMenu(hidden)
 		changed(true);
 		notify_observers("hideMenu", hidden);
+	end
+
+	def won=(won)
+		@won = won;
+		changed(true);
+		notify_observers("won", won);
 	end
 end
