@@ -12,7 +12,8 @@ install:
   - sudo apt-get install ruby-dev
   - gem install bundler
   - bundler install --with=travis
-
+script:
+  - rake test
 branches:
   only:
   - master
