@@ -8,6 +8,8 @@ engines:
     enabled: true
   rubocop:
     enabled: true
-
+ratings:
+  paths:
+  - "class/**"
 exclude_paths:
   - "assets/*"
