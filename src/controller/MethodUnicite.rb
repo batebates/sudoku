@@ -10,7 +10,7 @@ class MethodUnicite < Methode
 		 	SudokuAPI.API.sudokuEditable(true)
 		   SudokuAPI.API.assistantMessage=("Cette méthode repose sur le principe\nqu'un sudoku possède une unique solution")
 		 when 1
-		   SudokuAPI.API.assistantMessage=("Ainsi si quatre cellules dans deux régions différentes\forment un rectangle comporte une paire de candidats identiques\n sur trois de ces cellules ")
+		   SudokuAPI.API.assistantMessage=("Ainsi si quatre cellules dans deux régions différentes\nforment un rectangle comporte une paire de candidats identiques\n sur trois de ces cellules ")
 		 when 2
 		   SudokuAPI.API.assistantMessage=("Et que la quatrième comporte cette paire ainsi\nque d'autres candidats")
 		 when 3
@@ -86,7 +86,7 @@ class MethodUnicite < Methode
 					SudokuAPI.API.getInclude(tab.first.x,tab.first.y) - SudokuAPI.API.getInclude(tab.last.x,tab.last.y).each {|n| SudokuAPI.API.addExclude(tab.first.x, tab.first.y, n)}
 					SudokuAPI.API.hideMenu(false)
 					SudokuAPI.API.sudokuEditable(false)
-		
+
 		end
 		@step+=1
 	end
@@ -96,8 +96,8 @@ class MethodUnicite < Methode
 	def regionPaireCandidats
 		0.upto(8).each{|i|
 			elt = SudokuAPI.API.getUnite(2,i)
-			if elt.count{ |caze| 
-			SudokuAPI.API.getInclude(caze.x,caze.y).count == 2 } >= 2 
+			if elt.count{ |caze|
+			SudokuAPI.API.getInclude(caze.x,caze.y).count == 2 } >= 2
 				puts ("Region possedant plus de deux pair de candidats")
 				puts(i)
 				elt.each{ |c1|
@@ -123,7 +123,7 @@ class MethodUnicite < Methode
 	def samePairHint?(x,y,c)
 		return SudokuAPI.API.cazeAt(x,y).value == 0 && SudokuAPI.API.getInclude(x,y) == SudokuAPI.API.getInclude(c.x,c.y)
 	end
-	
+
 	#===Determine si deux cases contiennent la même pair d'indice
 	#
 	#===Paramètres :
@@ -187,7 +187,7 @@ class MethodUnicite < Methode
 				return pair
 			end
 		}
-		
+
 		lstC3 = getHintEquals(column2,pair[0])
 		puts("lstC3 C2")
 		puts(lstC3.count)
@@ -217,13 +217,13 @@ class MethodUnicite < Methode
 					#puts("((c1.x == c.x && c1.y != c.y) || (c1.x != c.x && c1.y == c.y))",((c1.x == c.x && c1.y != c.y) || (c1.x != c.x && c1.y == c.y)))
 					#puts("SudokuAPI.API.getInclude(c1.x,c1.y) == SudokuAPI.API.getInclude(c.x,c.y)",SudokuAPI.API.getInclude(c1.x,c1.y) == SudokuAPI.API.getInclude(c.x,c.y))
 					#puts("(c1.x == c.x || c1.y == c.y)",(c1.x == c.x || c1.y == c.y))
-					
+
 					 c.value == 0  && SudokuAPI.API.getInclude(c1.x,c1.y) == SudokuAPI.API.getInclude(c.x,c.y) && ((c1.x == c.x && c1.y != c.y) || (c1.x != c.x && c1.y == c.y))}
 					if !c2lst.empty?
 						c2lst.each{ |c2|
 							puts ("Case 2  possedant la même pair de candidat")
 							pair.push(c2)
-						
+
 							puts(pair[0].x)
 							puts(pair[0].y)
 							puts(pair[1].x)

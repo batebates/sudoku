@@ -38,7 +38,7 @@
 #</b>
 class SudokuAPI
 	include Observable
-#== Variables d'instance ==
+#== Variables d'instances ==
 	@sudoku
 	@sudokuCompleted
 	@sudokuStart
