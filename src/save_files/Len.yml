@@ -1,55 +1,61 @@
 ---
 - !ruby/object:ConfigEntry
+  name: avatar
+  displayName: Avatar du profil ?
+  type: avatar
+  value: 2
+  newValue: 0
+- !ruby/object:ConfigEntry
   name: grid_color
   displayName: Couleur de la grille
   type: color
   value:
-  - 61166
-  - 61166
-  - 60652
+  - 65535
+  - 65535
+  - 65535
   newValue: 0
 - !ruby/object:ConfigEntry
   name: hover_color
   displayName: Couleur de la case survolée
   type: color
   value:
-  - 53083
-  - 60292
-  - 60292
+  - 29298
+  - 40863
+  - 53199
   newValue: 0
 - !ruby/object:ConfigEntry
   name: hover_line_color
   displayName: Couleur de la ligne / colonne survolée
   type: color
   value:
-  - 57670
-  - 65535
-  - 65535
+  - 13364
+  - 25957
+  - 42148
   newValue: 0
 - !ruby/object:ConfigEntry
   name: hover_square_color
   displayName: Couleur du carré survolé
   type: color
   value:
-  - 58981
-  - 52428
-  - 65535
+  - 29555
+  - 53970
+  - 5654
   newValue: 0
 - !ruby/object:ConfigEntry
   name: number_color
   displayName: Couleur des chiffres
   type: color
   value:
-  - 64764
-  - 44975
-  - 15934
+  - 62965
+  - 31097
+  - 0
   newValue: 0
 - !ruby/object:ConfigEntry
   name: number_color_locked
   displayName: Couleur des chiffres vérouillés
   type: color
   value:
-  - 32767
+  - 0
   - 0
   - 0
   newValue: 0
@@ -62,6 +68,12 @@
 - !ruby/object:ConfigEntry
   name: show_square_highlight
   displayName: Surligner le carré survolé ?
+  type: bool
+  value: true
+  newValue: 0
+- !ruby/object:ConfigEntry
+  name: show_hint
+  displayName: Afficher les valeurs possibles ?
   type: bool
   value: false
   newValue: 0
