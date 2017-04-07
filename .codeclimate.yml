@@ -8,5 +8,9 @@ engines:
     enabled: true
   rubocop:
     enabled: true
+ratings:
+  paths:
+  - src/**
+  - "**.rb"
 exclude_paths:
   - "assets/*"
