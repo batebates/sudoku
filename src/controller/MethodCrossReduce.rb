@@ -1,3 +1,16 @@
+#<b>Auteur</b> Decrand Baptiste
+#
+#<b>Version</b> 1.0
+#
+#<b>Date</b> 05/04/2017
+#
+#=== Methode de la reduction par croix
+#<b>Liste des méthodes
+#*textMethod
+#*demoMethod
+#*onSudokuMethod
+#firstCazeValue0
+#</b>
 class MethodCrossReduce < Methode
   @cazeonSudokuMethod
   #===renvoi un texte expliquant la methode de reduction par croix
@@ -62,6 +75,7 @@ class MethodCrossReduce < Methode
     @step+=1
   end
 
+  # Applique la methode sur la grile de sudoku actuel
   def onSudokuMethod()
     if @cazeonSudokuMethod == nil
       @cazeonSudokuMethod = firstCazeValue0()
@@ -103,6 +117,7 @@ class MethodCrossReduce < Methode
     @step+=1
   end
 
+  # renvoi la premiere case n'ayant pas de valeur
   def firstCazeValue0()
     0.upto(8) do |i|
       0.upto(8) do |j|
