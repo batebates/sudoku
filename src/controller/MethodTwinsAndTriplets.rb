@@ -84,7 +84,7 @@ class MethodTwinsAndTriplets < Methode
 				end
 			end
 			if(@cand!=nil)
-				SudokuAPI.API.assistantMessage=("Le candidat " + @cand.to_s + " n'est présent que sur ces deux cases,\n il est donc obliger de le placer ici.");
+				SudokuAPI.API.assistantMessage=("Le candidat " + @cand.to_s + " n'est présent que sur ces deux cases,\n il est donc obligé de le placer ici.");
 			else
 				SudokuAPI.API.assistantMessage=("Il n'est pas possible d'appliquer cette méthode sur la grille.");
 			end
