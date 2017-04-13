@@ -3,6 +3,8 @@ class MethodTwinsAndTriplets < Methode
 
 	@compteur = 0
 	@cand = nil
+
+	#===Affiche le texte de description de la méthode
 	def textMethod
 		case @step
 			when nil
@@ -21,6 +23,7 @@ class MethodTwinsAndTriplets < Methode
 		@step+=1
 	end
 
+	#===Affiche a la place de la grille actuelle une nouvelle grille sur laquelle on execute comme un tutoriel la technique
 	def demoMethod
 		@type = "demoMethod"
 		if(@step==nil)
@@ -46,6 +49,7 @@ class MethodTwinsAndTriplets < Methode
 		@step+=1
 	end
 
+	#===Methode qui execute la methode Twins And Triplets sur la grille
 	def onSudokuMethod
 		@type = "onSudokuMethod"
 		if(@step==nil)
@@ -74,6 +78,7 @@ class MethodTwinsAndTriplets < Methode
 		end
 		@step+=1
 	end
+
 
 	def candidateOnSquareNumber(tab)
 		candid=0
