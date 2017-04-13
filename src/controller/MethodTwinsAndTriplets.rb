@@ -3,6 +3,18 @@
 #<b>Version</b> 1.0
 #
 #<b>Date</b> 18/03/2017
+#
+#=== Methode de la reduction par croix
+#<b>Liste des méthodes
+#*textMethod
+#*demoMethod
+#*onSudokuMethod
+#*candidateOnSquareNumber
+#*inOneTab
+#*parcourBeetweenRow
+#*traitementOnRow
+#*squareNumber
+#</b>
 
 class MethodTwinsAndTriplets < Methode
 	
