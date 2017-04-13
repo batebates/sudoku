@@ -1,3 +1,9 @@
+#<b>Auteur</b> Zerbane Mehdi
+#
+#<b>Version</b> 1.0
+#
+#<b>Date</b> 18/03/2017
+
 class MethodTwinsAndTriplets < Methode
 	
 
@@ -79,7 +85,10 @@ class MethodTwinsAndTriplets < Methode
 		@step+=1
 	end
 
-
+    #===Renvoit un tableau contenant la liste des candidats d'une unite
+    #
+    # Params:
+    # @param tab Le tableau d'unité
 	def candidateOnSquareNumber(tab)
 		candid=0
 		tab_tmp=Array.new()
@@ -92,10 +101,19 @@ class MethodTwinsAndTriplets < Methode
 		return tab_tmp
 	end
 
+    #===Renvoit un tableau qui contient plus d'une fois le meme chiffre
+    #
+    # Params:
+    # @param tab Le tableau des candidats d'une unite
 	def inOneTab(tab)
 		return tab.flatten.uniq.map { | e | [tab.flatten.count(e), e] }.select { | c, _ | c > 1 }.sort.reverse.map { | c, e | "#{e}" }
 	end
 
+    #===Renvoit un tableau contenant les candidats communs d'une unite
+    #
+    # Params:
+    # @param start Le tableau de candidats de la case
+    # @param compare Le tableau de candidats de la case suivante
 	def parcourBeetweenRow(start,compare)
 		end_ = Array.new()
 		start.each{ |elt|	
@@ -106,6 +124,12 @@ class MethodTwinsAndTriplets < Methode
 		return end_
 	end
 
+    #===Traitement principal de la methode, on colorise les cases sur lesquelles il est possible d'appliquer la methode
+    #
+    # Params:
+    # @param region Indique la region sur laquelle on se trouve
+    # @param sens Indique le sens (Horizontal/Vertical)
+    # @param ligne Le numero de la ligne dans la region
 	def traitementOnRow(region,sens,ligne)
 		if(ligne==1)
 			tab = squareNumber(region,0,sens) #retourne case d'une ligne ou colonne
@@ -120,7 +144,6 @@ class MethodTwinsAndTriplets < Methode
 			tab2 = squareNumber(region,1,sens) #retourne case d'une ligne ou colonne
 			tab3 = squareNumber(region,0,sens) #retourne case d'une ligne ou colonne
 		end
-
 		save = Array.new() 
 		tmp = Array.new() 
 		save = parcourBeetweenRow(inOneTab(candidateOnSquareNumber(tab)),tab2)
@@ -141,6 +164,12 @@ class MethodTwinsAndTriplets < Methode
 		}
 	end
 
+    #===Renvoit un tableau contenant les cases d'une unite
+    #
+    # Params:
+    # @param region Indique la region sur laquelle on se trouve
+    # @param sens Indique le sens (Horizontal/Vertical)
+    # @param number Le numero de la ligne dans la region
 	def squareNumber(region,number,sens)
 		tab_region = SudokuAPI.API.squareN(region)
 		i = 0
