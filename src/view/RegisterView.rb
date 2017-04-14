@@ -1,3 +1,4 @@
+#===Permet la génération de l'interface de création de compte en gtk
 class RegisterView
     private_class_method :new
 

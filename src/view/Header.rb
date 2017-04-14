@@ -1,3 +1,4 @@
+#===Représente l'entête de la fenêtre en gtk
 class Header
     private_class_method :new
 

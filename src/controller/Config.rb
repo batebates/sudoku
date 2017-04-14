@@ -1,3 +1,4 @@
+#===Représente l'ensemble des configs du sudoku
 class Config
     include Observable
 

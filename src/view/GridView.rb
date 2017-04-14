@@ -1,3 +1,4 @@
+#===Permet la génération de la grille de sudoku avec gtk
 class GridView
     private_class_method :new
 

@@ -1,3 +1,4 @@
+#===Permet l'utilisation du CSS dans l'interface
 class CSSStyle
     private_class_method :new
 

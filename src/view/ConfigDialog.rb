@@ -1,3 +1,4 @@
+#===Permet la génération de l'interface de configuration
 class ConfigDialog
 
 	@configDialog #this
