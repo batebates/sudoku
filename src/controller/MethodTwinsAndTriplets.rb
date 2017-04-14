@@ -1,9 +1,28 @@
+#<b>Auteur</b> Zerbane Mehdi
+#
+#<b>Version</b> 1.0
+#
+#<b>Date</b> 18/03/2017
+#
+#=== Methode de la reduction par croix
+#<b>Liste des méthodes
+#*textMethod
+#*demoMethod
+#*onSudokuMethod
+#*candidateOnSquareNumber
+#*inOneTab
+#*parcourBeetweenRow
+#*traitementOnRow
+#*squareNumber
+#</b>
+
 class MethodTwinsAndTriplets < Methode
 
 
 	@compteur = 0
 	@cand = nil
-	#===Lance une explication textuelle de la methode
+
+	#===Affiche le texte de description de la méthode
 	def textMethod
 		case @step
 			when nil
@@ -20,7 +39,8 @@ class MethodTwinsAndTriplets < Methode
 		@step+=1
 	end
 
-	#===Lance la methode sur une grille de demonstration
+
+	#===Affiche a la place de la grille actuelle une nouvelle grille sur laquelle on execute comme un tutoriel la technique
 	def demoMethod
 		@type = "demoMethod"
 		if(@step==nil)
@@ -44,7 +64,8 @@ class MethodTwinsAndTriplets < Methode
 		@step+=1
 	end
 
-	#===Lance la methode sur la grille actuelle
+
+	#===Methode qui execute la methode Twins And Triplets sur la grille
 	def onSudokuMethod
 		@type = "onSudokuMethod"
 		if(@step==nil)
@@ -60,7 +81,7 @@ class MethodTwinsAndTriplets < Methode
 				end
 			end
 			if(@cand!=nil)
-				SudokuAPI.API.assistantMessage=("Le candidat " + @cand.to_s + " n'est présent que sur ces deux cases,\n il est donc obliger de le placer ici.");
+				SudokuAPI.API.assistantMessage=("Le candidat " + @cand.to_s + " n'est présent que sur ces deux cases,\n il est donc obligé de le placer ici.");
 			else
 				SudokuAPI.API.assistantMessage=("Il n'est pas possible d'appliquer cette méthode sur la grille.");
 			end
@@ -72,6 +93,10 @@ class MethodTwinsAndTriplets < Methode
 		@step+=1
 	end
 
+    #===Renvoit un tableau contenant la liste des candidats d'une unite
+    #
+    # Params:
+    # @param tab Le tableau d'unité
 	def candidateOnSquareNumber(tab)
 		candid=0
 		tab_tmp=Array.new()
@@ -84,10 +109,19 @@ class MethodTwinsAndTriplets < Methode
 		return tab_tmp
 	end
 
+    #===Renvoit un tableau qui contient plus d'une fois le meme chiffre
+    #
+    # Params:
+    # @param tab Le tableau des candidats d'une unite
 	def inOneTab(tab)
 		return tab.flatten.uniq.map { | e | [tab.flatten.count(e), e] }.select { | c, _ | c > 1 }.sort.reverse.map { | c, e | "#{e}" }
 	end
 
+    #===Renvoit un tableau contenant les candidats communs d'une unite
+    #
+    # Params:
+    # @param start Le tableau de candidats de la case
+    # @param compare Le tableau de candidats de la case suivante
 	def parcourBeetweenRow(start,compare)
 		end_ = Array.new()
 		start.each{ |elt|
@@ -98,6 +132,12 @@ class MethodTwinsAndTriplets < Methode
 		return end_
 	end
 
+    #===Traitement principal de la methode, on colorise les cases sur lesquelles il est possible d'appliquer la methode
+    #
+    # Params:
+    # @param region Indique la region sur laquelle on se trouve
+    # @param sens Indique le sens (Horizontal/Vertical)
+    # @param ligne Le numero de la ligne dans la region
 	def traitementOnRow(region,sens,ligne)
 		if(ligne==1)
 			tab = squareNumber(region,0,sens) #retourne case d'une ligne ou colonne
@@ -133,6 +173,12 @@ class MethodTwinsAndTriplets < Methode
 		}
 	end
 
+    #===Renvoit un tableau contenant les cases d'une unite
+    #
+    # Params:
+    # @param region Indique la region sur laquelle on se trouve
+    # @param sens Indique le sens (Horizontal/Vertical)
+    # @param number Le numero de la ligne dans la region
 	def squareNumber(region,number,sens)
 		tab_region = SudokuAPI.API.squareN(region)
 		i = 0
