@@ -274,7 +274,7 @@ class SudokuAPI
 		for i in 0..80
 			caze = self.sudoku.cazeAt(i%9,i/9)
 			if(!(caze.excludedHint.empty?)) # If there is at least one excluded hints
-				saveFile.write (i%9).to_s + " " +  (i/9).to_s + " "
+				saveFile.write((i%9).to_s + " " +  (i/9).to_s + " ")
 				for j in 0..caze.excludedHint.size
 					saveFile.write caze.excludedHint[j].to_s + " "
 				end
@@ -475,19 +475,18 @@ class SudokuAPI
 		cazeAt(x, y).locked=(locked)
 	end
 
-	#===Permet de rendre une unité éditable
+	#===Permet d'activer/desactiver l'edition de la grille de sudoku
 	#
 	# Params:
-	# @param unite [tableau d'une unité
 	# @param locked [boolean] true pour activer, false sinon
 	def sudokuEditable(locked)
 		0.upto(8) do |x|
 			0.upto(8) do |y|
 				if(!locked && @sudokuStart.hasValue?(x,y) == false)
-			 		setEditable(x,y,locked)
-			 	elsif(locked)
-			 		setEditable(x,y,locked)
-			 	end
+					setEditable(x,y,locked)
+				elsif(locked)
+					setEditable(x,y,locked)
+				end
 			end
 		end
 	end

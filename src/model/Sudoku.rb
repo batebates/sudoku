@@ -27,7 +27,7 @@ class Sudoku
         y_length = 9
 
 		@tcaze = Array.new(x_length);
-		@tcaze.each_with_index { |value, index|
+		@tcaze.each_with_index { |_value, index|
 			@tcaze[index] = Array.new(y_length);
 		}
 
@@ -134,8 +134,6 @@ class Sudoku
 #===Verifie Validité de la grille
 #
 	def valid?()
-		cptX = 0
-		cptY = 0
 		if(gridFull()) #Verifie si grille pleine
 			for i in 0...9
 				if rowValue(i).uniq.length != rowValue(i).length
@@ -146,7 +144,6 @@ class Sudoku
 					return false;
 				end
 			end
-
 			return true
 		end
 		return true

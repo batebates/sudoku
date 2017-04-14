@@ -1,34 +1,33 @@
 class MethodTwinsAndTriplets < Methode
-	
+
 
 	@compteur = 0
 	@cand = nil
+	#===Lance une explication textuelle de la methode
 	def textMethod
 		case @step
 			when nil
 			@type = "textMethod"
 			@step = 0
-			SudokuAPI.API.hideMenu(true)
-			SudokuAPI.API.sudokuEditable(true)
+			statutMethod(true)
 			SudokuAPI.API.assistantMessage=("Cette méthode nous permet de déduire dans quelle partie d'une \nrégion peut se trouver un symbole. En effet il n'est pas toujours\névident de découvrir dès le début l'emplacement final et définitif.")
 			when 1
 			SudokuAPI.API.assistantMessage=("Si un candidat se trouve uniquement par exemple dans la dernière\n ligne d'une région il se trouvera donc obligatoirement\ndans cette ligne.")
 			when 2
 				SudokuAPI.API.assistantMessage=("Bonjour,je suis l'assistant, je suis là pour vous aider")
-				SudokuAPI.API.hideMenu(false)
-				SudokuAPI.API.sudokuEditable(false)
+				statutMethod(false)
 		end
 		@step+=1
 	end
 
+	#===Lance la methode sur une grille de demonstration
 	def demoMethod
 		@type = "demoMethod"
 		if(@step==nil)
 			@step = 0
 			SudokuAPI.API.saveSudoku("old");
-			SudokuAPI.API.hideMenu(true)
-			SudokuAPI.API.sudokuEditable(true)
-			gridDemo = "375648129010925070200371000732089060000267000060034792020453917147896235953712648"	
+			statutMethod(true)
+			gridDemo = "375648129010925070200371000732089060000267000060034792020453917147896235953712648"
 			SudokuAPI.API.setSudoku(Sudoku.create(gridDemo),Sudoku.create(gridDemo),Sudoku.create(gridDemo));
 			SudokuAPI.API.assistantMessage=("Bienvenue dans la démo (Appuyez sur Suivant)");
 		elsif(@step==1)
@@ -37,21 +36,20 @@ class MethodTwinsAndTriplets < Methode
 			SudokuAPI.API.cazeAt(6,4).color=Colors::CL_HIGHLIGHT_METHOD;
 			SudokuAPI.API.cazeAt(8,4).color=Colors::CL_HIGHLIGHT_METHOD;
 			SudokuAPI.API.assistantMessage=("Les 2 candidats 4, alignés dans cette région (en rouge),\n donnent la possibilité de supprimer les 4 dans les autres régions\n de cette ligne (en gris)");
-		elsif(@step==2)	
+		elsif(@step==2)
 			SudokuAPI.API.loadSudoku("old");
-			SudokuAPI.API.hideMenu(false)
-			SudokuAPI.API.sudokuEditable(false)
+			statutMethod(false)
 			SudokuAPI.API.assistantMessage=("Bonjour, je suis l'assistant, je suis là pour vous aider.")
 		end
 		@step+=1
 	end
 
+	#===Lance la methode sur la grille actuelle
 	def onSudokuMethod
 		@type = "onSudokuMethod"
 		if(@step==nil)
 			@step = 0
-			SudokuAPI.API.hideMenu(true)
-			SudokuAPI.API.sudokuEditable(true)
+			statutMethod(true)
 			SudokuAPI.API.assistantMessage=("Nous allons appliquer cette méthode sur la grille actuel \n(cliquez sur suivant pour continuer)");
 		elsif(@step==1)
 			@compteur=0
@@ -67,8 +65,7 @@ class MethodTwinsAndTriplets < Methode
 				SudokuAPI.API.assistantMessage=("Il n'est pas possible d'appliquer cette méthode sur la grille.");
 			end
 		elsif(@step==2)
-			SudokuAPI.API.hideMenu(false)
-			SudokuAPI.API.sudokuEditable(false)
+			statutMethod(false)
 			SudokuAPI.API.resetColors()
 			SudokuAPI.API.assistantMessage=("Bonjour, je suis l'assistant, je suis là pour vous aider.")
 		end
@@ -93,8 +90,8 @@ class MethodTwinsAndTriplets < Methode
 
 	def parcourBeetweenRow(start,compare)
 		end_ = Array.new()
-		start.each{ |elt|	
-			if((candidateOnSquareNumber(compare)).flatten.uniq.include?(elt.to_i)==false)	
+		start.each{ |elt|
+			if((candidateOnSquareNumber(compare)).flatten.uniq.include?(elt.to_i)==false)
 					end_<<elt.to_i
 			end
 		}
@@ -116,8 +113,8 @@ class MethodTwinsAndTriplets < Methode
 			tab3 = squareNumber(region,0,sens) #retourne case d'une ligne ou colonne
 		end
 
-		save = Array.new() 
-		tmp = Array.new() 
+		save = Array.new()
+		tmp = Array.new()
 		save = parcourBeetweenRow(inOneTab(candidateOnSquareNumber(tab)),tab2)
 		tmp=parcourBeetweenRow(save,tab3)
 		i,j=0,0
@@ -131,7 +128,7 @@ class MethodTwinsAndTriplets < Methode
 						@cand = tmp[0]
 					end
 				end
-				
+
 			}
 		}
 	end
@@ -156,4 +153,3 @@ class MethodTwinsAndTriplets < Methode
 		return sous_region
 	end
 end
-
