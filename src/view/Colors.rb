@@ -1,9 +1,10 @@
+#===Contient l'ensemble des couleurs du jeu
 class Colors
     def Colors.toGdkColor(r, g, b)
         return Gdk::Color.new(r * 65535, g * 65535, b * 65535);
     end
 
-    def Colors.clone(color) 
+    def Colors.clone(color)
     	return Gdk::Color.new(color.red, color.green, color.blue)
     end
 

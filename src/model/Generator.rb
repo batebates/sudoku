@@ -1,3 +1,4 @@
+#===Permet la génération d'une grille de suoku. Algorithme traduit du C
 class Generator
 
 	@grid = []			#avec trou
@@ -164,7 +165,7 @@ class Generator
 	def to_sCorrect()
 		return @gridCorrect.join("")
 	end
-	
+
 	def to_sPlayer()
 		return @gridPlayer.join("")
 	end

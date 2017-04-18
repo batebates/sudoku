@@ -1,3 +1,4 @@
+#===Permet la création de la fenêtre
 class Window
     private_class_method :new
 

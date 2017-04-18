@@ -33,8 +33,6 @@ require "./controller/ProfilManager.rb"
 
 require "./controller/Methode.rb"
 require "./controller/MethodCrossReduce.rb"
-require "./controller/MethodGroupIsolated.rb"
-require "./controller/MethodInteractionsRegion.rb"
 require "./controller/MethodTwinsAndTriplets.rb"
 require "./controller/MethodUnicite.rb"
 require "./controller/MethodUniqueCandidate.rb"

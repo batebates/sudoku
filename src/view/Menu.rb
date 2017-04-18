@@ -1,3 +1,4 @@
+#===Permet la génération du menu sur la droite en gtk
 class Menu
 	private_class_method :new
 

@@ -1,3 +1,4 @@
+#===Contients le code de génération de l'assistant
 class AssistantView
     private_class_method :new;
 

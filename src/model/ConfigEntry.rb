@@ -1,3 +1,4 @@
+#===Représente une valeur de la config
 class ConfigEntry
     attr_reader :name, :displayName, :type
     attr_accessor :value, :newValue

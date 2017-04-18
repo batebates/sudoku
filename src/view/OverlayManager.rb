@@ -1,3 +1,4 @@
+#===Gère l'interface au dessus de la grille
 class OverlayManager
     private_class_method :new
 
@@ -101,12 +102,14 @@ class OverlayManager
         end
     end
 
+    #===Cache l'overlay
     def OverlayManager.hide()
         @@open = false;
         @@overlayPanel.hide();
         OverlayManager.clear();
     end
 
+    #===Affiche l'overlay
     def OverlayManager.show()
         @@open = true;
         square = SquareView.selectedSquareView();

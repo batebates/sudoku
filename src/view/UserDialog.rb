@@ -1,3 +1,4 @@
+#===Permet la génération de l'interface de sélection de l'utilisateur
 class UserDialog
     private_class_method :new
 

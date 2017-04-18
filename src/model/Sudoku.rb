@@ -1,8 +1,8 @@
-#<b>Auteur  :</b> Decrand Baptiste,Zerbane Mehdi
+#<b>Auteur</b> Decrand Baptiste,Zerbane Mehdi
 #
-#<b>Version :</b> 1.0
+#<b>Version</b> 1.0
 #
-#<b>Date    :</b> 08/02/2017
+#<b>Date</b> 08/02/2017
 #
 #=== Permet la création d'une grille de sudoku composé de case ainsi que les méthodes associées
 #<b>Liste des méthodes
@@ -20,14 +20,14 @@ class Sudoku
 
 	#===Initialise une grille de sudoku
 	#
-	#===Paramètres :
-	#* <b>str</b> : String : indique la chaine de caractère décrivant le contenu du soduku
+	# Params:
+	# @param str [String] indique la chaine de caractère décrivant le contenu du soduku
 	def initialize(str)
 		x_length = 9
         y_length = 9
 
 		@tcaze = Array.new(x_length);
-		@tcaze.each_with_index { |value, index|
+		@tcaze.each_with_index { |_value, index|
 			@tcaze[index] = Array.new(y_length);
 		}
 
@@ -42,36 +42,36 @@ class Sudoku
 
 	#===Créé une grille de sudoku
 	#
-	#===Paramètres :
-	#* <b>str</b> : String : indique la chaine de caractère décrivant le contenu du soduku
-	def Sudoku.create(caze)
-		new(caze)
+	# Params:
+	# @param str [String] indique la chaine de caractère décrivant le contenu du soduku
+	def Sudoku.create(str)
+		new(str)
 	end
 
 	#===Renvoie la case correspondant aux coordonnées
 	#
-	#===Paramètres :
-	#* <b>x</b> : int : indique la coordonnée de l'axe des abscisses de la case
-	#* <b>y</b> : int : indique la coordonnée de l'axe des ordonnées de la case
+	# Params:
+	# @param x [int] indique la coordonnée de l'axe des abscisses de la case
+	# @param y [int] indique la coordonnée de l'axe des ordonnées de la case
 	def cazeAt(x,y)
 		return @tcaze[x][y]
 	end
 
 	#===Modifie la valeur de la case correspondant aux coordonnées
 	#
-	#===Paramètres :
-	#* <b>x</b> : int : indique la coordonnée de l'axe des abscisses de la case
-	#* <b>y</b> : int : indique la coordonnée de l'axe des ordonnées de la case
-	#* <b>val</b> : int : indique la nouvelle valeur de la case à modifier
+	# Params:
+	# @param x [int] indique la coordonnée de l'axe des abscisses de la case
+	# @param y [int] indique la coordonnée de l'axe des ordonnées de la case
+	# @param val [int] indique la nouvelle valeur de la case à modifier
 	def setValueAt(x,y,val)
 		 return @tcaze[x][y].value=(val)
 	end
 
 	#===Vérifie si une case contient bien une valeur
 	#
-	#===Paramètres :
-	#* <b>x</b> : int : indique la coordonnée de l'axe des abscisses de la case
-	#* <b>y</b> : int : indique la coordonnée de l'axe des ordonnées de la case
+	# Params:
+	# @param x [int] indique la coordonnée de l'axe des abscisses de la case
+	# @param y [int] indique la coordonnée de l'axe des ordonnées de la case
 	def hasValue?(x,y)
 		return @tcaze[x][y].value!=0
 	end
@@ -134,8 +134,6 @@ class Sudoku
 #===Verifie Validité de la grille
 #
 	def valid?()
-		cptX = 0
-		cptY = 0
 		if(gridFull()) #Verifie si grille pleine
 			for i in 0...9
 				if rowValue(i).uniq.length != rowValue(i).length
@@ -146,7 +144,6 @@ class Sudoku
 					return false;
 				end
 			end
-
 			return true
 		end
 		return true

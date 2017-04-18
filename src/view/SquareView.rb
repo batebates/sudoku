@@ -1,3 +1,4 @@
+#===Représente une case de la grille du sudoku en gtk
 class SquareView
     private_class_method :new
 

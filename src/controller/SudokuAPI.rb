@@ -1,8 +1,9 @@
-#<b>Auteur  :</b> Decrand Baptiste,Zerbane Mehdi,Laville Martin
+# encoding: utf-8
+#<b>Auteur ]</b> Decrand Baptiste,Zerbane Mehdi,Laville Martin
 #
-#<b>Version :</b> 1.0
+#<b>Version]</b> 1.0
 #
-#<b>Date    :</b> 08/02/2017
+#<b>Date   ]</b> 08/02/2017
 #
 #=== Contient les Methodes permettant d'extraire des informations précises d'un sudoku
 #<b>Liste des méthodes
@@ -38,7 +39,7 @@
 #</b>
 class SudokuAPI
 	include Observable
-#== Variables d'instance ==
+#== Variables d'instances ==
 	@sudoku
 	@sudokuCompleted
 	@sudokuStart
@@ -69,10 +70,10 @@ class SudokuAPI
 
 	#=== Set l'ensemble des grilles de sudoku
 	#
-	#===Paramètres :
-	#* <b>sudoku</b> : Sudoku : sudoku actuel
-	#* <b>sudokuStart</b> : Sudoku : sudoku du debut
-	#* <b>sudokuCompleted</b> : Sudoku : sudoku fini
+	# Params:
+	# @param sudoku [Sudoku] sudoku actuel
+	# @param sudokuStart [Sudoku] sudoku du debut
+	# @param sudokuCompleted [Sudoku] sudoku fini
 	def setSudoku(sudoku, sudokuStart = nil, sudokuCompleted = nil)
 		@timer = 0
 		@sudoku = sudoku
@@ -98,9 +99,9 @@ class SudokuAPI
 
 	#===Renvoie un tableau comprenant les candidats de la case
 	#
-	#===Paramètres :
-	#* <b>x</b> : int : indique la coordonnée de l'axe des abscisses de la case
-	#* <b>y</b> : int : indique la coordonnée de l'axe des ordonnées de la case
+	# Params:
+	# @param x [int] indique la coordonnée de l'axe des abscisses de la case
+	# @param y [int] indique la coordonnée de l'axe des ordonnées de la case
     def candidateCaze(x,y)
         candidats = [1,2,3,4,5,6,7,8,9];
         row(y).each{ |caze|
@@ -122,27 +123,27 @@ class SudokuAPI
 
 	#===Modifie la couleur d'une case
 	#
-	#===Paramètres :
-	#* <b>x</b> : int : indique la coordonnée de l'axe des abscisses de la case
-	#* <b>y</b> : int : indique la coordonnée de l'axe des ordonnées de la case
-	#* <b>color</b> : int : indique la nouvelle couleur de la case à modifier
+	# Params:
+	# @param x [int] indique la coordonnée de l'axe des abscisses de la case
+	# @param y [int] indique la coordonnée de l'axe des ordonnées de la case
+	# @param color [int] indique la nouvelle couleur de la case à modifier
 	def setColor(x,y,color)
 		@sudoku.cazeAt(x,y).color=color;
 	end
 
 	#===Recupere la couleur d'une case
 	#
-	#===Paramètres :
-	#* <b>x</b> : int : indique la coordonnée de l'axe des abscisses de la case
-	#* <b>y</b> : int : indique la coordonnée de l'axe des ordonnées de la case
+	# Params:
+	# @param x [int] indique la coordonnée de l'axe des abscisses de la case
+	# @param y [int] indique la coordonnée de l'axe des ordonnées de la case
 	def getColor(x,y)
 		return @sudoku.cazeAt(x,y).color;
 	end
 
 	#===Met en couleur une unite
 	#
-	#===Paramètres :
-	#* <b>unite</b> : ArrayList : indique l'unite (liste de case) à mettre en couleur
+	# Params:
+	# @param unite [ArrayList] indique l'unite (liste de case) à mettre en couleur
 	def highlightUnite(unite)
 		unite.each{ |caze|
 			cazeAt(caze.x,caze.y).color=Colors::CL_HIGHLIGHT_METHOD;
@@ -151,16 +152,16 @@ class SudokuAPI
 
 	#===Execute la methode
 	#
-	#===Paramètres :
-	#* <b>meth</b> : Methode : indique la methode à executer
+	# Params:
+	# @param meth [Methode] indique la methode à executer
 	def execMethod(meth)
 
 	end
 
 	#===Renvoie une ligne du Sudoku dans un tableau
 	#
-	#===Paramètres :
-	#* <b>y</b> : int : indique la coordonnée de l'axe des ordonnées de la ligne
+	# Params:
+	# @param y [int] indique la coordonnée de l'axe des ordonnées de la ligne
 	def row(y)
 		tab = Array.new()
 		9.times do |i|
@@ -171,8 +172,8 @@ class SudokuAPI
 
 	#===Renvoie une colonne du sudoku dans un tableau
 	#
-	#===Paramètres :
-	#* <b>x</b> : int : indique la coordonnée de l'axe des abscisses de la colonne
+	# Params:
+	# @param x [int] indique la coordonnée de l'axe des abscisses de la colonne
 	def column(x)
 		tab = Array.new()
 		9.times do |i|
@@ -183,19 +184,19 @@ class SudokuAPI
 
 	#===Renvoie une colonne suivi d'une ligne de la case d'un sudoku dans un tableau
 	#
-	#===Paramètres :
-	#* <b>x</b> : int : indique la coordonnée de l'axe des abscisses de la case
-	#* <b>y</b> : int : indique la coordonnée de l'axe des ordonnées de la case
+	# Params:
+	# @param x [int] indique la coordonnée de l'axe des abscisses de la case
+	# @param y [int] indique la coordonnée de l'axe des ordonnées de la case
 	def rowColumn(x,y)
 		return self.row(y) + self.column(x)
 	end
 
 	#===Renvoie la région d'une case d'un sudoku dans un tableau
 	#
-	#===Paramètres :
-	#* <b>x</b> : int : indique la coordonnée de l'axe des abscisses de la case
-	#* <b>y</b> : int : indique la coordonnée de l'axe des ordonnées de la case
-	#* <b>val</b> : int : indique la nouvelle valeur de la case à modifier
+	# Params:
+	# @param x [int] indique la coordonnée de l'axe des abscisses de la case
+	# @param y [int] indique la coordonnée de l'axe des ordonnées de la case
+	# @param val [int] indique la nouvelle valeur de la case à modifier
 	def square(x,y)
 		x = (x / 3).to_i * 3
 		y = (y / 3).to_i * 3
@@ -210,25 +211,25 @@ class SudokuAPI
 
 	#===Renvoie la Nème région d'un sudoku dans un tableau
 	#
-	#===Paramètres :
-	#* <b>n</b> : int : indique la région voulue (de 0 à 8)
+	# Params:
+	# @param n [int] indique la région voulue (de 0 à 8)
 	def squareN(n)
 		square(n*3%9, n/3*3)
 	end
 
 	#===Renvoie la region,la colonne suivi de la ligne d'un case du sudoku dans un tableau
 	#
-	#===Paramètres :
-	#* <b>x</b> : int : indique la coordonnée de l'axe des abscisses de la case
-	#* <b>y</b> : int : indique la coordonnée de l'axe des ordonnées de la case
+	# Params:
+	# @param x [int] indique la coordonnée de l'axe des abscisses de la case
+	# @param y [int] indique la coordonnée de l'axe des ordonnées de la case
 	def squareRowColumn(x,y)
 		return square(x,y) + row(y) + column(x)
 	end
 
 	#===Affiche le message de l'assistant
 	#
-	#===Paramètres :
-	#* <b>str</b> : string : contient le message a afficher
+	# Params:
+	# @param str [string] contient le message a afficher
 	def assistantMessage=(str)
 		@assistantMessage = str;
 		changed(true);
@@ -237,8 +238,8 @@ class SudokuAPI
 
 	#===Sauvegarde des deux grilles
 	#
-	#===Paramètres :
-	#* <b>fileName</b> : string : nom du fichier de sauvegarde
+	# Params:
+	# @param fileName [string] nom du fichier de sauvegarde
 	def saveSudoku(fileName)
 		saveFile = File.new("save_files/"+fileName, "w")
 
@@ -273,7 +274,7 @@ class SudokuAPI
 		for i in 0..80
 			caze = self.sudoku.cazeAt(i%9,i/9)
 			if(!(caze.excludedHint.empty?)) # If there is at least one excluded hints
-				saveFile.write (i%9).to_s + " " +  (i/9).to_s + " "
+				saveFile.write((i%9).to_s + " " +  (i/9).to_s + " ")
 				for j in 0..caze.excludedHint.size
 					saveFile.write caze.excludedHint[j].to_s + " "
 				end
@@ -291,8 +292,8 @@ class SudokuAPI
 
 	#===Chargement des deux grilles à partir d'un fichier
 	#
-	#===Paramètres :
-	#* <b>fileName</b> : string : nom du fichier à charger
+	# Params:
+	# @param fileName [string] nom du fichier à charger
 	def loadSudoku(fileName)
 		filePath = "save_files/#{fileName}"
 		if(File.file?(filePath))
@@ -343,9 +344,9 @@ class SudokuAPI
 
 	#===Retourne l'unité demandée sous forme de tableau
 	#
-	#===Paramètres :
-	#* <b>type</b> : type d'unité, 0 pour une ligne, 1 pour une colonne, 2 pour une région
-	#* <b>numero</b> : numero de la region dans l'ordre logique
+	# Params:
+	# @param type [type d'unité, 0 pour une ligne, 1 pour une colonne, 2 pour une région
+	# @param numero [numero de la region dans l'ordre logique
 	def getUnite(type, numero)
 		if type == 0
 			tmp = row(numero)
@@ -359,8 +360,8 @@ class SudokuAPI
 
 	#===Retourne le nombre de fois où un candidat est présent dans une unité
 	#
-	#===Paramètres :
-	# <b>unite</b> : tableau d'une unité
+	# Params:
+	# <b>unite [tableau d'une unité
 	def nbCandidate(unite)
 		nbCandid = Array.new(9,0);
 		unite.each{ |caze|
@@ -374,9 +375,9 @@ class SudokuAPI
 
 	#===Retourne la case de l'unité où le candidat est présent
 	#
-	#===Paramètres :
-	#* <b>unite</b> : Unite où on cherche la case
-	#* <b>candidate</b> : Candidat, normalement unique
+	# Params:
+	# @param unite [Unite où on cherche la case
+	# @param candidate [Candidat, normalement unique
 	def cazeUniqueCandidate(unite, candidate)
 		unite.each{ |caze|
 				if(candidateCaze(caze.x, caze.y).include?(candidate))
@@ -388,8 +389,8 @@ class SudokuAPI
 
 	#===Regarde si une unité possède un candidat présent une seule fois
 	#
-	#===Paramètres :
-	#* <b>nbCandid</b> : prend un tableau retourné par nbCandidate
+	# Params:
+	# @param nbCandid [prend un tableau retourné par nbCandidate
 	def uniqueCandidate(nbCandid)
 		res = 0
 		i = 0
@@ -403,19 +404,19 @@ class SudokuAPI
 	end
     #===Renvoie la case correspondant aux coordonnées
 	#
-	#===Paramètres :
-	#* <b>x</b> : int : indique la coordonnée de l'axe des abscisses de la case
-	#* <b>y</b> : int : indique la coordonnée de l'axe des ordonnées de la case
+	# Params:
+	# @param x [int] indique la coordonnée de l'axe des abscisses de la case
+	# @param y [int] indique la coordonnée de l'axe des ordonnées de la case
     def cazeAt(x,y)
         return @sudoku.cazeAt(x,y);
     end
 
 	#===Modifie la valeur de la case correspondant aux coordonnées
 	#
-	#===Paramètres :
-	#* <b>x</b> : int : indique la coordonnée de l'axe des abscisses de la case
-	#* <b>y</b> : int : indique la coordonnée de l'axe des ordonnées de la case
-	#* <b>val</b> : int : indique la nouvelle valeur de la case à modifier
+	# Params:
+	# @param x [int] indique la coordonnée de l'axe des abscisses de la case
+	# @param y [int] indique la coordonnée de l'axe des ordonnées de la case
+	# @param val [int] indique la nouvelle valeur de la case à modifier
 	def setValue(x,y,val)
 		 return cazeAt(x, y).value=(val)
 	end
@@ -423,7 +424,7 @@ class SudokuAPI
 
 	#===Permet de modifier l'username
 	#
-	#* <b>username</b> : String : nouvel username
+	# @param username [String] nouvel username
 	def username=(username)
 		@username = username;
 
@@ -433,20 +434,20 @@ class SudokuAPI
 
 	#===Permet d'activer le mode invisible d'une case
 	#
-	#===Paramètres :
-	#* <b>x</b> : int : indique la coordonnée de l'axe des abscisses de la case
-	#* <b>y</b> : int : indique la coordonnée de l'axe des ordonnées de la case
-	#* <b>invisible</b> : boolean : true pour activer, false sinon
+	# Params:
+	# @param x [int] indique la coordonnée de l'axe des abscisses de la case
+	# @param y [int] indique la coordonnée de l'axe des ordonnées de la case
+	# @param invisible [boolean] true pour activer, false sinon
 	def setCazeInvisible(x,y,invisible)
 		cazeAt(x, y).invisible=(invisible)
 	end
 
 	#===Permet d'activer la visibilité des indices d'une case
 	#
-	#===Paramètres :
-	#* <b>x</b> : int : indique la coordonnée de l'axe des abscisses de la case
-	#* <b>y</b> : int : indique la coordonnée de l'axe des ordonnées de la case
-	#* <b>hintEnabled</b> : boolean : true pour activer, false sinon
+	# Params:
+	# @param x [int] indique la coordonnée de l'axe des abscisses de la case
+	# @param y [int] indique la coordonnée de l'axe des ordonnées de la case
+	# @param hintEnabled [boolean] true pour activer, false sinon
 	def setHintAt(x,y,hintEnabled)
 		cazeAt(x, y).hint=(hintEnabled)
 	end
@@ -455,9 +456,9 @@ class SudokuAPI
 
 	#===Permet d'activer la visibilité des indices d'une unité
 	#
-	#===Paramètres :
-	#* <b>unite</b> : tableau d'une unité
-	#* <b>hintEnabled</b> : boolean : true pour activer, false sinon
+	# Params:
+	# @param unite [tableau d'une unité
+	# @param hintEnabled [boolean] true pour activer, false sinon
 	def setHintUnite(unite, hintEnabled)
 		unite.each{ |caze|
 			SudokuAPI.API.setHintAt(caze.x,caze.y,hintEnabled)
@@ -466,35 +467,34 @@ class SudokuAPI
 
 	#===Permet de rendre une case éditable
 	#
-	#===Paramètres :
-	#* <b>x</b> : int : indique la coordonnée de l'axe des abscisses de la case
-	#* <b>y</b> : int : indique la coordonnée de l'axe des ordonnées de la case
-	#* <b>locked</b> : boolean : true pour activer, false sinon
+	# Params:
+	# @param x [int] indique la coordonnée de l'axe des abscisses de la case
+	# @param y [int] indique la coordonnée de l'axe des ordonnées de la case
+	# @param locked [boolean] true pour activer, false sinon
 	def setEditable(x,y, locked)
 		cazeAt(x, y).locked=(locked)
 	end
 
-	#===Permet de rendre une unité éditable
+	#===Permet d'activer/desactiver l'edition de la grille de sudoku
 	#
-	#===Paramètres :
-	#* <b>unite</b> : tableau d'une unité
-	#* <b>locked</b> : boolean : true pour activer, false sinon
+	# Params:
+	# @param locked [boolean] true pour activer, false sinon
 	def sudokuEditable(locked)
 		0.upto(8) do |x|
 			0.upto(8) do |y|
 				if(!locked && @sudokuStart.hasValue?(x,y) == false)
-			 		setEditable(x,y,locked)
-			 	elsif(locked)
-			 		setEditable(x,y,locked)
-			 	end
+					setEditable(x,y,locked)
+				elsif(locked)
+					setEditable(x,y,locked)
+				end
 			end
 		end
 	end
 
 	#===Met en avant les cases possédant un numéro en candidat
 	#
-	#===Paramètres :
-	# <b>number</b> : int : number que l'on veut mettre en avant
+	# Params:
+	# <b>number [int] number que l'on veut mettre en avant
 	def showNumber(number)
 		for x in 0...9
 			for y in 0...9
@@ -517,10 +517,10 @@ class SudokuAPI
 
 	#===Permet d'exclure des indices d'une case
 	#
-	#===Paramètres :
-	#* <b>x</b> : int : indique la coordonnée de l'axe des abscisses de la case
-	#* <b>y</b> : int : indique la coordonnée de l'axe des ordonnées de la case
-	#* <b>number</b> : int : indice a exclure
+	# Params:
+	# @param x [int] indique la coordonnée de l'axe des abscisses de la case
+	# @param y [int] indique la coordonnée de l'axe des ordonnées de la case
+	# @param number [int] indice a exclure
 	def addExclude(x, y, number)
 		if(!cazeAt(x, y).excludedHint.include?(number))
 			cazeAt(x, y).excludedHint.push(number);
@@ -530,19 +530,19 @@ class SudokuAPI
 
 	#===Permet de réactiver des indices d'une case
 	#
-	#===Paramètres :
-	#* <b>x</b> : int : indique la coordonnée de l'axe des abscisses de la case
-	#* <b>y</b> : int : indique la coordonnée de l'axe des ordonnées de la case
-	#* <b>number</b> : int : indice a exclure
+	# Params:
+	# @param x [int] indique la coordonnée de l'axe des abscisses de la case
+	# @param y [int] indique la coordonnée de l'axe des ordonnées de la case
+	# @param number [int] indice a exclure
 	def removeExclude(x, y, number)
 		cazeAt(x, y).excludedHint.delete(number);
 	end
 
 	#===Permet de connaitre les indices exclus d'une case
 	#
-	#===Paramètres :
-	#* <b>x</b> : int : indique la coordonnée de l'axe des abscisses de la case
-	#* <b>y</b> : int : indique la coordonnée de l'axe des ordonnées de la case
+	# Params:
+	# @param x [int] indique la coordonnée de l'axe des abscisses de la case
+	# @param y [int] indique la coordonnée de l'axe des ordonnées de la case
 	def getExclude(x, y)
 		cazeAt(x, y).excludedHint
 	end
@@ -557,8 +557,8 @@ class SudokuAPI
 
 	#===Permet d'activer/désactiver le menu
 	#
-	#===Paramètres :
-	#* <b>hidden</b> : boolean : true pour cacher le menu, false sinon
+	# Params:
+	# @param hidden [boolean] true pour cacher le menu, false sinon
 	def hideMenu(hidden)
 		changed(true);
 		notify_observers("hideMenu", hidden);

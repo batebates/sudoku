@@ -1,3 +1,4 @@
+#===Représente le tableau des scores généré par gtk
 class ScoreDialog
 
 	@scoreDialog
